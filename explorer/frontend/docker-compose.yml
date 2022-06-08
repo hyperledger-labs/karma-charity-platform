@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  hlf-explorer-frontend:
+    image: hlf-explorer-frontend
+    env_file:
+      - ./docker/explorer/.env
+    ports:
+      - 80:8080
+      - 443:8443
+    working_dir: /application
+    command: node server.js

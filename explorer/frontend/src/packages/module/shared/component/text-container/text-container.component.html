@@ -1,0 +1,13 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3 border-bottom">
+
+    <p class="mat-title flex-grow-1 text-one-line">
+        <span class="mr-2" [innerHTML]="'general.text' | viTranslate"></span>
+    </p>
+
+    <button class="flex-shrink-0" tabindex="-1" [vi-click-to-copy]="textInput" mat-icon-button [matTooltip]="'general.copy' | viTranslate">
+        <span class="fas fa-copy"></span>
+    </button>
+
+</div>
+
+<pre #textInput class="text-highlight flex-grow-1 scroll-auto p-3 m-0" [innerHTML]="textHighlighted"></pre>

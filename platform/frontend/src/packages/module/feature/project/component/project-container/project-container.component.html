@@ -1,0 +1,43 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <button class="flex-shrink-0" mat-icon-button [title]="'general.menu' | viTranslate" tabindex="-1" (click)="menuOpen($event)">
+        <span class="fas fas fa-ellipsis-v"></span>
+    </button>
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [innerHTML]="project?.preferences.title"></p>
+</div>
+
+<vi-tab-group class="d-block flex-shrink-0 border-top" className="tabs-stretch no-border flex-shrink-0" [list]="tabs"></vi-tab-group>
+
+<div class="p-3 d-flex flex-grow-1 scroll-vertical">
+    <div class="flex-grow-1" *ngIf="tabs.selectedData === 'PROJECT'">
+        <p class="p-3 border background rounded mouse-inactive mb-3" [vi-translate]="'project.status.' + project?.status + 'Description'"></p>
+        <project-details [project]="project"></project-details>
+    </div>
+
+    <project-users class="flex-grow-1 border rounded" [project]="project" *ngIf="tabs.selectedData === 'USERS'"></project-users>
+  
+    <payment-transactions
+        class="flex-grow-1 border rounded"
+        [conditions]="{ projectId: project?.id }"
+        *ngIf="tabs.selectedData === 'PAYMENTS'"
+    ></payment-transactions>
+
+    <project-purposes
+        class="flex-grow-1 border rounded"
+        [project]="project"
+        *ngIf="tabs.selectedData === 'PURPOSES'"
+    ></project-purposes>
+
+    <project-files
+        class="flex-grow-1 border rounded"
+        [project]="project"
+        *ngIf="tabs.selectedData === 'FILES'"
+    ></project-files>
+
+    <payment-widget-container class="p-3 flex-grow-1 border rounded" [target]="project" *ngIf="tabs.selectedData === 'DONATE'"></payment-widget-container>
+
+</div>
+
+<mat-menu #matMenu [overlapTrigger]="false">
+    <vi-menu-list [list]="menu"></vi-menu-list>
+</mat-menu>
+<span [vi-menu-trigger-for]="matMenu"></span>

@@ -1,0 +1,16 @@
+<div class="flex-shrink-0 mr-4">
+    <p class="mat-body-2 mb-1" [class.text-danger]="!isExecuted" [innerHTML]="name | viPrettify"></p>
+    <p class="mat-caption-1 mb-1 text-secondary" [innerHTML]="date | viPrettify"></p>
+    <!--
+    <p class="mat-caption-1" [innerHTML]="requestUserId | viPrettify"></p>
+    -->
+</div>
+
+<div class="flex-grow-1 border dashed background-body rounded">
+    <div class="d-flex">
+        <pre class="text-highlight p-2 scroll-no m-0 border-bottom dashed flex-grow-1" [innerHTML]="request | viPrettify"></pre>
+    </div>
+    <div class="d-flex">
+        <pre class="text-highlight p-2 scroll-no m-0" [innerHTML]="response | viPrettify"></pre>
+    </div>
+</div>

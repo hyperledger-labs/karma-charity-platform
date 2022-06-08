@@ -1,0 +1,10 @@
+<div class="mb-0 position-relative" [title]="label">
+
+    <input #input class="w-100 h-100 position-absolute mouse-active" type="file" ng2FileSelect [accept]="fileTypes" [uploader]="fileUploader"
+        style="top:0;left:0;right:0;bottom:0;opacity:0" multiple>
+
+    <button mat-icon-button tabindex="-1" (click)="input.click()" [disabled]="uploader?.isUploading || disabled">
+        <span class="fas fa-plus"></span>
+    </button>
+
+</div>

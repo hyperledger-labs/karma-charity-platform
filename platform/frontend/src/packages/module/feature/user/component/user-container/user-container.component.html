@@ -1,0 +1,15 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <button class="flex-shrink-0" mat-icon-button [title]="'general.menu' | viTranslate" tabindex="-1" (click)="menuOpen($event)">
+        <span class="fas fas fa-ellipsis-v"></span>
+    </button>
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [innerHTML]="user | userTitle"></p>
+</div>
+
+<div class="p-3 flex-grow-1 border-top g-0 vertical-scroll-only">
+    <user-details [user]="user"></user-details>
+</div>
+
+<mat-menu #matMenu [overlapTrigger]="false">
+    <vi-menu-list [list]="menu"></vi-menu-list>
+</mat-menu>
+<span [vi-menu-trigger-for]="matMenu"></span>

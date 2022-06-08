@@ -1,0 +1,85 @@
+{
+    "name": "karma-ledger-network",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Org1",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "channels": {
+        "mychannel": {
+            "orderers": ["orderer.example.com"],
+            "peers": {
+                "peer0.org1.example.com": {},
+                "peer1.org1.example.com": {},
+                "peer0.org2.example.com": {},
+                "peer1.org2.example.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Org1": {
+            "mspid": "Org1MSP",
+            "peers": ["peer0.org1.example.com", "peer1.org1.example.com"]
+        }
+    },
+    "peers": {
+        "peer0.org1.example.com": {
+            "url": "grpcs://34.91.123.132:7051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org1.example.com",
+                "hostnameOverride": "peer0.org1.example.com"
+            },
+            "tlsCACerts": {
+                "path": "./fabcerts/peers/org1/peer0/ca.crt"
+            }
+        },
+        "peer1.org1.example.com": {
+            "url": "grpcs://34.91.123.132:8051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org1.example.com",
+                "hostnameOverride": "peer1.org1.example.com"
+            },
+            "tlsCACerts": {
+                "path": "./fabcerts/peers/org1/peer1/ca.crt"
+            }
+        },
+        "peer0.org2.example.com": {
+            "url": "grpcs://34.91.123.132:9051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.org2.example.com",
+                "hostnameOverride": "peer0.org2.example.com"
+            },
+            "tlsCACerts": {
+                "path": "./fabcerts/peers/org2/peer0/ca.crt"
+            }
+        },
+        "peer1.org2.example.com": {
+            "url": "grpcs://34.91.123.132:10051",
+            "grpcOptions": {
+                "ssl-target-name-override": "peer1.org2.example.com",
+                "hostnameOverride": "peer1.org2.example.com"
+            },
+            "tlsCACerts": {
+                "path": "./fabcerts/peers/org2/peer1/ca.crt"
+            }
+        }
+    },
+    "orderers": {
+        "orderer.example.com": {
+            "url": "grpcs://34.91.123.132:7050",
+            "grpcOptions": {
+                "ssl-target-name-override": "orderer.example.com",
+                "hostnameOverride": "orderer.example.com"
+            },
+            "tlsCACerts": {
+                "path": "./fabcerts/orderers/ca.crt"
+            }
+        }
+    }
+}

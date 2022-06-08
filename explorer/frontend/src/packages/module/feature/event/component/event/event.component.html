@@ -1,0 +1,8 @@
+<div class="flex-shrink-0 mr-4">
+    <p class="mat-body-2 mb-1" [innerHTML]="name | viPrettify"></p>
+    <p class="mat-caption-1 mb-1 text-secondary" [innerHTML]="date | viPrettify"></p>
+</div>
+
+<div class="flex-grow-1 border dashed background-body rounded">
+    <pre class="text-highlight p-2 scroll-no m-0 flex-grow-1" [innerHTML]="data | viPrettify"></pre>
+</div>

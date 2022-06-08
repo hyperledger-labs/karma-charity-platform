@@ -1,0 +1,11 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+mat-list-item {
+    ::ng-deep {
+        .mat-list-text {
+            // font-family: 'PT Sans Narrow', sans-serif;
+        }
+    }
+}

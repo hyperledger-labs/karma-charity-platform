@@ -1,0 +1,27 @@
+<div class="flex-grow-1 row g-0">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'payment.transaction.coinId'"></mat-placeholder>
+            <mat-select #coinIdInput="ngModel" name="coinId" [(ngModel)]="coinIds.selectedItem" required>
+                <mat-option *ngFor="let item of coinIds.collection" [value]="item" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(coinIdInput.valid || !coinIdInput.touched)" [innerHTML]="coinIdInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'payment.transaction.amount'"></mat-placeholder>
+            <mat-select #amountInput="ngModel" name="amount" [(ngModel)]="amounts.selectedItem" required>
+                <mat-option *ngFor="let item of amounts.collection" [value]="item" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(amountInput.valid || !amountInput.touched)" [innerHTML]="amountInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12 d-flex justify-content-center">
+        <button class="flex-grow-1" mat-raised-button color="primary" (click)="submit()">
+            <span [vi-translate]="'payment.payment'"></span>
+        </button>
+    </div>
+    
+</div>

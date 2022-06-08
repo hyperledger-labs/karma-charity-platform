@@ -1,0 +1,13 @@
+<form class="form px-3 flex-grow-1" #form="ngForm" autocomplete="off" (keyup.enter)="form.invalid || isLoading? $event.stopPropagation() : submit()">
+    <mat-form-field class="d-block no-underline" floatLabel="never">
+        <span class="fas fa-search mr-3" matPrefix></span>
+        <mat-label [innerHTML]="'search.description' | viTranslate"></mat-label>
+        <span class="fas ml-3" matSuffix [ngClass]="{'fa-link text-primary' : monitor.isLoaded, 'fa-unlink text-danger' : !monitor.isLoaded}"
+            [matTooltip]="(monitor.isLoaded? 'ledger.status.connected' : 'ledger.status.disconnected') | viTranslatePure"></span>
+        <input #queryInput="ngModel" matInput name="query" [(ngModel)]="query" [disabled]="isLoading">
+        <mat-error *ngIf="!(queryInput.valid || !queryInput.touched)" [innerHTML]="queryInput.errors | viNgModelError"></mat-error>
+    </mat-form-field>
+</form>
+
+
+

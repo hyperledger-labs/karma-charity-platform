@@ -1,0 +1,45 @@
+{
+    "name": "karma-platform-backend",
+    "version": "2.0.0",
+    "description": "",
+    "author": "Renat Gubaev",
+    "license": "ISC",
+    "scripts": {
+        "start": "npm run start --prefix src/packages/application/api",
+        "build": "npm run build --prefix src/packages/application/api",
+        "api:docker:image:build": "docker build -t karma-platform-api -f ./docker/api/Dockerfile ../..",
+        "api:docker:image:update": "docker pull karma-platform-api",
+        "api:docker:image:remove": "docker rmi -f karma-platform-api",
+        "api:docker:container:run": "docker-compose up -d karma-platform-api",
+        "api:docker:container:start": "docker start karma-platform-api",
+        "api:docker:container:stop": "docker stop karma-platform-api",
+        "api:docker:container:remove": "docker rm karma-platform-api",
+        "submodules:update": "git submodule update --init"
+    },
+    "dependencies": {
+        "@hlf-explorer/common": "^2.0.4",
+        "@nestjs/jwt": "^8.0.0",
+        "@nestjs/passport": "^8.2.1",
+        "@nestjs/platform-express": "^8.4.0",
+        "@nestjs/swagger": "^5.1.5",
+        "@nestjs/typeorm": "^8.0.3",
+        "@project/common": "file:./../../common",
+        "@project/module": "file:./src/packages/module",
+        "@ts-core/common": "^2.0.6",
+        "@ts-core/backend-nestjs": "^8.0.11",
+        "@ts-core/crypto-gost": "^2.0.1",
+        "@ts-core/notification": "^2.0.7",
+        "body-parser": "^1.19.2",
+        "crypto-js": "^4.1.1",
+        "passport": "^0.5.2",
+        "passport-google-oauth20": "^2.0.0",
+        "passport-jwt": "^4.0.0"
+    },
+    "devDependencies": {
+        "prettier": "^2.5.1",
+        "ts-node": "^10.7.0",
+        "ts-node-dev": "^1.1.8",
+        "tsconfig-paths": "^3.13.0",
+        "typescript": "^4.6.2"
+    }
+}

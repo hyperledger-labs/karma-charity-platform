@@ -1,0 +1,39 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./build",
+        "sourceMap": true,
+        "declaration": false,
+        "target": "es2015",
+        "module": "es2020",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "lib": ["es2018", "dom"],
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "strict": true,
+        "strictFunctionTypes": false,
+        "noImplicitAny": false,
+        "strictNullChecks": false,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "downlevelIteration": true,
+        "paths": {
+            "@common/*": ["./src/externals/common/*"],
+            "@core/*": ["./src/packages/module/core/*"],
+            "@shared/*": ["./src/packages/module/shared/*"],
+            "@feature/*": ["./src/packages/module/feature/*"],
+            "@page/*": ["./src/packages/page/*"]
+        }
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    }
+}

@@ -1,0 +1,44 @@
+<mat-sidenav-container class="background-body" fullscreen>
+    <mat-sidenav-content #container class="vertical-scroll-only" [vi-scroll-check]="300" (limitExceed)="isNeedScrollButton = $event" style="overflow-x: hidden">
+        <div class="container-fluid h-100 no-gutters pl-0 pr-0 d-flex flex-column">
+            <div class="background border-bottom flex-shrink-0">
+                <shell-header class="container flex-shrink-0 my-3" [isHasMenu]="isShowMenu" (openMenu)="toggleMenu()"></shell-header>
+            </div>
+            
+            <div class="flex-grow-1 py-3 container">
+                <router-outlet></router-outlet>
+            </div>
+
+            <!--   
+            <div class="background border-top flex-shrink-0">
+                <shell-footer class="container flex-shrink-0 my-3"></shell-footer>
+            </div>
+            -->
+
+        </div>
+    </mat-sidenav-content>
+
+    <mat-sidenav
+        class="sidenav-right no-scroll background"
+        mode="over"
+        position="end"
+        [opened]="isShowNotifications"
+        (openedChange)="isShowNotifications = $event"
+    >
+        <p class="p-2 mat-headline text-one-line flex-shrink-0 text-center border-bottom mouse-inactive" [vi-translate]="'general.notifications'"></p>
+        <div class="flex-grow-1 vertical-scroll-only background-body">
+            <vi-notification class="border-bottom" *ngFor="let item of notificationItems" [config]="item"></vi-notification>
+        </div>
+    </mat-sidenav>
+</mat-sidenav-container>
+
+<button
+    mat-icon-button
+    class="background border border-primary-hover mat-elevation-z4"
+    color="primary"
+    (click)="scrollTop()"
+    style="z-index: 1; right: 22px; bottom: 12px; position: fixed"
+    *ngIf="isNeedScrollButton"
+>
+    <span class="fas fa-chevron-up pb-1"></span>
+</button>

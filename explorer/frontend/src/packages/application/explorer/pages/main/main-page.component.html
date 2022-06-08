@@ -1,0 +1,17 @@
+<search-container class="my-3"></search-container>
+
+<div class="row flex-grow-1 justify-content-center">
+
+    <div class="col-12 col-lg-4">
+        <blocks-last [ledger]="monitor.ledgerDefault"></blocks-last>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <transactions-last [ledger]="monitor.ledgerDefault"></transactions-last>
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <events-last [ledger]="monitor.ledgerDefault"></events-last>
+    </div>
+
+</div>

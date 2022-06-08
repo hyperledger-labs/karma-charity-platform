@@ -1,0 +1,41 @@
+<div class="d-flex p-3 align-items-center" [title]="title">
+    <span class="me-2 flex-shrink-0" [ngClass]="icon"></span>
+    <p
+        class="text-one-line mouse-inactive flex-grow-1 me-3 mouse-inactive"
+        [class.text-danger]="item?.uploader.isError"
+        [vi-translate]="'file.type.' + item?.type"
+    ></p>
+
+    <span class="ms-2 text-primary flex-shrink-0 mat-caption" style="line-height: 1" [innerHTML]="progressLabel" *ngIf="item?.uploader.isLoading"></span>
+
+    <file-select-button
+        class="flex-shrink-0 mouse-active"
+        [label]="'file.action.select' | viTranslate"
+        [uploader]="item?.uploader"
+        *ngIf="!item?.file && !item?.uploader.isError"
+    ></file-select-button>
+
+    <button mat-icon-button tabindex="-1" [title]="'file.open.open' | viTranslate" (click)="open()" *ngIf="item?.file">
+        <span class="fas fa-file"></span>
+    </button>
+
+    <!--
+    <button mat-icon-button [title]="'file.cancel' | viTranslate" (click)="item?.uploader.cancelAll()" *ngIf="item?.uploader.isLoading">
+        <span class="fas fa-stop-circle"></span>
+    </button>
+
+    <button class="ms-2" mat-icon-button [title]="'file.upload' | viTranslate" (click)="item?.uploader.uploadAll()" *ngIf="item?.uploader.isNotLoaded">
+        <span class="fas fa-upload"></span>
+    </button>
+-->
+
+    <button mat-icon-button color="primary" disabled *ngIf="item?.uploader.isLoaded">
+        <span class="fas fa-check-circle text-primary"></span>
+    </button>
+
+    <button mat-icon-button color="warn" disabled *ngIf="item?.uploader.isError">
+        <span class="fas fa-exclamation-circle text-danger"></span>
+    </button>
+</div>
+
+<mat-progress-bar class="border" [mode]="item?.uploader.isLoading ? 'indeterminate' : 'determinate'"></mat-progress-bar>

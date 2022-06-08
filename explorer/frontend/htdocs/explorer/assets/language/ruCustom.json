@@ -1,0 +1,160 @@
+{
+    "block": {
+        "batch": {
+            "batch": "Батч"
+        },
+        "block": "Блок",
+        "createdDate": "Дата создания",
+        "details": "Детализация",
+        "event": {
+            "createdDate": "⇛block.createdDate",
+            "data": "Данные",
+            "event": "Событие",
+            "events": "События",
+            "transactionHash": "⇛block.transaction.transaction",
+            "uid": "⇛block.transaction.uid"
+        },
+        "hash": "Хеш",
+        "number": "Номер",
+        "rawData": "Сырой блок",
+        "transaction": {
+            "algorithm": "Подпись",
+            "createdDate": "⇛block.createdDate",
+            "error": "Ошибка",
+            "hash": "Хеш в леджере",
+            "linkCommandId": "Основная команда",
+            "request": "Запрос",
+            "response": "Ответ",
+            "status": {
+                "failed": "Ошибка",
+                "succeed": "Выполнена"
+            },
+            "transaction": "Транзакция",
+            "transactions": "Транзакции",
+            "uid": "UID",
+            "userId": "Пользователь",
+            "validationCode": {
+                "0": "VALID",
+                "1": "NIL_ENVELOPE",
+                "2": "BAD_PAYLOAD",
+                "3": "BAD_COMMON_HEADER",
+                "4": "BAD_CREATOR_SIGNATURE",
+                "5": "INVALID_ENDORSER_TRANSACTION",
+                "6": "INVALID_CONFIG_TRANSACTION",
+                "7": "UNSUPPORTED_TX_PAYLOAD",
+                "8": "BAD_PROPOSAL_TXID",
+                "9": "DUPLICATE_TXID",
+                "10": "ENDORSEMENT_POLICY_FAILURE",
+                "11": "MVCC_READ_CONFLICT",
+                "12": "PHANTOM_READ_CONFLICT",
+                "13": "BAD_PROPOSAL_TXID",
+                "14": "TARGET_CHAIN_NOT_FOUND",
+                "15": "MARSHAL_TX_ERROR",
+                "16": "NIL_TXACTION",
+                "17": "EXPIRED_CHAINCODE",
+                "18": "CHAINCODE_VERSION_CONFLICT",
+                "19": "BAD_HEADER_EXTENSION",
+                "20": "BAD_CHANNEL_HEADER",
+                "21": "BAD_RESPONSE_PAYLOAD",
+                "22": "BAD_RWSET",
+                "23": "ILLEGAL_WRITESET",
+                "24": "INVALID_WRITESET",
+                "254": "NOT_VALIDATED",
+                "255": "INVALID_OTHER_REASON",
+                "validationCode": "Код валидации"
+            }
+        }
+    },
+    "ledger": {
+        "blocks": "Блоки",
+        "blocksLast": "Последние блоки",
+        "events": "События",
+        "eventsLast": "Последние события",
+        "ledger": "Леджер",
+        "status": {
+            "connected": "Подключен",
+            "disconnected": "Не подключен"
+        },
+        "transactions": "Транзакции",
+        "transactionsLast": "Последние транзакции"
+    },
+    "reset": {
+        "notification": "Эксплорер сброшен"
+    },
+    "search": {
+        "description": "Поиск..."
+    },
+    "tab": {
+        "blocks": "Блоки",
+        "main": "Главная",
+        "events": "События",
+        "transactions": "Транзакции"
+    },
+    "error": {
+        "language": "Default language cannot be loaded. Please write to support if error repeats",
+        "network": "Сервер не отвечает, проверьте ваше соединение с интернетом",
+        "sessionExpired": "Ваша сессия истекла, пожалуйста войдите снова",
+        "sessionRefreshed": "Ваша сессия обновлена",
+        "noLedger": "Не найден '{name}' леджер в эксплорере",
+        "socketDisconnected": "Потеряно подключение к сокет-серверу - {url}. Вы хотите переподключиться?"
+    },
+    "format": {
+        "addressHidePlural": "{addresses,plural,one {адрес} few {адреса} many{адресов} other{}}",
+        "addressPlural": "{addresses,plural,one {# адрес} few {# адреса} many{# адресов} other{}}",
+        "dayHidePlural": "{days,plural,one {день} few {дня} many{дней} other{}}",
+        "dayPlural": "{days,plural,one {# день} few {# дня} many{# дней} other{}}",
+        "hourHidePlural": "{hours,plural,one {час} few {часа} many{часов} other{}}",
+        "hourPlural": "{hours,plural,one {# час} few {# часа} many{# часов} other{}}",
+        "minuteHidePlural": "{minutes,plural,one {минута} few {минуты} many{минут} other{}}",
+        "minutePlural": "{minutes,plural,one {# минута} few {# минуты} many{# минут} other{}}",
+        "registrationHidePlural": "{registrations,plural,one {регистрация} few {регистрации} many{регистраций} other{}}",
+        "registrationPlural": "{registrations,plural,one {# регистрация} few {# регистрации} many{# регистраций} other{}}",
+        "secondHidePlural": "{seconds,plural,one {секунда} few {секунды} many{секунд} other{}}",
+        "secondPlural": "{seconds,plural,one {# секунда} few {# секунды} many{# секунд} other{}}",
+        "tokenHidePlural": "{tokens,plural,one {токен} few {токена} many{токенов} other{}}",
+        "tokenPlural": "{tokens,plural,one {# токен} few {# токена} many{# токенов} other{}}",
+        "transactionHidePlural": "{transactions,plural,one {транзакция} few {транзакции} many{транзакций} other{}}",
+        "transactionPlural": "{transactions,plural,one {# транзакция} few {# транзакции} many{# транзакций} other{}}"
+    },
+    "general": {
+        "add": "Добавить",
+        "advanced": "Дополнительно",
+        "all": "Все",
+        "balance": "Баланс",
+        "bonus": "Бонус",
+        "continue": "Продолжить",
+        "copy": "Скопировать",
+        "create": "Создать",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "get": "Получить",
+        "language": "Язык",
+        "loading": "Загружается...",
+        "never": "Никогда",
+        "notifications": "Уведомления",
+        "open": "Открыть",
+        "period": "Период",
+        "remove": "Удалить",
+        "reset": "Сбросить",
+        "save": "Сохранить",
+        "search": "Поиск",
+        "submit": "Отправить",
+        "text": "Текст",
+        "unknown": "Неизвестно",
+        "header": "HLF Explorer",
+        "footer": "<a href='https://ledger.monitor' target='_blank' tabindex='-1'>Hyperledger Explorer</a> © 2021"
+    },
+    "paginator": {
+        "firstPage": "На первую страницу",
+        "itemsPerPage": "На странице",
+        "lastPage": "На последнюю страницу",
+        "nextPage": "Следующая страница",
+        "pageRange": "{current} из {total}",
+        "previousPage": "Предыдущая страница"
+    },
+    "theme": {
+        "dark": "Темная",
+        "light": "Светлая",
+        "theme": "Тема"
+    }
+}

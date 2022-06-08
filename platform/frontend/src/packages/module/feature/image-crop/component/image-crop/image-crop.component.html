@@ -1,0 +1,49 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3 border-bottom">
+    <p class="mat-title flex-shrink-0 text-one-line mouse-inactive" [vi-translate]="'general.image'"></p>
+
+    <div class="flex-grow-1 text-center">
+        <button mat-icon-button (click)="transformUpdate('scale', 0.5)" [disabled]="!file">
+            <span class="fas fa-plus"></span>
+        </button>
+        <button mat-icon-button (click)="transformUpdate('scale', -0.5)" [disabled]="!file || !(imageTransform?.scale > 1)">
+            <span class="fas fa-minus"></span>
+        </button>
+        <button mat-icon-button (click)="transformUpdate('rotate', 10)" [disabled]="!file">
+            <span class="fas fa-redo"></span>
+        </button>
+        <button mat-icon-button (click)="transformUpdate('rotate', -10)" [disabled]="!file">
+            <span class="fas fa-undo"></span>
+        </button>
+    </div>
+
+    <button class="flex-shrink-0 me-2" mat-icon-button *ngIf="file" [title]="'general.remove' | viTranslate" (click)="uploader.removeAll()">
+        <span class="fas fa-brush"></span>
+    </button>
+
+    <button class="flex-shrink-0" mat-raised-button color="primary" [disabled]="!imageBase64" (click)="submit()">
+        <span [vi-translate]="'general.save'"></span>
+    </button>
+</div>
+
+<div class="d-flex flex-grow-1 align-items-stretch scroll-auto p-3">
+    <div
+        class="d-flex flex-column flex-grow-1 align-items-center justify-content-center rounded border dashed"
+        *ngIf="!file"
+        [vi-file-drop]="uploader"
+        className="background-body"
+    >
+        <p class="text-primary text-center mouse-disabled mat-title mb-3" [vi-translate]="'general.fileDrop' | viTranslate"></p>
+        <file-select-button class="flex-shrink-0 mouse-active" [label]="'general.fileSelect' | viTranslate" [uploader]="uploader"></file-select-button>
+    </div>
+
+    <image-cropper
+        class="flex-grow-1 rounded dashed border p-0"
+        [imageFile]="file?.file._file"
+        *ngIf="file"
+        [maintainAspectRatio]="true"
+        backgroundColor="black"
+        [aspectRatio]="1 / 1"
+        [transform]="imageTransform"
+        (imageCropped)="imageCropped($event)"
+    ></image-cropper>
+</div>

@@ -1,0 +1,25 @@
+{
+    "version": "1.0.0-5",
+    "versionDate": "2022-05-27T09:26:04.535Z",
+    "language": "ru",
+    "languages": "ru|Русский",
+    "assetsUrl": "assets/",
+    "apiUrl": "http://localhost:3005",
+    "explorerUrl": "https://karma-explorer.karma.n-t.io",
+
+    "googleClientId": "620828373898-aiamermn42egp3rl06nb8jlbi1iuq0eo.apps.googleusercontent.com",
+
+    "theme": "light",
+    "themes": [
+        {
+            "name": "light",
+            "isDark": false,
+            "styles": {}
+        },
+        {
+            "name": "dark",
+            "isDark": true,
+            "styles": {}
+        }
+    ]
+}

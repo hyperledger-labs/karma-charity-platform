@@ -1,0 +1,32 @@
+<div class="flex-grow-1 scroll-auto">
+
+    <div class="row p-3 no-gutters align-items-center mouse-inactive border-bottom">
+        <span class="col-2" [innerHTML]="'block.event.event' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [class.text-danger]="!wrapper?.isExecuted" [innerHTML]="event.name | viPrettify"></span>
+    </div>
+    <div class="row p-3 no-gutters align-items-center mouse-inactive border-bottom" *ngIf="wrapper?.isHasData">
+        <span class="col-2" [innerHTML]="'block.event.data' | viTranslate"></span>
+        <pre class="col-10 text-highlight background-body border dashed rounded scroll-auto p-2 m-0"
+            [innerHTML]="eventData"></pre>
+    </div>
+    <div class="row p-3 no-gutters align-items-center mouse-active border-bottom" (click)="transactionOpen(event.transactionHash)">
+        <span class="col-2" [innerHTML]="'block.event.transactionHash' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [innerHTML]="event.transactionHash | viPrettify"></span>
+    </div>
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom" *ngIf="!wrapper.isValid">
+        <span class="col-2" [innerHTML]="'block.transaction.validationCode.validationCode' | viTranslate"></span>
+        <span class="col-10 mat-body-2 text-danger text-one-line" [innerHTML]="wrapper?.transactionValidationCode | viPrettify"></span>
+    </p>
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom" [vi-click-to-copy]="uid">
+        <span class="col-2" [innerHTML]="'block.event.uid' | viTranslate"></span>
+        <span #uid class="col-10 mat-body-2" [innerHTML]="event.uid | viPrettify"></span>
+    </p>
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom">
+        <span class="col-2" [innerHTML]="'block.createdDate' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [innerHTML]="event.createdDate | viMomentDateFromNow"></span>
+    </p>
+    <p class="row p-3 no-gutters align-items-center mouse-active" (click)="blockOpen(event.blockNumber)">
+        <span class="col-2" [innerHTML]="'block.block' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [innerHTML]="event.blockNumber | viPrettify"></span>
+    </p>
+</div>

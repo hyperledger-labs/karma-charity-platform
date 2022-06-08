@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="uid" [value]="company?.ledgerUid | viPrettify" disabled />
+            <mat-placeholder [vi-translate]="'company.ledgerUid'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="balance" [value]="company?.balance | account" disabled />
+            <mat-placeholder [vi-translate]="'wallet.wallet'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="status" [value]="'company.status.' + company?.status | viTranslatePure" disabled />
+            <mat-placeholder [vi-translate]="'company.status.status'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="phone" [value]="company?.preferences.phone | viPrettify" disabled />
+            <mat-placeholder [vi-translate]="'company.preferences.phone'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="website" [value]="company?.preferences.website | viPrettify" disabled />
+            <mat-placeholder [vi-translate]="'company.preferences.website'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="addressPost" [value]="company?.preferences.addressPost | viPrettify" disabled />
+            <mat-placeholder [vi-translate]="'company.preferences.addressPost'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="paymentAggregatorType" [value]="'payment.aggregator.type.' + company?.paymentAggregator.type | viTranslate" disabled />
+            <mat-placeholder [vi-translate]="'payment.aggregator.aggregator'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <p class="ck-content p-3 border rounded" [innerHTML]="company?.preferences.description"></p>
+    </div>
+</div>

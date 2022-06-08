@@ -1,0 +1,160 @@
+{
+    "block": {
+        "batch": {
+            "batch": "Batch"
+        },
+        "block": "Block",
+        "createdDate": "Created date",
+        "details": "Details",
+        "event": {
+            "createdDate": "⇛block.createdDate",
+            "data": "Data",
+            "event": "Event",
+            "events": "Events",
+            "transactionHash": "⇛block.transaction.transaction",
+            "uid": "⇛block.transaction.uid"
+        },
+        "hash": "Hash",
+        "number": "Number",
+        "rawData": "Raw block",
+        "transaction": {
+            "algorithm": "Signature",
+            "createdDate": "⇛block.createdDate",
+            "error": "Error",
+            "hash": "Hash in ledger",
+            "linkCommandId": "Base command",
+            "request": "Request",
+            "response": "Response",
+            "status": {
+                "failed": "Error",
+                "succeed": "Success"
+            },
+            "transaction": "Transaction",
+            "transactions": "Transactions",
+            "uid": "UID",
+            "userId": "User",
+            "validationCode": {
+                "0": "VALID",
+                "1": "NIL_ENVELOPE",
+                "2": "BAD_PAYLOAD",
+                "3": "BAD_COMMON_HEADER",
+                "4": "BAD_CREATOR_SIGNATURE",
+                "5": "INVALID_ENDORSER_TRANSACTION",
+                "6": "INVALID_CONFIG_TRANSACTION",
+                "7": "UNSUPPORTED_TX_PAYLOAD",
+                "8": "BAD_PROPOSAL_TXID",
+                "9": "DUPLICATE_TXID",
+                "10": "ENDORSEMENT_POLICY_FAILURE",
+                "11": "MVCC_READ_CONFLICT",
+                "12": "PHANTOM_READ_CONFLICT",
+                "13": "BAD_PROPOSAL_TXID",
+                "14": "TARGET_CHAIN_NOT_FOUND",
+                "15": "MARSHAL_TX_ERROR",
+                "16": "NIL_TXACTION",
+                "17": "EXPIRED_CHAINCODE",
+                "18": "CHAINCODE_VERSION_CONFLICT",
+                "19": "BAD_HEADER_EXTENSION",
+                "20": "BAD_CHANNEL_HEADER",
+                "21": "BAD_RESPONSE_PAYLOAD",
+                "22": "BAD_RWSET",
+                "23": "ILLEGAL_WRITESET",
+                "24": "INVALID_WRITESET",
+                "254": "NOT_VALIDATED",
+                "255": "INVALID_OTHER_REASON",
+                "validationCode": "Validation code"
+            }
+        }
+    },
+    "general": {
+        "add": "Add",
+        "advanced": "Advanced",
+        "all": "All",
+        "balance": "Balance",
+        "bonus": "Bonus",
+        "continue": "Continue",
+        "copy": "Copy",
+        "create": "Create",
+        "delete": "Remove",
+        "edit": "Edit",
+        "get": "Get",
+        "language": "Language",
+        "loading": "Loading...",
+        "never": "Never",
+        "notifications": "Notifications",
+        "open": "Open",
+        "period": "Period",
+        "remove": "Remove",
+        "reset": "Reset",
+        "save": "Save",
+        "search": "Search",
+        "submit": "Submit",
+        "text": "Text",
+        "unknown": "Unknown",
+        "header": "HLF Explorer",
+        "footer": "<a href='https://ledger.monitor' target='_blank' tabindex='-1'>Hyperledger Explorer</a> © 2021"
+    },
+    "ledger": {
+        "blocks": "Blocks",
+        "blocksLast": "Last blocks",
+        "events": "Events",
+        "eventsLast": "Recent events",
+        "ledger": "Ledger",
+        "status": {
+            "connected": "Connected",
+            "disconnected": "Disconnected"
+        },
+        "transactions": "Transactions",
+        "transactionsLast": "Recent transactions"
+    },
+    "reset": {
+        "notification": "Explorer resetted"
+    },
+    "search": {
+        "description": "Search..."
+    },
+    "tab": {
+        "blocks": "Blocks",
+        "main": "Main page",
+        "events": "Events",
+        "transactions": "Transactions"
+    },
+    "error": {
+        "language": "Default language cannot be loaded. Please write to support if error repeats",
+        "network": "Server doesn't respond, check your internet connection",
+        "sessionExpired": "Your session has expired, please login again",
+        "sessionRefreshed": "Your session has been refreshed",
+        "noLedger": "Not found '{name}' ledger in explorer",
+        "socketDisconnected": "Lost connection to the socket server - {url}. Do you want to reconnect?"
+    },
+    "format": {
+        "addressHidePlural": "{addresses,plural,one {address} few {addresses} many{addresses} other{}}",
+        "addressPlural": "{addresses,plural,one {# address} few {# addresses} many{# addresses} other{}}",
+        "dayHidePlural": "{days,plural,one {day} few {days} many{days} other{}}",
+        "dayPlural": "{days,plural,one {# day} few {# days} many{# days} other{}}",
+        "hourHidePlural": "{hours,plural,one {hour} few {hours} many{hours} other{}}",
+        "hourPlural": "{hours,plural,one {# hour} few {# hours} many{# hours} other{}}",
+        "minuteHidePlural": "{minutes,plural,one {minute} few {minutes} many{minutes} other{}}",
+        "minutePlural": "{minutes,plural,one {# minute} few {# minutes} many{# minutes} other{}}",
+        "registrationHidePlural": "{registrations,plural,one {registration} few {registrations} many{registrations} other{}}",
+        "registrationPlural": "{registrations,plural,one {# registration} few {# registrations} many{# registrations} other{}}",
+        "secondHidePlural": "{seconds,plural,one {second} few {seconds} many{seconds} other{}}",
+        "secondPlural": "{seconds,plural,one {# second} few {# seconds} many{# seconds} other{}}",
+        "tokenHidePlural": "{tokens,plural,one {token} few {tokens} many{tokens} other{}}",
+        "tokenPlural": "{tokens,plural,one {# token} few {# tokens} many{# tokens} other{}}",
+        "transactionHidePlural": "{transactions,plural,one {transaction} few {transactions} many{transactions} other{}}",
+        "transactionPlural": "{transactions,plural,one {# transaction} few {# transactions} many{# transactions} other{}}"
+    },
+    "paginator": {
+        "firstPage": "To the first page",
+        "itemsPerPage": "on the page",
+        "lastPage": "To the last page",
+        "nextPage": "Next page",
+        "pageRange": "{current} from {total}",
+        "previousPage": "Previous page"
+    },
+    "theme": {
+        "dark": "Dark",
+        "light": "Bright",
+        "theme": "Theme"
+    }
+}

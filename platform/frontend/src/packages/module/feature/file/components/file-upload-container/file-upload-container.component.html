@@ -1,0 +1,47 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3 border-bottom">
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [vi-translate]="'file.files'"></p>
+
+</div>
+
+<div class="m-3 flex-grow-1 vertical-scroll-only border rounded" className="background-body">
+    <file-list-item *ngFor="let item of items" [item]="item"></file-list-item>
+</div>
+
+<!--
+<div class="d-flex flex-shrink-0 align-items-center justify-content-center px-3 pb-3">
+    <select-file-button class="flex-shrink-0 mouse-active" [label]="'file.select' | viTranslate" [uploader]="uploader"></select-file-button>
+
+    <button
+        class="flex-shrink-0"
+        mat-icon-button
+        color="primary"
+        [disabled]="!uploader?.hasFiles"
+        (click)="uploader.uploadAll()"
+        [title]="'file.uploadAll' | viTranslate"
+    >
+        <span class="fas fa-upload"></span>
+    </button>
+
+    <button
+        class="flex-shrink-0"
+        mat-icon-button
+        color="primary"
+        [disabled]="!uploader?.isLoading"
+        (click)="uploader.cancelAll()"
+        [title]="'file.cancelAll' | viTranslate"
+    >
+        <span class="far fa-stop-circle"></span>
+    </button>
+
+    <button
+        class="flex-shrink-0"
+        mat-icon-button
+        color="primary"
+        [disabled]="!uploader?.hasFiles"
+        (click)="uploader.removeAll()"
+        [title]="'file.removeAll' | viTranslate"
+    >
+        <span class="far fa-times-circle"></span>
+    </button>
+</div>
+-->

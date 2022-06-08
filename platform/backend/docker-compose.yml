@@ -1,0 +1,37 @@
+version: '3.2'
+
+services:
+  karma-platform-api:
+    image: karma-platform-api
+    env_file:
+      - docker/api/.env
+    volumes:
+      - ./:/app:cached
+    depends_on:
+      - karma-platform-db
+    ports:
+      - 3005:3005
+    working_dir: /application/build
+    command: node main.js
+    networks:
+      - default
+      - ledger
+
+  karma-platform-db:
+    image: postgres:11.4-alpine
+    env_file:
+      - docker/database/.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - 55432:5432
+    networks:
+      - default
+      - ledger
+
+volumes:
+  pg_data:
+
+networks:
+  ledger:
+    name: ledger_network

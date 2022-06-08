@@ -1,0 +1,22 @@
+<div class="row flex-grow-1 justify-content-center">
+    <div class="col-12">
+        <div class="d-flex flex-column background border rounded">
+            <div class="d-flex border-bottom align-items-center p-3">
+                <span class="far fa-copy mr-2"></span>
+                <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [innerHTML]="'ledger.transactionsLast' | viTranslate"></p>
+            </div>
+
+            <div class="mat-nav-list">
+                <transaction-last [transaction]="item" *ngFor="let item of ledger?.transactionsLast.collection;trackBy:ledger?.transactionsLast.trackByFn;last as isLast"
+                    class="mat-list-item mouse-active p-3 border-bottom" [class.border-bottom-0]="isLast" (click)="transactionOpen(item)"></transaction-last>
+            </div>
+
+            <div class="d-flex border-top align-items-center p-3">
+                <button class="flex-grow-1" mat-stroked-button (click)="transactionsOpen()">
+                    <span [innerHTML]="'tab.transactions' | viTranslate"></span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

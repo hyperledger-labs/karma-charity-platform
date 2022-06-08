@@ -1,0 +1,13 @@
+{
+    "name": "@hlf-explorer/frontend-build",
+    "version": "2.0.0",
+    "description": "",
+    "main": "",
+    "scripts": {},
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1",
+        "lodash": "^4.17.21"
+    }
+}

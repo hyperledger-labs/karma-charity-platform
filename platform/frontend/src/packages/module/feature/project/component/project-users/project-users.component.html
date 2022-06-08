@@ -1,0 +1,18 @@
+<vi-cdk-table-paginable class="d-block background flex-grow-1" [table]="items" [settings]="settings" (cellClicked)="cellClickedHandler($event)">
+    <div class="d-flex flex-grow-1 align-items-center p-3">
+        <button class="flex-shrink-0 me-3" mat-stroked-button (click)="add()" *ngIf="isCanRole">
+            <span class="fas fa-plus me-2"></span>
+            <span [vi-translate]="'general.add'"></span>
+        </button>
+
+        <button class="flex-shrink-0" mat-stroked-button (click)="items.reload()" [title]="'general.refresh' | viTranslate" [disabled]="items?.isLoading">
+            <span class="fas fa-sync me-2" [class.fa-spin]="items?.isLoading"></span>
+            <span [vi-translate]="'general.refresh'"></span>
+        </button>
+    </div>
+</vi-cdk-table-paginable>
+
+<mat-menu #matMenu [overlapTrigger]="false">
+    <vi-menu-list [list]="menu"></vi-menu-list>
+</mat-menu>
+<span [vi-menu-trigger-for]="matMenu"></span>

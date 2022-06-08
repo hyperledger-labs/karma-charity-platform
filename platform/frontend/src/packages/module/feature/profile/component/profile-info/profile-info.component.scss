@@ -1,0 +1,17 @@
+:host {
+    overflow: hidden;
+
+    &:hover {
+        .text-container {
+            .value {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.text-container {
+    .value {
+        // font-size: 18px;
+    }
+}

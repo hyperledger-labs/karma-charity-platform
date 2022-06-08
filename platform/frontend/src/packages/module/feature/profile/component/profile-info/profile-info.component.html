@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center p-3" [matMenuTriggerFor]="matMenu" (click)="menu.refresh()">
+
+    <img
+        class="border flex-shrink-0 rounded-circle me-3 border-base"
+        style="width: 36px; height: 36px; border-radius: 50%; border-width: 1px"
+        [src]="picture"
+    />
+
+    <div class="text-container text-one-line flex-grow-1">
+        <p class="value text-one-line mat-body-strong text-base mb-1" [innerHTML]="name"></p>
+        <p class="description text-one-line mat-caption text-secondary" style="line-height: 1" [innerHTML]="description"></p>
+    </div>
+</div>
+
+<mat-menu class="border rounded" #matMenu [overlapTrigger]="false">
+    <vi-menu-list [list]="menu"></vi-menu-list>
+</mat-menu>

@@ -1,0 +1,26 @@
+<div class="d-flex align-items-center px-3">
+
+    <span class="fas fa-copy ml-2 mr-2 my-1"></span>
+    
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive">
+        <span [innerHTML]="'ledger.events' | viTranslate"></span>
+    </p>
+
+    <mat-paginator [length]="events?.total" [pageSize]="events?.pageSize" [hidePageSize]="true"
+        [pageSizeOptions]="[10, 25, 50, 100]"
+        [pageIndex]="events?.pageIndex" (page)="events.pageIndex = $event.pageIndex"></mat-paginator>
+
+    <button class="flex-shrink-0" mat-icon-button (click)="events.reload()"
+        [matTooltip]="'general.refresh' | viTranslate" [disabled]="events?.isLoading">
+        <span class="fas fa-sync" [class.fa-spin]="events?.isLoading"></span>
+    </button>
+
+</div>
+
+<mat-progress-bar class="flex-shrink-0 border" [mode]="events?.isLoading ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+
+<div class="mat-nav-list">
+    <event-last [event]="item" *ngFor="let item of events?.collection; trackBy: events?.trackByFn; last as isLast"
+        class="mat-list-item mouse-active p-3 border-bottom" [class.border-bottom-0]="isLast" (click)="eventOpen(item)"></event-last>
+</div>
+
