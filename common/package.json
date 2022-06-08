@@ -1,0 +1,19 @@
+{
+    "name": "@karma/common",
+    "version": "2.0.0",
+    "description": "Common classes for Karma",
+    "author": "Renat Gubaev",
+    "license": "ISC",
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier --list-different \"{src}/**/*.{ts,js,json}\"",
+        "format:fix": "prettier --write \"{src}/**/*.{ts,js,json}\" --loglevel warn"
+    },
+    "dependencies": {
+        "@ts-core/common": "^2.0.4"
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.31",
+        "gulp-npm-publisher": "^2.0.2"
+    }
+}

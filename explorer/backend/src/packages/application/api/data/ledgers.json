@@ -1,0 +1,20 @@
+{
+    "ledgers": [
+        {
+            "uid": "Karma",
+            "passwordToReset": "04e77bf8f95cb3e1a36a59d1e93857c411930db646b46c218a0352e432023cf2",
+
+            "fabricIdentity": "user",
+            "fabricIdentityMspId": "Org1MSP",
+            "fabricIdentityPrivateKey": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgFV2tecLU03cs8uQG\nOTqAvoGZT/WNvY2sFsvGLAlLX9ahRANCAATRwhiQNQGvRszE5vjN1ZUU0Qor5aVV\nmpff+rFd8szAH9VIw+VXDExI1D2u1OPR3Jci2VfE8jq/IPg65QuKh/wE\n-----END PRIVATE KEY-----",
+            "fabricIdentityCertificate": "-----BEGIN CERTIFICATE-----\nMIICjjCCAjWgAwIBAgIUOiQB5yeOWfYmGPVO8VZUA0ouxLMwCgYIKoZIzj0EAwIw\nczELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNh\nbiBGcmFuY2lzY28xGTAXBgNVBAoTEG9yZzEuZXhhbXBsZS5jb20xHDAaBgNVBAMT\nE2NhLm9yZzEuZXhhbXBsZS5jb20wHhcNMjAwMzI0MTYwNzAwWhcNMjEwMzI0MTYx\nMjAwWjBCMTAwDQYDVQQLEwZjbGllbnQwCwYDVQQLEwRvcmcxMBIGA1UECxMLZGVw\nYXJ0bWVudDExDjAMBgNVBAMTBXVzZXIxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD\nQgAE0cIYkDUBr0bMxOb4zdWVFNEKK+WlVZqX3/qxXfLMwB/VSMPlVwxMSNQ9rtTj\n0dyXItlXxPI6vyD4OuULiof8BKOB1zCB1DAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0T\nAQH/BAIwADAdBgNVHQ4EFgQUC+JeBv82tQd2FXIdZvx9mg57wCgwKwYDVR0jBCQw\nIoAgUn+0FOv3dX+1WR7Fa8jfriCeHzZbH7Jat8R1I2RDTQ8waAYIKgMEBQYHCAEE\nXHsiYXR0cnMiOnsiaGYuQWZmaWxpYXRpb24iOiJvcmcxLmRlcGFydG1lbnQxIiwi\naGYuRW5yb2xsbWVudElEIjoidXNlcjEiLCJoZi5UeXBlIjoiY2xpZW50In19MAoG\nCCqGSM49BAMCA0cAMEQCIGZJMg1Z7/MdTjqACo8JDaIJ8XBpujZ6K+BTiMDXV6Sp\nAiAAmPhEIica+eb8v+fvDvX6s70o29qOYrXa9ftiI+J5NQ==\n-----END CERTIFICATE-----\n",
+
+            "fabricNetworkName": "mychannel",
+            "fabricChaincodeName": "main",
+            "fabricConnectionSettingsPath": "src/connection.json",
+
+            "fabricIsDiscoveryEnabled": false,
+            "fabricIsDiscoveryAsLocalhost": false
+        }
+    ]
+}

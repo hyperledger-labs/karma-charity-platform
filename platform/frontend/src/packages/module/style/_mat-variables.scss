@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+
+/*--------------------------------------------------------------------------
+//
+//  Bootstrap
+//
+//-------------------------------------------------------------------------*/
+
+$border-radius: 4px;
+
+/*--------------------------------------------------------------------------
+//
+//  Typography
+//
+//-------------------------------------------------------------------------*/
+
+$typography: mat-typography-config(
+    $font-family: 'Roboto, Microsoft Yahei, Helvetica Neue, sans-serif',
+    $display-4: mat-typography-level(72px, 1.4, 300),
+    $display-3: mat-typography-level(56px, 1.4, 300),
+    $display-2: mat-typography-level(45px, 1.4, 300),
+    $display-1: mat-typography-level(34px, 1.4, 300),
+    $headline: mat-typography-level(24px, 1.4, 300),
+    $title: mat-typography-level(20px, 1.4, 300),
+    $subheading-2: mat-typography-level(18px, 1.4, 300),
+    $subheading-1: mat-typography-level(16px, 1.4, 300),
+    $body-2: mat-typography-level(14px, 1.4, 500),
+    $body-1: mat-typography-level(14px, 1.4, 300),
+    $caption: mat-typography-level(12px, 1.4, 300),
+    $button: mat-typography-level(14px, 1.4, 400),
+    $input: mat-typography-level(16px, 1.4, 400)
+);

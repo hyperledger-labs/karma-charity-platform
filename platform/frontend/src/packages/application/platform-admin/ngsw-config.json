@@ -1,0 +1,28 @@
+{
+    "$schema": "../../../../node_modules/@angular/service-worker/config/schema.json",
+    "index": "/index.html",
+    "assetGroups": [
+        {
+            "name": "app",
+            "installMode": "prefetch",
+            "resources": {
+                "files": [
+                    "/index.html",
+                    "/manifest.webmanifest",
+
+                    "/assets/font/**/*.(svg|otf|ttf|woff|woff2)",
+                    "/*.css",
+                    "/*.js"
+                ]
+            }
+        },
+        {
+            "name": "assets",
+            "installMode": "lazy",
+            "updateMode": "lazy",
+            "resources": {
+                "files": ["/assets/**", "/*.(cur|jpg|jpeg|png|apng|webp|mp4|avif|gif|svg|otf|ttf|woff|woff2)"]
+            }
+        }
+    ]
+}

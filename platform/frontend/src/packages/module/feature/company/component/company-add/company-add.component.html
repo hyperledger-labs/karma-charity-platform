@@ -1,0 +1,174 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [vi-translate]="'company.action.add.add'"></p>
+    <button class="flex-shrink-0 ms-2" mat-raised-button color="primary" [disabled]="form.invalid || form.pristine || !isNalogLoaded" (click)="submit()">
+        <span [vi-translate]="'company.action.save.save'"></span>
+    </button>
+</div>
+
+<mat-progress-bar class="border flex-shrink-0" [mode]="isDisabled ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+
+<form class="flex-grow-1 px-3 pt-3 pb-2 row g-0 vertical-scroll-only" #form="ngForm">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #innInput="ngModel"
+                matInput
+                name="inn"
+                [(ngModel)]="company.preferences.inn"
+                type="text"
+                required
+                [minlength]="innMinLength"
+                [maxlength]="innMaxLength"
+                [disabled]="isDisabled"
+            />
+            <button mat-icon-button matSuffix (click)="load()" [disabled]="isDisabled || innInput.errors">
+                <span class="fas fa-arrow-alt-circle-down"></span>
+            </button>
+            <mat-placeholder [vi-translate]="'company.preferences.inn'"></mat-placeholder>
+            <mat-error *ngIf="!(innInput.valid || !innInput.touched)" [innerHTML]="innInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <company-nalog-preferences [company]="company"></company-nalog-preferences>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #titleInput="ngModel"
+                matInput
+                name="title"
+                [(ngModel)]="company.preferences.title"
+                type="text"
+                required
+                [minlength]="titleMinLength"
+                [maxlength]="titleMaxLength"
+                [disabled]="isDisabled"
+            />
+            <mat-placeholder [vi-translate]="'company.preferences.title'"></mat-placeholder>
+            <mat-error *ngIf="!(titleInput.valid || !titleInput.touched)" [innerHTML]="titleInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input #pictureInput matInput name="picture" [value]="company?.preferences.picture | viTruncate: 25" type="text" required disabled />
+            <button mat-icon-button matSuffix (click)="pictureEdit()">
+                <span class="fas fa-image"></span>
+            </button>
+            <mat-placeholder [vi-translate]="'company.preferences.picture'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <textarea
+                #addressPostInput="ngModel"
+                matInput
+                name="addressPost"
+                [(ngModel)]="company.preferences.addressPost"
+                required
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                [maxlength]="addressMaxLength"
+                [disabled]="isDisabled"
+            ></textarea>
+            <mat-placeholder [vi-translate]="'company.preferences.addressPost'"></mat-placeholder>
+            <mat-error *ngIf="!(addressPostInput.valid || !addressPostInput.touched)" [innerHTML]="addressPostInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #phoneInput="ngModel"
+                matInput
+                name="phone"
+                [(ngModel)]="company.preferences.phone"
+                type="text"
+                [maxlength]="phoneMaxLength"
+                [disabled]="isDisabled"
+            />
+            <mat-placeholder [vi-translate]="'company.preferences.phone'"></mat-placeholder>
+            <mat-error *ngIf="!(phoneInput.valid || !phoneInput.touched)" [innerHTML]="phoneInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #websiteInput="ngModel"
+                matInput
+                name="website"
+                [(ngModel)]="company.preferences.website"
+                type="text"
+                [maxlength]="websiteMaxLength"
+                [disabled]="isDisabled"
+            />
+            <mat-placeholder [vi-translate]="'company.preferences.website'"></mat-placeholder>
+            <mat-error *ngIf="!(websiteInput.valid || !websiteInput.touched)" [innerHTML]="websiteInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'payment.aggregator.type.type'"></mat-placeholder>
+            <mat-select #paymentAggregatorTypeInput="ngModel" name="type" [(ngModel)]="company.paymentAggregator.type" required>
+                <mat-option *ngFor="let item of paymentAggregatorTypes.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error
+                *ngIf="!(paymentAggregatorTypeInput.valid || !paymentAggregatorTypeInput.touched)"
+                [innerHTML]="paymentAggregatorTypeInput.errors | viNgModelError"
+            ></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #paymentAggregatorUidInput="ngModel"
+                matInput
+                name="paymentAggregatorUid"
+                [(ngModel)]="company.paymentAggregator.uid"
+                type="text"
+                required
+                [maxlength]="stringMaxLength"
+                [disabled]="isDisabled"
+            />
+            <mat-placeholder [vi-translate]="'payment.aggregator.uid'"></mat-placeholder>
+            <mat-error
+                *ngIf="!(paymentAggregatorUidInput.valid || !paymentAggregatorUidInput.touched)"
+                [innerHTML]="paymentAggregatorUidInput.errors | viNgModelError"
+            ></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #paymentAggregatorKeyInput="ngModel"
+                matInput
+                name="paymentAggregatorKey"
+                [(ngModel)]="company.paymentAggregator.key"
+                type="text"
+                required
+                [maxlength]="stringMaxLength"
+                [disabled]="isDisabled"
+            />
+            <mat-placeholder [vi-translate]="'payment.aggregator.key'"></mat-placeholder>
+            <mat-error
+                *ngIf="!(paymentAggregatorKeyInput.valid || !paymentAggregatorKeyInput.touched)"
+                [innerHTML]="paymentAggregatorKeyInput.errors | viNgModelError"
+            ></mat-error>
+        </mat-form-field>
+    </div>
+
+    <ckeditor
+        class="col-12 mt-3"
+        required
+        name="description"
+        [(ngModel)]="company.preferences.description"
+        [editor]="descriptionEditor"
+        [config]="ckeditor.descriptionSettings"
+    ></ckeditor>
+
+</form>

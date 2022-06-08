@@ -1,0 +1,68 @@
+<vi-tab-group class="d-block" className="tabs-stretch no-border flex-shrink-0" [list]="tabs"></vi-tab-group>
+
+<div class="flex-grow-1 scroll-auto" *ngIf="tabs?.selectedData === 'details'">
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom">
+        <span class="col-2" [innerHTML]="'block.number' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [innerHTML]="block.number"></span>
+    </p>
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom" [vi-click-to-copy]="hash">
+        <span class="col-2" [innerHTML]="'block.hash' | viTranslate"></span>
+        <span #hash class="col-10 mat-body-2" [innerHTML]="block.hash"></span>
+    </p>
+    <p class="row p-3 no-gutters align-items-center mouse-inactive border-bottom">
+        <span class="col-2" [innerHTML]="'block.createdDate' | viTranslate"></span>
+        <span class="col-10 mat-body-2" [innerHTML]="block.createdDate | viMomentDateFromNow"></span>
+    </p>
+
+    <div *ngIf="blockEvents?.length > 0">
+        <p class="row p-3 no-gutters align-items-center mouse-active">
+            <span class="col-2 mat-body-2" [innerHTML]="'block.event.events' | viTranslate"></span>
+        </p>
+        <div class="mat-nav-list flex-grow-1 scroll-auto">
+ 
+            <event
+                [event]="item"
+                *ngFor="let item of blockEvents?.collection; trackBy: blockEvents?.trackByFn; last as isLast"
+                class="mat-list-item mouse-active p-3 border-bottom"
+                [class.border-bottom-0]="isLast"
+                (click)="eventOpen(item)"
+            ></event>
+  
+        </div>
+    </div>
+
+    <div class="border-top" *ngIf="blockTransactions?.length > 0">
+        <p class="row p-3 no-gutters align-items-center mouse-active">
+            <span class="col-2 mat-body-2" [innerHTML]="'block.transaction.transactions' | viTranslate"></span>
+        </p>
+        <div class="mat-nav-list flex-grow-1 scroll-auto">
+  
+            <transaction
+                [transaction]="item"
+                *ngFor="let item of blockTransactions?.collection; trackBy: blockTransactions?.trackByFn; last as isLast"
+                class="mat-list-item mouse-active p-3 border-bottom"
+                [class.border-bottom-0]="isLast"
+                (click)="transactionOpen(item)"
+            ></transaction>
+  
+        </div>
+    </div>
+</div>
+
+<div class="mat-nav-list flex-grow-1 scroll-auto" *ngIf="tabs?.selectedData === 'transactions'">
+
+    <transaction [transaction]="item" *ngFor="let item of blockTransactions?.collection; trackBy: blockTransactions?.trackByFn; last as isLast"
+        class="mat-list-item mouse-active p-3 border-bottom" [class.border-bottom-0]="isLast" (click)="transactionOpen(item)"></transaction>
+
+</div>
+
+<div class="mat-nav-list flex-grow-1 scroll-auto" *ngIf="tabs?.selectedData === 'events'">
+    
+    <event [event]="item" *ngFor="let item of blockEvents?.collection; trackBy: blockEvents?.trackByFn; last as isLast"
+        class="mat-list-item mouse-active p-3 border-bottom" [class.border-bottom-0]="isLast" (click)="eventOpen(item)"></event>
+
+</div>
+
+<div class="p-3" *ngIf="tabs?.selectedData === 'rawData'">
+    <pre class="text-highlight background-body border dashed rounded flex-grow-1 scroll-auto p-2 m-0" [innerHTML]="rawText"></pre>
+</div>

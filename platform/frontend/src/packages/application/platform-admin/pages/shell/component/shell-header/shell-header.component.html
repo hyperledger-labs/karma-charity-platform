@@ -1,0 +1,14 @@
+<div class="d-flex align-items-center justify-content-center flex-grow-1">
+    <button class="flex-shrink-0" mat-icon-button [matTooltip]="'general.menu' | viTranslate" tabindex="-1" (click)="openMenu.emit()" *ngIf="!isNeedMenu">
+        <span class="fas fa-ellipsis-v"></span>
+    </button>
+
+    <span class="flex-grow-1"></span>
+
+    <p class="flex-shrink-0 mouse-active" (click)="back()">
+        <span class="fas fa-life-ring fa-2x me-2 flex-shrink-0"></span>
+        <span class="mat-headline text-base text-underline-hover flex-shrink-0" [vi-translate]="'general.header'"></span>
+    </p>
+
+    <span class="flex-grow-1"></span>
+</div>

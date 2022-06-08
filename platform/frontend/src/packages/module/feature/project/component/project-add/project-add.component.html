@@ -1,0 +1,119 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [vi-translate]="'project.action.add.add'"></p>
+    <button
+        class="flex-shrink-0 ms-2"
+        tabindex="-1"
+        mat-raised-button
+        color="primary"
+        (click)="submit()"
+        [disabled]="form.invalid || form.pristine || project?.purposes.length === 0"
+    >
+        <span [vi-translate]="'project.action.save.save'"></span>
+    </button>
+</div>
+
+<mat-progress-bar class="border flex-shrink-0" [mode]="isDisabled ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+
+<form class="flex-grow-1 px-3 pt-3 pb-2 row g-0" #form="ngForm">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                #titleInput="ngModel"
+                matInput
+                name="title"
+                [(ngModel)]="project.preferences.title"
+                type="text"
+                required
+                [minlength]="titleMinLength"
+                [maxlength]="titleMaxLength"
+            />
+            <mat-hint align="end" [innerHTML]="titleInput.value?.length | maxLength: titleMaxLength"></mat-hint>
+            <mat-placeholder [vi-translate]="'project.preferences.title'"></mat-placeholder>
+            <mat-error *ngIf="!(titleInput.valid || !titleInput.touched)" [innerHTML]="titleInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input #pictureInput matInput name="picture" [value]="project?.preferences.picture | viTruncate: 25" type="text" required disabled />
+            <button mat-icon-button matSuffix (click)="pictureEdit()">
+                <span class="fas fa-image"></span>
+            </button>
+            <mat-placeholder [vi-translate]="'project.preferences.picture'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <textarea
+                #descriptionShortInput="ngModel"
+                matInput
+                name="descriptionShort"
+                [(ngModel)]="project.preferences.descriptionShort"
+                required
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="2"
+                [minlength]="descriptionShortMinLength"
+                [maxlength]="descriptionShortMaxLength"
+            ></textarea>
+            <mat-hint align="end" [innerHTML]="descriptionShortInput.value?.length | maxLength: descriptionShortMaxLength"></mat-hint>
+            <mat-placeholder [vi-translate]="'project.preferences.descriptionShort'"></mat-placeholder>
+            <mat-error
+                *ngIf="!(descriptionShortInput.valid || !descriptionShortInput.touched)"
+                [innerHTML]="descriptionShortInput.errors | viNgModelError"
+            ></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [innerHTML]="'project.tag.tags' | viTranslate"></mat-placeholder>
+            <mat-select #tagsInput="ngModel" name="tags" [(ngModel)]="project.preferences.tags" multiple>
+                <mat-select-trigger>
+                    <div class="d-flex text-one-line align-items-center">
+                        <span class="me-2" [innerHTML]="'general.selected' | viTranslate"></span>
+                        <span [innerHTML]="project.preferences.tags?.length"></span>
+                    </div>
+                </mat-select-trigger>
+                <mat-option *ngFor="let item of tagsAll.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(tagsInput.valid || !tagsInput.touched)" [innerHTML]="tagsInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12 mt-3">
+        <project-purposes class="border rounded" [project]="project" [isEditable]="true"></project-purposes>
+    </div>
+
+    <ckeditor
+        class="col-12 mt-3"
+        required
+        name="description"
+        [(ngModel)]="project.preferences.description"
+        [editor]="descriptionEditor"
+        [config]="ckeditor.descriptionSettings"
+    ></ckeditor>
+
+    <!--
+    <div class="col-12 mt-3">
+
+        <mat-form-field class="d-block">
+            <textarea
+                #descriptionInput="ngModel"
+                matInput
+                name="description"
+                [(ngModel)]="project.preferences.description"
+                required
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="5"
+                [minlength]="descriptionMinLength"
+                [maxlength]="descriptionMaxLength"
+            ></textarea>
+            <mat-hint align="end" [innerHTML]="descriptionInput.value?.length | maxLength: descriptionMaxLength"></mat-hint>
+            <mat-placeholder [vi-translate]="'project.preferences.description'"></mat-placeholder>
+            <mat-error *ngIf="!(descriptionInput.valid || !descriptionInput.touched)" [innerHTML]="descriptionInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+
+    </div>
+    -->
+</form>

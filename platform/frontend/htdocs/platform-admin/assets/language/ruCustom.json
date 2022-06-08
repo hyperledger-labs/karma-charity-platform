@@ -1,0 +1,23 @@
+{
+    "general": {
+        "uid": "UID",
+        "menu": "Меню",
+        "image": "Изображение",
+        "add": "Добавить",
+        "open": "Открыть",
+        "edit": "Редактировать",
+        "save": "Сохранить",
+        "remove": "Удалить",
+        "selected": "Выбрано",
+        "description": "Описание",
+        "createdDate": "Создание",
+        "header": "Platform Admin",
+        "footer": "{version} от {versionDate}"
+    },
+    "serviceWorker": {
+        "update": {
+            "newVersionConfirmation": "Доступна новая версия, вы хотите обновить страницу?",
+            "errorNotification": "Произошла ошибка при обновлении страницы: <br/>{error}<br/><br/>Необходимо перезагрузить страницу"
+        }
+    }
+}

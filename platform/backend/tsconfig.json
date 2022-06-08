@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "./build",
+        "baseUrl": "./src",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "allowSyntheticDefaultImports": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "preserveSymlinks": true,
+        "target": "esnext",
+        "sourceMap": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "newLine": "LF"
+    }
+}

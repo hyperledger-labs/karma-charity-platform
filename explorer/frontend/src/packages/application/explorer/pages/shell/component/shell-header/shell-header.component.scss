@@ -1,0 +1,16 @@
+.logo-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    box-shadow: #ffffff 0px 0px 50px;
+    animation: fa-spin 120s infinite linear;
+    
+    &.mouse-active {
+        &:hover {
+            box-shadow: #ffffff 0px 0px 10px, #ffffff 0px 0px 50px;
+        }
+    }
+    &.reverse {
+        animation-direction: reverse;
+    }
+}

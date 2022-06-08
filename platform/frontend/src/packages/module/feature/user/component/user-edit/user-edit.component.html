@@ -1,0 +1,105 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [innerHTML]="user | userTitle"></p>
+
+    <button class="flex-shrink-0 ms-2" mat-raised-button color="primary" [disabled]="form.invalid || form.pristine" (click)="submit()">
+        <span [vi-translate]="'user.action.save.save'"></span>
+    </button>
+</div>
+
+<mat-progress-bar class="border flex-shrink-0" [mode]="isDisabled ? 'indeterminate' : 'determinate'"></mat-progress-bar>
+
+<form class="flex-grow-1 px-3 pt-3 pb-2 row g-0 vertical-scroll-only" #form="ngForm">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input #nameInput="ngModel" matInput name="name" [(ngModel)]="name" type="text" required [minlength]="nameMinLength" [maxlength]="nameMaxLength" />
+            <mat-placeholder [vi-translate]="'user.preferences.name'"></mat-placeholder>
+            <span
+                class="fab"
+                [ngClass]="{ 'fa-google': resource === 'GOOGLE', 'fa-vk': resource === 'VK', 'fa-facebook': resource === 'FACEBOOK' }"
+                matSuffix
+                [matTooltip]="'login.resource.' + resource | viTranslate"
+            ></span>
+            <mat-error *ngIf="!(nameInput.valid || !nameInput.touched)" [innerHTML]="nameInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'user.type.type'"></mat-placeholder>
+            <mat-select #typeInput="ngModel" name="type" [(ngModel)]="type" required [disabled]="!isAdministrator">
+                <mat-option *ngFor="let item of types.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(typeInput.valid || !typeInput.touched)" [innerHTML]="typeInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'user.status.status'"></mat-placeholder>
+            <mat-select #statusInput="ngModel" name="status" [(ngModel)]="status" required [disabled]="!isAdministrator">
+                <mat-option *ngFor="let item of statuses.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(statusInput.valid || !statusInput.touched)" [innerHTML]="statusInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+    
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'user.preferences.isMale.isMale'"></mat-placeholder>
+            <mat-select #isMaleInput="ngModel" name="isMale" [(ngModel)]="isMale">
+                <mat-option *ngFor="let item of isMales.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(isMaleInput.valid || !isMaleInput.touched)" [innerHTML]="isMaleInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <mat-placeholder [vi-translate]="'user.preferences.projectCancelStrategy.projectCancelStrategy'"></mat-placeholder>
+            <mat-select #projectCancelStrategyInput="ngModel" name="projectCancelStrategy" [(ngModel)]="projectCancelStrategy">
+                <mat-option *ngFor="let item of projectCancelStrategies.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
+            </mat-select>
+            <mat-error *ngIf="!(projectCancelStrategyInput.valid || !projectCancelStrategyInput.touched)" [innerHTML]="projectCancelStrategyInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="mouse-active d-block" (click)="datepicker.open()">
+            <mat-label [vi-translate]="'user.preferences.birthday'"></mat-label>
+            <input class="mouse-active" matInput [(ngModel)]="birthday" [matDatepicker]="datepicker" disabled name="birthday" />
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker touchUi disabled="false"></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+ <!--   
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input #locationInput="ngModel" matInput name="location" [(ngModel)]="location" disabled />
+            <mat-placeholder [vi-translate]="'user.preferences.location'"></mat-placeholder>
+            <button matSuffix mat-icon-button (click)="geoSelect()">
+                <span class="fas fa-map-marked-alt"></span>
+            </button>
+        </mat-form-field>
+    </div>
+-->
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <textarea
+                #descriptionInput="ngModel"
+                matInput
+                name="description"
+                [(ngModel)]="description"
+                type="text"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                [maxlength]="descriptionMaxLength"
+            ></textarea>
+            <mat-placeholder [vi-translate]="'user.preferences.description'"></mat-placeholder>
+            <mat-error *ngIf="!(descriptionInput.valid || !descriptionInput.touched)" [innerHTML]="descriptionInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+    
+</form>

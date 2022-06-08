@@ -1,0 +1,15 @@
+:host {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+mat-progress-bar {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+    height: 2px;
+}

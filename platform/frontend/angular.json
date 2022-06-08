@@ -1,0 +1,122 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "newProjectRoot": "projects",
+    "cli": {
+        "cache": {
+            "enabled": false
+        }
+    },
+    "projects": {
+        "platform-admin": {
+            "root": "src/packages/application/platform-admin",
+            "sourceRoot": "src/packages/application/platform-admin",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "sass"
+                },
+                "@schematics/angular:application": {
+                    "strict": true
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "build/platform-admin",
+                        "index": "src/packages/application/platform-admin/index.html",
+                        "main": "src/packages/application/platform-admin/main.ts",
+                        "polyfills": "polyfills.ts",
+                        "aot": true,
+                        "tsConfig": "src/packages/application/platform-admin/tsconfig.json",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@ts-core/angular/asset/language",
+                                "output": "/assets/language"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/common",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/platform-admin",
+                                "output": "/"
+                            }
+                        ],
+                        "styles": [
+                            "node_modules/csshake/dist/csshake-horizontal.css",
+
+                            "htdocs/common/assets/font/awesome/css/all.css",
+                            "htdocs/platform-admin/assets/font/google/roboto/all.css",
+
+                            "src/packages/module/feature/ckeditor/style/ckeditor.css",
+                            "src/packages/application/platform-admin/style/preloader.css",
+                            "src/packages/application/platform-admin/style/mat.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/css-element-queries/src/ResizeSensor.js",
+                            "node_modules/interactjs/dist/interact.min.js",
+                            "node_modules/numeral/numeral.js",
+                            "node_modules/numeral/locales/ru.js",
+                            "node_modules/moment/moment.js",
+                            "node_modules/moment/locale/ru.js",
+                            "node_modules/hammerjs/hammer.js"
+                        ],
+                        "allowedCommonJsDependencies": ["@ts-core/common", "@ts-core/frontend"],
+                        "serviceWorker": true,
+                        "ngswConfigPath": "src/packages/application/platform-admin/ngsw-config.json"
+                    },
+                    "configurations": {
+                        "development": {
+                            "aot": false,
+                            "optimization": false,
+                            "buildOptimizer": false,
+                            "vendorChunk": false,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": false
+                        },
+                        "production": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": false,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "10mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "platform-admin:build:development"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "platform-admin:build:production"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

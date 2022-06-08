@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="name" [value]="user?.preferences.name" disabled />
+            <mat-placeholder [vi-translate]="'user.preferences.name'"></mat-placeholder>
+            <span
+                class="fab"
+                [ngClass]="{ 'fa-google': user?.resource === 'GOOGLE', 'fa-vk': user?.resource === 'VK', 'fa-facebook': user?.resource === 'FACEBOOK' }"
+                matSuffix
+                [matTooltip]="'login.resource.' + user?.resource | viTranslate"
+            ></span>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="uid" [value]="user?.uid" disabled />
+            <mat-placeholder [vi-translate]="'user.uid'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="uid" [value]="user?.ledgerUid | viPrettify" disabled />
+            <mat-placeholder [vi-translate]="'user.ledgerUid'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="type" [value]="'user.type.' + user?.type | viTranslatePure" disabled />
+            <mat-placeholder [vi-translate]="'user.type.type'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="status" [value]="'user.status.' + user?.status | viTranslatePure" disabled />
+            <mat-placeholder [vi-translate]="'user.status.status'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input matInput name="isMale" [value]="'user.preferences.isMale.' + user?.preferences.isMale | viTranslatePure" disabled />
+            <mat-placeholder [vi-translate]="'user.preferences.isMale.isMale'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <input
+                matInput
+                name="isMale"
+                [value]="'user.preferences.projectCancelStrategy.' + user?.preferences.projectCancelStrategy | viTranslatePure"
+                disabled
+            />
+            <mat-placeholder [vi-translate]="'user.preferences.projectCancelStrategy.projectCancelStrategy'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <textarea
+                matInput
+                name="isMale"
+                [value]="user?.preferences.description"
+                disabled
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+            ></textarea>
+            <mat-placeholder [vi-translate]="'user.preferences.description'"></mat-placeholder>
+        </mat-form-field>
+    </div>
+</div>
+
+<!--
+
+    <div class="col-12">
+        <mat-form-field class="mouse-active d-block" (click)="datepicker.open()">
+            <mat-label [vi-translate]="'user.preferences.birthday'"></mat-label>
+            <input class="mouse-active" matInput [(ngModel)]="birthday" [matDatepicker]="datepicker" disabled name="birthday" />
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker touchUi disabled="false"></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
+            <textarea
+                #descriptionInput="ngModel"
+                matInput
+                name="description"
+                [(ngModel)]="description"
+                type="text"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                [maxlength]="descriptionMaxLength"
+            ></textarea>
+            <mat-placeholder [vi-translate]="'user.preferences.description'"></mat-placeholder>
+            <mat-error *ngIf="!(descriptionInput.valid || !descriptionInput.touched)" [innerHTML]="descriptionInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+</form>
+
+-->

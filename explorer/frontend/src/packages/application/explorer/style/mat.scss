@@ -1,0 +1,45 @@
+@import '../../../module/style/mat-base.scss';
+
+/*--------------------------------------------------------------------------
+//
+//  Typography
+//
+//-------------------------------------------------------------------------*/
+
+@include typography-apply($typography);
+
+/*--------------------------------------------------------------------------
+//
+//  Dark Theme
+//
+//-------------------------------------------------------------------------*/
+
+$dark-primary: mat-palette($mat-light-blue, 300, 100, 500);
+$dark-accent: mat-palette($mat-yellow, 400, 300, 600);
+$dark-warn: mat-palette($mat-red, 400);
+
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'body', #242424);
+/*
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'card', #101010);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'hover', rgba(white, 0.06));
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'dialog', #101010);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'background', #1a1a1a);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'unselected-chip', #141414);
+
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'text', rgba(white,0.64));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'disabled-text', rgba(white,0.4));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'secondary-text', rgba(white,0.5));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'success-text', #789865);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'danger-text', #dc5e5e);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'warning-text', map-get($mat-orange, 400));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'divider', #2c2c2c);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'dividers', #2c2c2c);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'tooltip', red);
+*/
+
+.dark-theme {
+    @include theme-apply($dark-theme, 700, 500);
+}

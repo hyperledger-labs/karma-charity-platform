@@ -1,0 +1,18 @@
+{
+    "version": "1.0.0-beta.3",
+    "language": "ru",
+    "languages": "en|English;ru|Русский",
+    "assetsUrl": "assets/",
+    "apiUrl": "http://localhost:3000",
+    "apiUrl1": "https://hlf-explorer.karma.n-t.io",
+    "ledgerName": "Karma",
+
+    "theme": "dark",
+    "themes": [
+        {
+            "name": "dark",
+            "isDark": true,
+            "styles": {}
+        }
+    ]
+}

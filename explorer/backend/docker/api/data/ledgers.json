@@ -1,0 +1,74 @@
+{
+    "ledgers": [
+        {
+            "uid": "Karma",
+            "passwordToReset": "04e77bf8f95cb3e1a36a59d1e93857c411930db646b46c218a0352e432023cf2",
+
+            "fabricIdentity": "user",
+            "fabricIdentityMspId": "Org1MSP",
+            "fabricIdentityPrivateKey": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgC7SZXKw1lAC0jvWB\n8xt/hTrv0xI2uI3OO3LQkL2Q/5OhRANCAARQF5kBuOHrutrZM1aB3qV6aCz1x9/7\nFxKbUEnDaJ0k0P3t9h02m3y+SwDtToU529RpYGAc6PY8nP4UU/aNXI1j\n-----END PRIVATE KEY-----\n",
+            "fabricIdentityCertificate": "-----BEGIN CERTIFICATE-----\nMIICKjCCAdCgAwIBAgIQd3ENcsnWIqGFaXI4cI7c0TAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0yMjAxMTIxNTQ2MDBaFw0zMjAxMTAxNTQ2MDBa\nMGwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMQ8wDQYDVQQLEwZjbGllbnQxHzAdBgNVBAMMFlVzZXIxQG9y\nZzEuZXhhbXBsZS5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARQF5kBuOHr\nutrZM1aB3qV6aCz1x9/7FxKbUEnDaJ0k0P3t9h02m3y+SwDtToU529RpYGAc6PY8\nnP4UU/aNXI1jo00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNV\nHSMEJDAigCD0CBWHNxjBzoyRgzswaejJs+MJ4Q/5YWtJKyAo4AoKFjAKBggqhkjO\nPQQDAgNIADBFAiEAyVb5ARxENvRpGQ795PY4kFp3ZjLTNQDifG1JiaT3OegCIAhm\n5hpBxsovTlrF88nM1Mr8Sg9dGn+WZ36k2uebsst5\n-----END CERTIFICATE-----\n",
+
+            "fabricNetworkName": "mychannel",
+            "fabricChaincodeName": "main",
+
+            "fabricIsDiscoveryEnabled": false,
+            "fabricIsDiscoveryAsLocalhost": false,
+
+            "batch": {
+                "timeout": 10000000,
+                "key": {
+                    "publicKey": "e365007e85508c6b44d5101a1d59d0061a48fd1bcd393186ccb5e7ae938a59a8",
+                    "privateKey": "e87501bc00a3db3ba436f7109198e0cb65c5f929eabcedbbb5a9874abc2c73a3e365007e85508c6b44d5101a1d59d0061a48fd1bcd393186ccb5e7ae938a59a8"
+                }
+            },
+
+            "fabricConnectionSettings": {
+                "name": "karma-ledger-network",
+                "version": "1.0.0",
+                "client": {
+                    "organization": "Org1",
+                    "connection": {
+                        "timeout": {
+                            "peer": {
+                                "endorser": "300"
+                            }
+                        }
+                    }
+                },
+                "channels": {
+                    "mychannel": {
+                        "orderers": ["orderer.example.com"],
+                        "peers": {
+                            "peer0.org1.example.com": {}
+                        }
+                    }
+                },
+                "organizations": {
+                    "Org1": {
+                        "mspid": "Org1MSP",
+                        "peers": ["peer0.org1.example.com"]
+                    }
+                },
+                "peers": {
+                    "peer0.org1.example.com": {
+                        "url": "grpc://167.99.216.174:7051",
+                        "grpcOptions": {
+                            "ssl-target-name-override": "peer0.org1.example.com",
+                            "hostnameOverride": "peer0.org1.example.com"
+                        }
+                    }
+                },
+                "orderers": {
+                    "orderer.example.com": {
+                        "url": "grpc://167.99.216.174:7050",
+                        "grpcOptions": {
+                            "ssl-target-name-override": "orderer.example.com",
+                            "hostnameOverride": "orderer.example.com"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

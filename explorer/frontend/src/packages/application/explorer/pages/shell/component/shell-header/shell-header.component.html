@@ -1,0 +1,18 @@
+<div class="d-flex align-items-center justify-content-center flex-grow-1">
+    
+    <span class="fas fa-dice-d6 fa-2x mr-2 flex-shrink-0" [ngClass]="{ 'text-primary': monitor.isLoaded, 'text-danger': !monitor.isLoaded }"
+    (click)="back()"></span>
+    
+    <span class="mat-headline text-base mouse-active text-underline-hover flex-shrink-0" [vi-translate]="'general.header'"
+        (click)="back()"></span>
+
+    <div class="flex-grow-1 text-center">
+        <ng-container *ngFor="let item of menu?.filtered">
+            <button mat-button (click)="menu.actionItem(item)" [ngClass]="{'text-primary text-underline' : item.isSelected}">
+                <span [innerHTML]="item.label"></span>
+            </button>
+        </ng-container>
+    </div>
+
+</div>
+

@@ -1,0 +1,18 @@
+<div class="border background dashed rounded d-flex align-items-center justify-content-center mr-3" style="width: 48px; height: 48px;">
+    <span class="fas fa-cube"></span>
+</div>
+
+<div class="flex-grow-1 mt-1 mr-3">
+    <p class="mat-body-2 mb-1" [innerHTML]="number"></p>
+    <p [innerHTML]="date"></p>
+</div>
+
+<p class="flex-shrink-0 border background dashed rounded p-2 text-secondary mr-3">
+    <span class="fas fa-copy mr-2"></span>
+    <span class="mat-body" [innerHTML]="transactions"></span>
+</p>
+
+<p class="flex-shrink-0 border background dashed rounded p-2 text-secondary">
+    <span class="fas fa-calendar-check mr-2"></span>
+    <span class="mat-body" [innerHTML]="events"></span>
+</p>

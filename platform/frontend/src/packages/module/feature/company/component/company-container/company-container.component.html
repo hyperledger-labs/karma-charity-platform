@@ -1,0 +1,31 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3">
+    <button class="flex-shrink-0" mat-icon-button [title]="'general.menu' | viTranslate" tabindex="-1" (click)="menuOpen($event)">
+        <span class="fas fas fa-ellipsis-v"></span>
+    </button>
+    <p class="mat-title flex-grow-1 text-one-line mouse-inactive" [innerHTML]="company?.preferences.title"></p>
+</div>
+
+<vi-tab-group class="d-block flex-shrink-0 border-top" className="tabs-stretch no-border flex-shrink-0" [list]="tabs"></vi-tab-group>
+
+<div class="p-3 d-flex flex-grow-1 scroll-vertical">
+    <div class="flex-grow-1" *ngIf="tabs.selectedData === 'COMPANY'">
+        <p class="p-3 border background rounded mouse-inactive mb-3" [vi-translate]="'company.status.' + company?.status + 'Description'"></p>
+        <company-nalog-preferences [company]="company"></company-nalog-preferences>
+        <company-details [company]="company"></company-details>
+    </div>
+
+    <company-users class="flex-grow-1 border rounded" [company]="company" *ngIf="tabs.selectedData === 'USERS'"></company-users>
+
+    <payment-transactions
+        class="flex-grow-1 border rounded"
+        [conditions]="{ companyId: company?.id }"
+        *ngIf="tabs.selectedData === 'PAYMENTS'"
+    ></payment-transactions>
+
+    <payment-widget-container class="p-3 flex-grow-1 border rounded" [target]="company" *ngIf="tabs.selectedData === 'DONATE'"></payment-widget-container>
+</div>
+
+<mat-menu #matMenu [overlapTrigger]="false">
+    <vi-menu-list [list]="menu"></vi-menu-list>
+</mat-menu>
+<span [vi-menu-trigger-for]="matMenu"></span>

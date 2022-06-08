@@ -1,0 +1,79 @@
+{
+    "payment": {
+        "donate": "Пожертвовать",
+        "payment": "Платеж",
+        "payments": "Платежи",
+        "payments": "Платежи",
+        "description": {
+            "company": "Пожертвование в пользу организации \"{name}\"",
+            "project": "Пожертвование в пользу проекта \"{name}\""
+        },
+        "status": {
+            "status": "Статус",
+            "COMPLETED": "Завершен",
+            "AUTHORIZED": "Авторизован"
+        },
+        "transaction": {
+            "target": "Цель",
+            "transaction": "Транзакция",
+            "transactions": "Транзакции",
+            "amount": "Сумма",
+            "coinId": "Валюта",
+            "activatedDate": "Зачислен",
+            "debet": "Со счета",
+            "credit": "На счет",
+            "type": {
+                "type": "Тип",
+                "DONATED": "Пожертвование",
+                "FEE_AGGREGATOR_DEDUCTED": "Комиссия аггрегатора"
+            }
+        },
+
+        "aggregator": {
+            "uid": "UID проекта",
+            "key": "API ключ",
+            "aggregator": "Платежный аггрегатор",
+            "type": {
+                "type": "Тип",
+                "CLOUD_PAYMENTS": "Cloud Payments"
+            },
+            "cloudpayments": {
+                "error": {
+                    "REFER_TO_CARD_ISSUER": "Свяжитесь с вашим банком или воспользуйтесь другой картой",
+                    "INVALID_MERCHANT": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "PICK_UP_CARD": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "DO_NOT_HONOR": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "ERROR": "⇛payment.aggregator.cloudpayments.error.INVALID_CARD_NUMBER",
+                    "PICK_UP_CARD_SPECIAL_CONDITIONS": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "INVALID_TRANSACTION": "Воспользуйтесь другой картой или свяжитесь с банком, выпустившим карту",
+                    "AMOUNT_ERROR": "Проверьте корректность суммы",
+                    "INVALID_CARD_NUMBER": "Проверьте правильность введенных данных карты или воспользуйтесь другой картой",
+                    "NO_SUCH_ISSUER": "⇛payment.aggregator.cloudpayments.error.INVALID_CARD_NUMBER",
+                    "TRANSACTION_ERROR": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "FORMAT_ERROR": "Повторите попытку позже",
+                    "BANK_NOT_SUPPORTED_BY_SWITCH": "Воспользуйтесь другой картой",
+                    "EXPIRED_CARD_PICKUP": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "SUSPECTED_FRAUD": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "RESTRICTED_CARD": "⇛payment.aggregator.cloudpayments.error.RESTRICTED_CARD_2",
+                    "LOST_CARD": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "STOLEN_CARD": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "INSUFFICIENT_FUNDS": "Недостаточно средств на карте",
+                    "EXPIRED_CARD": "⇛payment.aggregator.cloudpayments.error.INVALID_CARD_NUMBER",
+                    "TRANSACTION_NOT_PERMITTED": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "SUSPECTED_FRAUD_DECLINE": "Свяжитесь с банком или воспользуйтесь другой картой",
+                    "RESTRICTED_CARD_2": "Платежи для этой карты запрещены. Попробуйте другую карту",
+                    "SECURITY_VIOLATION": "⇛payment.aggregator.cloudpayments.error.BANK_NOT_SUPPORTED_BY_SWITCH",
+                    "EXCEED_WITHDRAWAL_FREQUENCY": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "INCORRECT_CVV": "Неверно указан код CVV",
+                    "TIMEOUT": "Повторите попытку позже или воспользуйтесь другой картой",
+                    "CANNOT_REACH_NETWORK": "⇛payment.aggregator.cloudpayments.error.TIMEOUT",
+                    "SYSTEM_ERROR": "⇛payment.aggregator.cloudpayments.error.FORMAT_ERROR",
+                    "UNABLE_TO_PROCESS": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "AUTHENTICATION_FAILED": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "AUTHENTICATION_UNAVAILABLE": "⇛payment.aggregator.cloudpayments.error.REFER_TO_CARD_ISSUER",
+                    "ANTI_FRAUD": "⇛payment.aggregator.cloudpayments.error.BANK_NOT_SUPPORTED_BY_SWITCH"
+                }
+            }
+        }
+    }
+}

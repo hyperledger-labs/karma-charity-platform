@@ -1,0 +1,38 @@
+version: '3.2'
+
+services:
+  hlf-explorer-api:
+    image: hlf-explorer-api
+    env_file:
+      - ./docker/api/.env
+    volumes:
+      - ./docker/api/data:/application/build/data
+    depends_on:
+      - hlf-explorer-db
+    ports:
+      - 3000:3000
+    working_dir: /application/build
+    command: node main.js
+    networks:
+      - default
+      - ledger
+
+  hlf-explorer-db:
+    image: postgres:11.4-alpine
+    env_file:
+      - ./docker/database/.env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - 35432:5432
+    networks:
+      - default
+      - ledger
+
+volumes:
+  pg_data:
+
+networks:
+  ledger:
+    external:
+      name: ledger_network

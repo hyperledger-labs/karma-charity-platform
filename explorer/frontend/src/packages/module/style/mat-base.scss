@@ -1,0 +1,224 @@
+/*--------------------------------------------------------------------------
+//
+//  Bootstrap
+//
+//-------------------------------------------------------------------------*/
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+
+@import '../../../../node_modules/@ts-core/angular/style/mat/vi-mat';
+@import 'mat-variables';
+
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/root';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/utilities/align';
+@import '~bootstrap/scss/utilities/clearfix';
+@import '~bootstrap/scss/utilities/display';
+@import '~bootstrap/scss/utilities/flex';
+@import '~bootstrap/scss/utilities/float';
+@import '~bootstrap/scss/utilities/overflow';
+@import '~bootstrap/scss/utilities/position';
+@import '~bootstrap/scss/utilities/shadows';
+@import '~bootstrap/scss/utilities/sizing';
+@import '~bootstrap/scss/utilities/spacing';
+@import '~bootstrap/scss/utilities/text';
+@import '~bootstrap/scss/utilities/visibility';
+
+/*--------------------------------------------------------------------------
+//
+//  Core
+//
+//-------------------------------------------------------------------------*/
+
+@include mat-core($typography);
+@include vi-mat-core($typography);
+@include vi-mat-core-bootstrap($typography);
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+/*--------------------------------------------------------------------------
+//
+//  Font Classes
+//
+//-------------------------------------------------------------------------*/
+
+mat-expansion-panel-header {
+    height: auto !important;
+    padding: 1rem !important;
+
+    &.mat-expanded {
+        height: auto !important;
+    }
+}
+
+/*--------------------------------------------------------------------------
+//
+//  Text
+//
+
+//-------------------------------------------------------------------------*/
+
+.text-indent {
+    text-indent: 24px;
+}
+
+/*--------------------------------------------------------------------------
+//
+//  Transition
+//
+//-------------------------------------------------------------------------*/
+
+.color-transition {
+    transition: color 0.2s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+.border-transition {
+    transition: border-color 0.2s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+/*--------------------------------------------------------------------------
+//
+//  Methods
+//
+//-------------------------------------------------------------------------*/
+
+@mixin typography-apply($typography) {
+    .mat-tooltip {
+        font-size: mat-font-size($typography, caption);
+    }
+}
+
+@mixin theme-apply($theme, $text-primary-default: 800, $text-accent-default: 800) {
+    @include angular-material-theme($theme);
+
+    @include vi-mat-theme($theme);
+    @include vi-mat-theme-bootstrap($theme, $text-primary-default, $text-accent-default);
+
+    $warn: map-get($theme, warn);
+    $accent: map-get($theme, accent);
+    $primary: map-get($theme, primary);
+    $is-dark: map-get($theme, is-dark);
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $border-color: map-get($foreground, divider);
+
+    $text-base: map-get($foreground, base);
+    $text-primary: mat-color($primary, $text-primary-default);
+
+    @if $is-dark {
+        $text-accent: mat-color($accent);
+        $text-primary: mat-color($primary);
+    }
+
+    a:hover,
+    a:active {
+        color: $text-primary;
+    }
+
+    mat-row {
+        &.active {
+            background-color: map-get($background, hover) !important;
+        }
+    }
+    mat-list-item {
+        &.active {
+            color: $text-primary !important;
+            background-color: map-get($background, hover) !important;
+        }
+    }
+
+    mat-sidenav {
+        width: 230px;
+        .mat-drawer-inner-container {
+            display: flex;
+            flex-direction: column;
+            @include scroll-no();
+        }
+    }
+
+    mat-table {
+        mat-header-row {
+            background-color: map-get($background, hover) !important;
+        }
+    }
+
+    /*
+    .mat-dialog-container,
+    vi-notification {
+        border: 1px solid $border-color;
+    }
+    */
+
+    .mat-tooltip {
+        white-space: pre-line;
+    }
+
+    .border-transparent {
+        border-width: 1px;
+        border-color: transparent !important;
+        border-style: solid !important;
+    }
+
+    .mat-menu-item:hover,
+    .mat-menu-item.cdk-program-focused,
+    .mat-menu-item.cdk-keyboard-focused,
+    .mat-menu-item-highlighted {
+        &:not([disabled]) {
+            color: $text-base;
+        }
+    }
+
+    .text-base-hover {
+        &:hover {
+            color: $text-base !important;
+        }
+    }
+
+    .text-underline-hover {
+        &:hover {
+            text-decoration: underline !important;
+        }
+    }
+
+    .text-subheading {
+        color: rgba($text-base, 0.5);
+    }
+
+    .hljs-string {
+        color: $text-primary;
+    }
+    
+    .text-highlight {
+        &.error {
+            .hljs-string {
+                color: mat-color($warn) !important;
+            }
+        }
+    }
+}

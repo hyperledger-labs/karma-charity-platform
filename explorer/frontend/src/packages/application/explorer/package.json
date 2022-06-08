@@ -1,0 +1,7 @@
+{
+    "name": "@hlf-explorer/frontend-explorer",
+    "version": "2.0.0",
+    "license": "MIT",
+    "author": "Renat Gubaev",
+    "private": true
+}

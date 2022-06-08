@@ -1,0 +1,20 @@
+{
+    "name": "karma-chaincode",
+    "version": "2.0.0",
+    "author": "Renat Gubaev",
+    "license": "ISC",
+    "description": "Karma chaincode",
+    "main": "index.js",
+    "scripts": {
+        "start": "node ./build/main.js --chaincode-id-name='main_1.20.0:209800e2693b775a6cb83e2cad517bef0c90f3194bf05bd3c2f966bc8dc83c46' --peer.address grpc://167.99.216.174:7052",
+        "start:dev": "CORE_CHAINCODE_LOGGING_LEVEL=INFO ts-node --transpile-only main.ts --chaincode-id-name='main_1.20.0:209800e2693b775a6cb83e2cad517bef0c90f3194bf05bd3c2f966bc8dc83c46' --peer.address grpc://167.99.216.174:7052",
+        "build": "tsc"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "ts-node": "^10.4.0",
+        "ts-node-dev": "^1.1.8",
+        "tsconfig-paths": "^3.12.0",
+        "typescript": "^4.6.2"
+    }
+}
