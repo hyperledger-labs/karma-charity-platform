@@ -1,17 +1,18 @@
-FROM node:12 as build
+FROM node:14 as build
 # Set directory
 WORKDIR /build
+# Copy the source code
+COPY ./chaincode .
+COPY ./common ./src/packages/common
 # Install dependencies and building
-COPY . .
 RUN npm i
-
 # ----------------------------------- Patching corrupted fabric-shim -----------#
-RUN cp /build/patch/index.d.ts /build/node_modules/fabric-shim/types/index.d.ts
+# Copy a patch for fabric-shim
+COPY ./patch/index.d.ts ./node_modules/fabric-shim/types/index.d.ts
 # ------------------------------------------------------------------------------#
+RUN cd ./src/packages/application/chaincode && npm i && npm run build
 
-RUN cd /build/src/packages/application/chaincode && npm i && npm run build
-
-FROM node:12
+FROM node:14
 # Set directory
 WORKDIR /application
 # Copy global node_modules

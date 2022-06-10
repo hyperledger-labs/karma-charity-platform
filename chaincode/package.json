@@ -16,7 +16,7 @@
     "license": "ISC",
     "dependencies": {
         "@hlf-core/transport": "^2.0.6",
-        "@project/common": "file:./../common",
+        "@project/common": "file:./src/packages/common",
         "@project/module": "file:./src/packages/module",
         "@ts-core/backend-nestjs": "^8.0.5",
         "@ts-core/crypto-gost": "^2.0.1"
