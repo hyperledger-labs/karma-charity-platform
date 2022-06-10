@@ -23,7 +23,8 @@ Next, create the chaincode package and install it onto the Hyperledger Fabric pe
 
 ## Using as an external chaincode
 
-Use this [docker file](docker/chaincode/Dockerfile) to build the chaincode image. 
+Use this [docker file](docker/chaincode/Dockerfile) to build the chaincode image. Run the following command from the
+root project directory:
 
 ```shell
 docker build -f docker/chaincode/Dockerfile -t karma-chaincode .
