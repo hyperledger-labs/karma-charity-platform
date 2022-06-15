@@ -1,15 +1,15 @@
 FROM node:14 as build
 # Set directory
 WORKDIR /build
+# Copy the source code
+COPY ./explorer/backend .
 # Install dependencies and building
-COPY . .
 RUN npm i
-
 # ----------------------------------- Patching corrupted fabric-shim -----------#
-RUN cp /build/patch/index.d.ts /build/node_modules/fabric-shim/types/index.d.ts
+# Copy a patch for fabric-shim
+COPY ./patch/index.d.ts ./node_modules/fabric-shim/types/index.d.ts
 # ------------------------------------------------------------------------------#
-
-RUN cd /build/src/packages/application/api && npm i && npm run build
+RUN cd ./src/packages/application/api && npm i && npm run build
 
 FROM node:14
 # Set directory

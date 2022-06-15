@@ -52,7 +52,7 @@
                 },
                 "peers": {
                     "peer0.org1.example.com": {
-                        "url": "grpc://167.99.216.174:7051",
+                        "url": "grpc://peer0.org1.example.com:7051",
                         "grpcOptions": {
                             "ssl-target-name-override": "peer0.org1.example.com",
                             "hostnameOverride": "peer0.org1.example.com"
@@ -61,7 +61,7 @@
                 },
                 "orderers": {
                     "orderer.example.com": {
-                        "url": "grpc://167.99.216.174:7050",
+                        "url": "grpc://peer0.org1.example.com:7050",
                         "grpcOptions": {
                             "ssl-target-name-override": "orderer.example.com",
                             "hostnameOverride": "orderer.example.com"

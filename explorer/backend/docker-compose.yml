@@ -4,15 +4,13 @@ services:
   hlf-explorer-api:
     image: hlf-explorer-api
     env_file:
-      - ./docker/api/.env
+      - ./../../docker/explorer/backend/api/.env
     volumes:
-      - ./docker/api/data:/application/build/data
+      - ./../../docker/explorer/backend/api/data:/application/build/data
+    ports:
+      - "3000:3000"
     depends_on:
       - hlf-explorer-db
-    ports:
-      - 3000:3000
-    working_dir: /application/build
-    command: node main.js
     networks:
       - default
       - ledger
@@ -20,11 +18,11 @@ services:
   hlf-explorer-db:
     image: postgres:11.4-alpine
     env_file:
-      - ./docker/database/.env
+      - ./../../docker/explorer/backend/database/.env
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
-      - 35432:5432
+      - "35432:5432"
     networks:
       - default
       - ledger
