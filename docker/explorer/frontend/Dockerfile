@@ -1,7 +1,6 @@
 FROM node:14 as build
 WORKDIR /build
-# Install dependencies and building
-COPY . .
+COPY ./explorer/frontend .
 RUN npm ci --only-production
 RUN npm run explorer:build
 
