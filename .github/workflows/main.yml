@@ -4,6 +4,8 @@ on:
   pull_request:
     branches: [ "main" ]
 
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,3 +16,7 @@ jobs:
       - name: Building HLF Explorer Backend
         run: |
           docker build -f docker/explorer/backend/api/Dockerfile -t karma-charity-platform/hlf-explorer-api .
+
+      - name: Building HLF Explorer Frontend
+        run: |
+          docker build -f docker/explorer/frontend/Dockerfile -t karma-charity-platform/hlf-explorer-frontend .
