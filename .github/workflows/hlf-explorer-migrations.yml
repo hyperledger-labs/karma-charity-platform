@@ -1,4 +1,4 @@
-name: Building HLF Explorer Backend
+name: Building HLF Explorer Database Migrations
 
 on:
   push:
