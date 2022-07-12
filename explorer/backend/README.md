@@ -9,7 +9,7 @@ docker build -f docker/explorer/backend/api/Dockerfile -t hlf-explorer-api .
 The following command builds an image with database migrations
 
 ```shell
-docker build -f docker/explorer/backend/api/Dockerfile-migrations -t hlf-explorer-migrations.
+docker build -f docker/explorer/backend/database/Dockerfile -t hlf-explorer-migrations.
 ```
 
 Please see an example how to run the image in the [docker-compose file](docker-compose.yml).

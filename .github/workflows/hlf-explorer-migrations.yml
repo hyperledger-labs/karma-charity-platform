@@ -1,12 +1,12 @@
-name: Building HLF Explorer Frontend
+name: Building HLF Explorer Database Migrations
 
 on:
   push:
     branches:
       - 'main'
     paths:
-      - 'explorer/frontend/*'
-      - 'docker/explorer/frontend/Dockerfile'
+      - 'explorer/backend/*'
+      - 'docker/explorer/backend/database/Dockerfile'
 
   workflow_dispatch:
 
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: ghcr.io/hyperledger-labs/karma-charity-platform/hlf-explorer-frontend
+      IMAGE_NAME: ghcr.io/hyperledger-labs/karma-charity-platform/hlf-explorer-migrations
 
     steps:
       - uses: actions/checkout@v3
