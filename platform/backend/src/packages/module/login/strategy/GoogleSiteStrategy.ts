@@ -45,7 +45,6 @@ export class GoogleSiteStrategy extends DestroyableContainer implements ILoginSt
             token = response.tokens;
         }
         catch (error) {
-            console.log(123, error);
             throw new LoginTokenInvalidError(error.message);
         }
 

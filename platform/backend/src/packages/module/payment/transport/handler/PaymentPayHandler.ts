@@ -167,17 +167,20 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
     // --------------------------------------------------------------------------
 
     protected async execute(params: IPaymentPayDto<any>): Promise<void> {
-        let item = new PaymentEntity();
+        let item = await this.database.payment.findOne({ referenceId: params.details.referenceId });
+        if (!_.isNil(item)) {
+            throw new ExtendedError(`Payment with \"referenceId\" already exist`);
+        }
+
+        item = new PaymentEntity();
         item.type = params.type;
         item.status = params.status;
         item.details = JSON.stringify(params.data);
         item.transactionId = params.transactionId;
+        item.referenceId = params.details.referenceId;
 
         if (!_.isNil(params.details.userId)) {
             item.user = await this.database.userGet(params.details.userId);
-        }
-        if (!_.isNil(params.details.referenceId)) {
-            item.referenceId = params.details.referenceId;
         }
 
         let project: ProjectEntity = null;
@@ -199,10 +202,8 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
 
         let privateKey = await this.transport.sendListen(new CryptoDecryptCommand({ type: CryptoKeyType.DATABASE, value: company.paymentAggregator.key }));
         if (!PaymentUtil.checkSignature(params.details, privateKey)) {
-            // throw new ExtendedError(`Invalid signature`);
-            this.warn(`Invalid signature`);
+            throw new ExtendedError(`Invalid signature`);
         }
-
 
         let fee = '0';
         let amount = '0';

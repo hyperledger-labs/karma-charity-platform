@@ -13,7 +13,6 @@ import { COMPANY_URL } from '@project/common/platform/api';
 import { ICompanyVerifyDtoResponse } from '@project/common/platform/api/company';
 import { CompanyStatus, COMPANY_VERIFY_STATUS, COMPANY_VERIFY_TYPE } from '@project/common/platform/company';
 import { Company } from '@project/common/platform/company';
-import { CompanyUndefinedError, RequestInvalidError } from '@project/module/core/middleware';
 import { IUserHolder } from '@project/module/database/user';
 import { TransformGroup } from '@project/module/database';
 
