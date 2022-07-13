@@ -2,7 +2,7 @@ import { ITraceable } from '@ts-core/common/trace';
 import { TransformUtil } from '@ts-core/common/util';
 import { LedgerUser } from '../../../ledger/user';
 import { Type } from 'class-transformer';
-import { Matches, IsOptional, IsDefined, ValidateNested} from 'class-validator';
+import { Matches, IsEnum, IsOptional, IsDefined, ValidateNested } from 'class-validator';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { ILedgerPaymentDetails, LedgerPaymentDetails } from '../../../ledger/payment';
 import { ICoinObject, CoinObject } from './ICoinObject';
@@ -29,8 +29,14 @@ export class CoinEmitCommand extends KarmaTransportCommandAsync<ICoinEmitDto, vo
 
 }
 
+export enum CoinEmitType {
+    DONATED = 'DONATED',
+    FEE_AGGREGATOR_DEDUCTED = 'FEE_AGGREGATOR_DEDUCTED'
+}
+
 export interface ICoinEmitDto extends ITraceable {
     to: ICoinObject;
+    type: CoinEmitType,
     from?: string;
     amount: ICoinAmount;
     details: ILedgerPaymentDetails;
@@ -41,6 +47,9 @@ class CoinEmitDto implements ICoinEmitDto {
     @IsDefined()
     @ValidateNested()
     to: CoinObject;
+
+    @IsEnum(CoinEmitType)
+    type: CoinEmitType;
 
     @IsOptional()
     @Matches(LedgerUser.UID_REGXP)

@@ -1,15 +1,18 @@
-import { IsEnum, Length, IsDate, Matches, IsOptional } from 'class-validator';
+import { IsEnum, Length, IsArray, IsDate, Matches, ArrayMinSize, ValidateNested, ArrayMaxSize, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RegExpUtil, ValidateUtil } from '../../util';
 import { LedgerWallet } from '../wallet';
 import * as _ from 'lodash';
 import { LedgerCompany } from '../company';
 import { ILedgerObject } from '../ILedgerObject';
+import { LedgerProjectPurpose } from './LedgerProjectPurpose';
 
 export enum LedgerProjectStatus {
     ACTIVE = 'ACTIVE',
     NON_ACTIVE = 'NON_ACTIVE'
 }
+
+
 
 export class LedgerProject implements ILedgerObject {
     // --------------------------------------------------------------------------
@@ -50,6 +53,9 @@ export class LedgerProject implements ILedgerObject {
     @Matches(LedgerProject.UID_REGXP)
     uid: string;
 
+    @Matches(LedgerCompany.UID_REGXP)
+    companyUid: string;
+
     @IsEnum(LedgerProjectStatus)
     status: LedgerProjectStatus;
 
@@ -62,10 +68,15 @@ export class LedgerProject implements ILedgerObject {
     @Matches(RegExpUtil.DESCRIPTION)
     description: string;
 
+    @IsOptional()
+    @IsArray()
+    @ArrayMinSize(ValidateUtil.PROJECT_PURPOSES_MIN_LENGTH)
+    @ArrayMaxSize(ValidateUtil.PROJECT_PURPOSES_MAX_LENGTH)
+    @Type(() => LedgerProjectPurpose)
+    @ValidateNested({ each: true })
+    purposes: Array<LedgerProjectPurpose>;
+
     @Type(() => LedgerWallet)
     wallet: LedgerWallet;
-
-    @IsOptional()
-    @Matches(LedgerCompany.UID_REGXP)
-    companyUid: string;
 }
+

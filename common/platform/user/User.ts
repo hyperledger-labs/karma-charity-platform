@@ -6,6 +6,7 @@ import { UserRole } from './UserRole';
 import { UserStatus } from './UserStatus';
 
 export class User {
+    id: number;
     uid: string;
     type: UserType;
     login: string;
@@ -19,9 +20,6 @@ export class User {
 
     @Type(() => Date)
     updatedDate: Date;
-
-    @Type(() => UserRole)
-    roles?: Array<UserRole>;
 
     @Type(() => UserPreferences)
     preferences: UserPreferences;

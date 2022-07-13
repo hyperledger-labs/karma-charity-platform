@@ -5,6 +5,7 @@ import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCo
 import { LedgerProject } from '../../../ledger/project';
 import { LedgerUser } from '../../../ledger/user';
 import { LedgerProjectRole } from '../../../ledger/role';
+import { IProjectUserIsInDto } from './ProjectUserIsInCommand';
 
 export class ProjectUserAddCommand extends KarmaTransportCommandAsync<IProjectUserAddDto, void> {
     // --------------------------------------------------------------------------
@@ -26,9 +27,7 @@ export class ProjectUserAddCommand extends KarmaTransportCommandAsync<IProjectUs
     }
 }
 
-export interface IProjectUserAddDto extends ITraceable {
-    userUid: string;
-    projectUid: string;
+export interface IProjectUserAddDto extends IProjectUserIsInDto {
     roles?: Array<LedgerProjectRole>;
 }
 
