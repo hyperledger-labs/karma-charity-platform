@@ -1,0 +1,33 @@
+name: Building Chaincode
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'chaincode/*'
+      - 'docker/chaincode/Dockerfile'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ghcr.io/hyperledger-labs/karma-charity-platform/chaincode
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          docker build -f docker/chaincode/Dockerfile -t $IMAGE_NAME:${{ github.sha }} .
+          docker tag $IMAGE_NAME:${{ github.sha }} $IMAGE_NAME:latest
+
+      - name: Push
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          
+          docker push $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:latest
