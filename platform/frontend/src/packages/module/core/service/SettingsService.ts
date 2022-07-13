@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RouterBaseService } from '@ts-core/angular';
 import { SettingsBaseService } from '@ts-core/frontend/service';
 import * as _ from 'lodash';
 import axios from 'axios';
@@ -12,7 +11,7 @@ export class SettingsService extends SettingsBaseService {
     //
     //--------------------------------------------------------------------------
 
-    constructor(private router: RouterBaseService) {
+    constructor() {
         super();
     }
 
@@ -22,9 +21,9 @@ export class SettingsService extends SettingsBaseService {
     //
     //--------------------------------------------------------------------------
 
-    public async load(url: string = 'config.json'): Promise<void> {
+    public async load(url: string = 'config.json', routerParams?: any): Promise<void> {
         let { data } = await axios.get(url);
-        this.initialize(data, this.router.getParams());
+        this.initialize(data, routerParams);
     }
 
     // --------------------------------------------------------------------------
@@ -41,7 +40,11 @@ export class SettingsService extends SettingsBaseService {
         return SettingsBaseService.parseUrl(this.getValue('explorerUrl'));
     }
 
-    public get googleClientId(): string {
-        return this.getValue('googleClientId');
+    public get googleSiteId(): string {
+        return this.getValue('googleSiteId');
+    }
+
+    public get googleSiteRedirectUri(): string {
+        return this.getValue('googleSiteRedirectUri');
     }
 }

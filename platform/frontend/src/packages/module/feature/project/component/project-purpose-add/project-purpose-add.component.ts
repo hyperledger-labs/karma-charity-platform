@@ -1,14 +1,14 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { ISelectListItem, IWindowContent, SelectListItem, SelectListItems, ViewUtil } from '@ts-core/angular';
-import { PipeService } from '../../../../core/service';
+import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { } from '@common/platform/project';
-import { LedgerCoinId } from 'common/ledger/coin';
+import { LedgerCoinId } from '@project/common/ledger/coin';
 import { ProjectPurpose } from '@project/common/platform/project';
 import { RandomUtil, TransformUtil } from '@ts-core/common/util';
-import { AmountPipe } from '../../../../shared/pipe';
-import { ValidateUtil } from 'common/util';
+import { AmountPipe } from '@shared/pipe';
+import { ValidateUtil } from '@project/common/util';
 
 @Component({
     selector: 'project-purpose-add',
@@ -73,6 +73,7 @@ export class ProjectPurposeAddComponent extends IWindowContent implements ISeria
         return TransformUtil.toClass(ProjectPurpose, {
             id: new Date().getTime(),
             name: this.name,
+            decimals: 2,
             amount: AmountPipe.toCent(this.amount),
             coinId: this.coinIds.selectedData,
         })

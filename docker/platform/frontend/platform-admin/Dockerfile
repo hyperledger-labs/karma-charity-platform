@@ -1,11 +1,13 @@
-FROM node:14 as build
+FROM node:16 as build
 WORKDIR /build
+# Copy the source code
+COPY ./platform/frontend .
+COPY ./common ./src/externals/common
 # Install dependencies and building
-COPY . .
 RUN npm ci --only-production
-RUN npm run build
+RUN npm run platform-admin:build
 
-FROM node:14
+FROM node:16
 WORKDIR /application
 COPY --from=build /build/build /application
 COPY --from=build /build/node_modules /application/node_modules

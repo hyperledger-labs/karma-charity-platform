@@ -1,0 +1,115 @@
+@use '@angular/material' as mat;
+
+@import '../../../module/style/mat-base.scss';
+
+/*--------------------------------------------------------------------------
+//
+//  Typography
+//
+//-------------------------------------------------------------------------*/
+
+@include typography-apply($typography);
+
+/*--------------------------------------------------------------------------
+//
+//  Light Theme
+//
+//-------------------------------------------------------------------------*/
+
+$light-primary: mat.define-palette($mat-teal, 500);
+$light-accent: mat.define-palette($mat-lime, 700);
+$light-warn: mat.define-palette(mat.$red-palette);
+
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+$light-theme: vi-mat-theme-background-change($light-theme, 'body', #fafafa);
+$light-theme: vi-mat-theme-background-change($light-theme, 'background', #ffffff);
+
+/*
+$light-theme: vi-mat-theme-foreground-change($light-theme, 'text', #141414);
+$light-theme: vi-mat-theme-foreground-change($light-theme, 'icon', #141414);
+$light-theme: vi-mat-theme-foreground-change($light-theme, 'icons', #141414);
+$light-theme: vi-mat-theme-foreground-change($light-theme, 'divider', #e1e8ed);
+$light-theme: vi-mat-theme-foreground-change($light-theme, 'dividers', #e1e8ed);
+*/
+
+.light-theme {
+    @include theme-apply($light-theme, 700, 500);
+}
+
+/*--------------------------------------------------------------------------
+//
+//  Dark Theme
+//
+//-------------------------------------------------------------------------*/
+
+/*
+
+
+/ Background palette for dark themes.
+$dark-theme-background-palette: (
+    status-bar: black,
+    app-bar:    map.get($grey-palette, 900),
+    background: #303030,
+    hover:      rgba(white, 0.04), // TODO(kara): check style with Material Design UX
+    card:       map.get($grey-palette, 800),
+    dialog:     map.get($grey-palette, 800),
+    disabled-button: rgba(white, 0.12),
+    raised-button: map.get($grey-palette, 800),
+    focused-button: $light-focused,
+    selected-button: map.get($grey-palette, 900),
+    selected-disabled-button: map.get($grey-palette, 800),
+    disabled-button-toggle: black,
+    unselected-chip: map.get($grey-palette, 700),
+    disabled-list-option: rgba(white, 0.12),
+    tooltip: map.get($grey-palette, 700),
+);
+
+$dark-theme-foreground-palette: (
+    base:              white,
+    divider:           $light-dividers,
+    dividers:          $light-dividers,
+    disabled:          $light-disabled-text,
+    disabled-button:   rgba(white, 0.3),
+    disabled-text:     $light-disabled-text,
+    elevation:         black,
+    hint-text:         $light-disabled-text,
+    secondary-text:    $light-secondary-text,
+    icon:              white,
+    icons:             white,
+    text:              white,
+    slider-min:        white,
+    slider-off:        rgba(white, 0.3),
+    slider-off-active: rgba(white, 0.3),
+);
+
+$dark-primary: mat-palette($mat-teal, 200, 100, 400);
+$dark-accent: mat-palette($mat-lime, 700, 500, 800);
+$dark-warn: mat-palette($mat-red, 400);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'body', #242424);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'card', #363636);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'text', #d9d9d9);
+
+
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'card', #101010);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'hover', rgba(white, 0.06));
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'dialog', #101010);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'background', #1a1a1a);
+$dark-theme: vi-mat-theme-background-change($dark-theme, 'unselected-chip', #141414);
+
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'text', rgba(white,0.64));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'disabled-text', rgba(white,0.4));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'secondary-text', rgba(white,0.5));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'success-text', #789865);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'danger-text', #dc5e5e);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'warning-text', map-get($mat-orange, 400));
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'divider', #2c2c2c);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'dividers', #2c2c2c);
+$dark-theme: vi-mat-theme-foreground-change($dark-theme, 'tooltip', red);
+
+.dark-theme {
+    @include theme-apply($dark-theme, 700, 500);
+}
+*/

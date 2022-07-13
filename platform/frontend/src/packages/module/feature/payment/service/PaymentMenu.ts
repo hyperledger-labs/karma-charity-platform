@@ -3,9 +3,9 @@ import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Transport } from '@ts-core/common/transport';
-import { UserService } from '../../../core/service';
+import { UserService } from '@core/service';
 import { Payment } from '@project/common/platform/payment';
-import { UserOpenCommand } from '../../user/transport';
+import { UserOpenCommand } from '@feature/user/transport';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentMenu extends ListItems<IListItem<void>> {

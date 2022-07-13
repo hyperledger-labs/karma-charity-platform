@@ -3,11 +3,11 @@ import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Transport } from '@ts-core/common/transport';
-import { UserService } from '../../../core/service';
-import { UserCompany } from 'common/platform/user';
+import { UserService } from '@core/service';
+import { UserCompany } from '@project/common/platform/user';
 import { CompanyUser, CompanyUtil } from '@project/common/platform/company';
 import { CompanyUserRoleEditCommand } from '../transport';
-import { PermissionUtil } from 'common/util';
+import { PermissionUtil } from '@project/common/util';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyUserMenu extends ListItems<IListItem<void>> {

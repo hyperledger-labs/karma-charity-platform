@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CompaniesPageRoutingModule } from './companies-page.routing.module';
 import { CompaniesPageComponent } from './companies-page.component';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '../../module/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({

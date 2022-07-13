@@ -1,6 +1,6 @@
 import { CdkTableFilterableMapCollection, ICdkTableColumn, ICdkTableSettings } from '@ts-core/angular';
 import * as _ from 'lodash';
-import { PipeService } from '../../service';
+import { PipeService } from '@core/service';
 import { Injectable } from '@angular/core';
 import { Project, ProjectPurpose } from '@project/common/platform/project';
 

@@ -1,11 +1,11 @@
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ISelectListItem, MenuTriggerForDirective, SelectListItem, SelectListItems, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
-import { CompanyMenu } from '../../service';
+import { CompanyMenu } from '@feature/company/service';
 import { LanguageService } from '@ts-core/frontend/language';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
-import { UserCompany } from 'common/platform/user';
-import { PaymentMapCollection, PaymentTransactionMapCollection } from '../../../../core/lib/payment';
+import { UserCompany } from '@project/common/platform/user';
+import { PaymentMapCollection, PaymentTransactionMapCollection } from '@core/lib/payment';
 
 @Component({
     selector: 'company-container',

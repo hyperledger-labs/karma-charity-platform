@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import * as _ from 'lodash';
-import { CompanyService } from '../../../core/service';
+import { CompanyService } from '@core/service';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyGuard implements CanActivate {

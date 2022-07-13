@@ -1,0 +1,18 @@
+{
+    "version": "1.0.0-7",
+    "versionDate": "2022-07-12T14:30:00.995Z",
+    "language": "ru",
+    "languages": "ru|Русский",
+    "assetsUrl": "assets/",
+    "apiUrl": "http://localhost:3005",
+    "explorerUrl": "https://karma-explorer.karma.n-t.io",
+
+    "theme": "light",
+    "themes": [
+        {
+            "name": "light",
+            "isDark": false,
+            "styles": {}
+        }
+    ]
+}

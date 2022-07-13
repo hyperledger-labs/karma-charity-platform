@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 import { LanguageService } from '@ts-core/frontend/language';
 import { FinancePipe, PrettifyPipe } from '@ts-core/angular';
 import { MathUtil } from '@ts-core/common/util';
-import { LedgerCoinId } from 'common/ledger/coin';
+import { LedgerCoinId } from '@project/common/ledger/coin';
 import { Payment } from '@project/common/platform/payment';
-import { AmountPipe } from '../../../shared/pipe';
+import { AmountPipe } from '@shared/pipe';
 
 @Pipe({
     name: 'paymentAmount'

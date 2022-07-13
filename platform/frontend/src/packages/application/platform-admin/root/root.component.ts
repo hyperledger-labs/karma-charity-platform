@@ -7,18 +7,18 @@ import { ApplicationComponent, ViewUtil, WindowService } from '@ts-core/angular'
 import { TransportHttpCommandAsync } from '@ts-core/common/transport/http';
 import { LanguageService } from '@ts-core/frontend/language';
 import { ThemeService } from '@ts-core/frontend/theme';
-import { RouterService, SettingsService } from '../../module/core/service';
+import { RouterService, SettingsService } from '@core/service';
 import { Language } from '@ts-core/language';
 import { takeUntil, filter, map, merge, delay } from 'rxjs';
 import { RouteConfigLoadEnd, RouteConfigLoadStart } from '@angular/router';
-import { LoginService, CompanyService, UserService } from '../../module/core/service';
+import { LoginService, CompanyService, UserService } from '@core/service';
 import { Client } from '@common/platform/api';
 import 'numeral/locales/ru';
 import 'moment/locale/ru';
 import { ExtendedError } from '@ts-core/common/error';
 import { Transport } from '@ts-core/common/transport';
-import { ProfileQuizOpenCommand } from '../../module/feature/profile-quiz/transport';
-import { CompanyAddCommand } from '../../module/feature/company/transport';
+import { ProfileQuizOpenCommand } from '@feature/profile-quiz/transport';
+import { CompanyAddCommand } from '@feature/company/transport';
 
 @Component({
     selector: 'root',

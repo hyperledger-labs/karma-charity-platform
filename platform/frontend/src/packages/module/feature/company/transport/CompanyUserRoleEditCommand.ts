@@ -1,4 +1,4 @@
-import { UserCompany } from 'common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 import { TransportCommandAsync } from '@ts-core/common/transport';
 
 export class CompanyUserRoleEditCommand extends TransportCommandAsync<ICompanyUserRoleEditDto, ICompanyUserRoleEditDtoResponse> {

@@ -1,4 +1,4 @@
-import { IUserEditDtoResponse } from 'common/platform/api/user';
+import { IUserEditDtoResponse } from '@project/common/platform/api/user';
 import { UserUid } from '@ts-core/angular';
 import { TransportCommandAsync } from '@ts-core/common/transport';
 

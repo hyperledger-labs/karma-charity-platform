@@ -3,14 +3,14 @@ import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUti
 import * as _ from 'lodash';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { ProjectUser } from '@project/common/platform/project/ProjectUser';
-import { PipeService, UserService } from '../../../../core/service';
+import { PipeService, UserService } from '@core/service';
 import { Transport } from '@ts-core/common/transport';
 import { Project, ProjectFileAllowExtensions, ProjectFileType } from '@project/common/platform/project';
-import { FileMapCollection, FileTableSettings } from '../../../../core/lib/file';
+import { FileMapCollection, FileTableSettings } from '@core/lib/file';
 import { File, FileLinkType } from '@project/common/platform/file';
-import { FileUploadCommand, FileOpenCommand } from '../../../file/transport';
+import { FileUploadCommand, FileOpenCommand } from '@feature/file/transport';
 import { ProjectFileMenu } from '../../service';
-import { UserProject } from 'common/platform/user';
+import { UserProject } from '@project/common/platform/user';
 
 @Component({
     selector: 'project-files',

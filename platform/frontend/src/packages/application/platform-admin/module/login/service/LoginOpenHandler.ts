@@ -4,9 +4,9 @@ import { Logger } from '@ts-core/common/logger';
 import { PromiseHandler } from '@ts-core/common/promise';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
-import { LoginContainerComponent } from '../../../../../module/feature/login/component';
+import { LoginContainerComponent } from '@feature/login/component';
 import { takeUntil } from 'rxjs';
-import { LoginOpenCommand, ILoginOpenDtoResponse } from '../../../../../module/feature/login/transport';
+import { LoginOpenCommand, ILoginOpenDtoResponse } from '@feature/login/transport';
 
 @Injectable({ providedIn: 'root' })
 export class LoginOpenHandler extends TransportCommandAsyncHandler<void, ILoginOpenDtoResponse, LoginOpenCommand> {

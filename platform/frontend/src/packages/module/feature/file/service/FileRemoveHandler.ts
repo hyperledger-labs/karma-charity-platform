@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { NotificationService, WindowService } from '@ts-core/angular';
 import { Logger } from '@ts-core/common/logger';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';

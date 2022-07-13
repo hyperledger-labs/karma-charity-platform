@@ -1,6 +1,6 @@
 import { Component, EventEmitter, ElementRef, Output, Input } from '@angular/core';
 import { Destroyable } from '@ts-core/common';
-import { RouterService } from '../../../../../../module/core/service';
+import { RouterService } from '@core/service';
 import { ViewUtil } from '@ts-core/angular';
 import { Transport } from '@ts-core/common/transport';
 import { Client } from '@common/platform/api';

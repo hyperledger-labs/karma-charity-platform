@@ -1,9 +1,8 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { IWindowContent, ViewUtil, WindowService } from '@ts-core/angular';
-import { LoginService } from '../../../../core/service';
+import { LoginService } from '@core/service';
 import { ISerializable } from '@ts-core/common';
 import { takeUntil } from 'rxjs';
-import { FacebookLoginProvider, GoogleLoginProvider, VKLoginProvider } from '@abacritt/angularx-social-login';
 import { LoginResource } from '@common/platform/api/login';
 
 @Component({
@@ -33,11 +32,12 @@ export class LoginContainerComponent extends IWindowContent implements ISerializ
     //
     //--------------------------------------------------------------------------
 
-    private async loginSocial(providerId: string, resource: LoginResource): Promise<void> {
+    private async loginSocial(resource: LoginResource): Promise<void> {
         try {
-            await this.service.loginSocial(providerId, resource);
+            await this.service.loginSocial(resource);
         } catch (error: any) {
             this.windows.info(error.message);
+            this.shake();
         }
     }
 
@@ -48,15 +48,11 @@ export class LoginContainerComponent extends IWindowContent implements ISerializ
     //--------------------------------------------------------------------------
 
     public async vk(): Promise<void> {
-        return this.loginSocial(VKLoginProvider.PROVIDER_ID, LoginResource.VK);
+        return this.loginSocial(LoginResource.VK);
     }
 
     public async google(): Promise<void> {
-        return this.loginSocial(GoogleLoginProvider.PROVIDER_ID, LoginResource.GOOGLE);
-    }
-
-    public async facebook(): Promise<void> {
-        return this.loginSocial(FacebookLoginProvider.PROVIDER_ID, LoginResource.FACEBOOK);
+        return this.loginSocial(LoginResource.GOOGLE);
     }
 
     public serialize(): boolean {

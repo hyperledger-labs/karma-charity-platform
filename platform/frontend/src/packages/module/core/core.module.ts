@@ -33,7 +33,6 @@ import { TRANSPORT_LAZY_MODULES } from './core.lazy.modules';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { DateUtil } from '@ts-core/common/util';
 import { Client } from '@common/platform/api';
-import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from '@abacritt/angularx-social-login';
 import { UserMapCollection } from './lib/user';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -57,7 +56,6 @@ const modules = [
     HammerModule,
     RouterModule,
 
-    SocialLoginModule,
     VIComponentModule,
 
     // Have to import it here, even if it's not using in core
@@ -73,8 +71,11 @@ const modules = [
 //
 //--------------------------------------------------------------------------
 
-function initializerFactory(settings: SettingsService): () => Promise<void> {
-    return () => settings.load();
+function initializerFactory(settings: SettingsService, router: RouterBaseService, api: Client): () => Promise<void> {
+    return async () => {
+        await settings.load('config.json', router.getParams());
+        api.url = settings.apiUrl;
+    }
 }
 
 function transportFactory(logger: ILogger, loader: LazyModuleLoader<ITransportLazyModuleData>): Transport {
@@ -83,23 +84,10 @@ function transportFactory(logger: ILogger, loader: LazyModuleLoader<ITransportLa
     return item;
 }
 
-function clientFactory(logger: ILogger, settings: SettingsService): Client {
-    let item = new Client(logger, settings.apiUrl);
+function clientFactory(logger: ILogger): Client {
+    let item = new Client(logger);
     item.level = LoggerLevel.NONE;
     return item;
-}
-
-
-function socialAuthServiceConfigFactory(settings: SettingsService): SocialAuthServiceConfig {
-    return {
-        autoLogin: false,
-        providers: [
-            {
-                id: GoogleLoginProvider.PROVIDER_ID,
-                provider: new GoogleLoginProvider(settings.googleClientId, { scope: 'email' })
-            }
-        ]
-    };
 }
 
 class HammerConfig extends HammerGestureConfig {
@@ -115,20 +103,15 @@ class HammerConfig extends HammerGestureConfig {
 @NgModule({
     imports: [
         ...modules,
-        VICommonModule.forRoot({ languageOptions: { name: 'platform-admin-language' }, themeOptions: { name: 'platform-admin-theme' } }),
+        VICommonModule.forRoot({ languageOptions: { name: 'platform-payment-widget-language' }, themeOptions: { name: 'platform-payment-widget-theme' } }),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerWhenStable:30000' })
     ],
     providers: [
         {
             provide: APP_INITIALIZER,
-            deps: [SettingsService, InitializerService],
+            deps: [SettingsService, RouterBaseService, Client, InitializerService],
             useFactory: initializerFactory,
             multi: true
-        },
-        {
-            provide: 'SocialAuthServiceConfig',
-            deps: [SettingsService],
-            useFactory: socialAuthServiceConfigFactory
         },
 
         { provide: Client, deps: [Logger, SettingsService], useFactory: clientFactory },

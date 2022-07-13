@@ -4,19 +4,25 @@
     "license": "MIT",
     "author": "Renat Gubaev",
     "scripts": {
+        "start1": "npm run platform-payment-widget:serve",
         "start": "npm run platform-admin:serve",
         "build": "npm run platform-admin:build",
+        "version": "npm run platform-admin:version && npm run platform-payment-widget:version",
         "platform-admin:serve": "ng serve platform-admin",
         "platform-admin:build": "ng build platform-admin --configuration production",
         "platform-admin:version": "RELEASE=prerelease SOURCE=htdocs/platform-admin/config.json node $(node -e \"console.log(require.resolve('node-version-incrementer'))\") && git add htdocs/platform-admin/config.json",
+
+        "platform-payment-widget:serve": "ng serve platform-payment-widget",
+        "platform-payment-widget:build": "ng build platform-payment-widget --configuration production",
+        "platform-payment-widget:version": "RELEASE=prerelease SOURCE=htdocs/platform-payment-widget/config.json node $(node -e \"console.log(require.resolve('node-version-incrementer'))\") && git add htdocs/platform-payment-widget/config.json",
+
         "submodules:update": "git submodule init && git submodule update"
     },
     "pre-commit": [
-        "platform-admin:version"
+        "version"
     ],
     "private": true,
     "dependencies": {
-        "@abacritt/angularx-social-login": "^1.0.2",
         "@angular/animations": "^13.3.2",
         "@angular/cdk": "^13.3.2",
         "@angular/cli": "^13.3.2",
@@ -32,11 +38,11 @@
         "@angular/service-worker": "^13.3.2",
         "@ckeditor/ckeditor5-angular": "^4.0.0",
         "@nguniversal/express-engine": "^13.1.0",
-        "@project/common": "file:./../../common/",
-        "@ts-core/angular": "^13.0.28",
-        "@ts-core/common": "^2.0.6",
+        "@project/common": "file:./src/externals/common/",
+        "@ts-core/angular": "^13.0.65",
+        "@ts-core/common": "^2.0.8",
         "@ts-core/crypto-gost": "^2.0.1",
-        "@ts-core/frontend": "^2.0.3",
+        "@ts-core/frontend": "^2.0.9",
         "@types/numeral": "^2.0.2",
         "bootstrap": "^5.1.3",
         "classlist.js": "^1.1.20150312",
@@ -44,8 +50,8 @@
         "csshake": "^1.5.3",
         "express": "^4.17.3",
         "hammerjs": "^2.0.8",
-        "interactjs": "^1.10.11",
-        "moment": "^2.29.4",
+        "interactjs": "1.10.11",
+        "moment": "^2.29.2",
         "ng2-file-upload": "^1.4.0",
         "ngx-cookie": "^4.0.1",
         "ngx-image-cropper": "^6.1.0",

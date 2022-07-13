@@ -1,14 +1,14 @@
 import { Component, Input, ViewContainerRef } from '@angular/core';
 import { SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { PipeService, UserService, CkeditorService } from '../../../../core/service';
+import { PipeService, UserService, CkeditorService } from '@core/service';
 import * as _ from 'lodash';
 import { ProjectPreferences, ProjectTag, ProjectStatus } from '@common/platform/project';
 import { ISerializable } from '@ts-core/common';
 import { IProjectEditDto } from '@common/platform/api/project';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
-import { UserProject } from 'common/platform/user';
+import { UserProject } from '@project/common/platform/user';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
-import Editor from '../../../ckeditor/script/ckeditor.js';
+import Editor from '@feature/ckeditor/script/ckeditor.js';
 
 @Component({
     selector: 'project-edit',

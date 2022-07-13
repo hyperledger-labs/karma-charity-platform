@@ -3,7 +3,7 @@ import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings, Pre
 import { IPagination } from '@ts-core/common/dto';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
-import { PipeService, UserService } from '../../service';
+import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
 import { TransformUtil } from '@ts-core/common/util';
 import { PaymentStatus } from '@project/common/platform/payment';

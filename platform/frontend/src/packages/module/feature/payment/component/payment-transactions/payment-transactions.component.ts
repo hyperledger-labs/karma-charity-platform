@@ -2,15 +2,15 @@ import { Component, Input, ViewContainerRef } from '@angular/core';
 import { ICdkTableCellEvent, ICdkTableSettings, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { PaymentBaseComponent } from '../PaymentBaseComponent';
-import { PaymentTransactionMapCollection, PaymentTransactionTableSettings } from '../../../../core/lib/payment';
-import { PipeService, UserService } from '../../../../core/service';
+import { PaymentTransactionMapCollection, PaymentTransactionTableSettings } from '@core/lib/payment';
+import { PipeService, UserService } from '@core/service';
 import { Transport } from '@ts-core/common/transport';
 import { Payment, PaymentTransaction } from '@project/common/platform/payment';
 import { PaymentOpenCommand } from '../../transport';
 import { FilterableConditions } from '@ts-core/common/dto';
 import { ObjectUtil } from '@ts-core/common/util';
-import { CompanyOpenCommand } from '../../../company/transport';
-import { ProjectOpenCommand } from '../../../project/transport';
+import { CompanyOpenCommand } from '@feature/company/transport';
+import { ProjectOpenCommand } from '@feature/project/transport';
 
 @Component({
     selector: 'payment-transactions',

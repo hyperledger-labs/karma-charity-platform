@@ -3,7 +3,7 @@ import { ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { Project } from '@common/platform/project';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
-import { UserProject } from 'common/platform/user';
+import { UserProject } from '@project/common/platform/user';
 
 @Component({
     selector: 'project-details',

@@ -1,18 +1,18 @@
 <div class="flex-grow-1 row g-0">
-    <div class="col-12">
+    <div class="col-12" *ngIf="paymentAggregator">
         <mat-form-field class="d-block">
-            <mat-placeholder [vi-translate]="'payment.transaction.coinId'"></mat-placeholder>
-            <mat-select #coinIdInput="ngModel" name="coinId" [(ngModel)]="coinIds.selectedItem" required>
-                <mat-option *ngFor="let item of coinIds.collection" [value]="item" [innerHTML]="item.label"></mat-option>
+            <mat-placeholder [vi-translate]="'paymentWidget.coinId'"></mat-placeholder>
+            <mat-select #coinIdInput="ngModel" name="coinId" [(ngModel)]="paymentAggregator.coinId" required>
+                <mat-option *ngFor="let item of coinIds.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
             </mat-select>
             <mat-error *ngIf="!(coinIdInput.valid || !coinIdInput.touched)" [innerHTML]="coinIdInput.errors | viNgModelError"></mat-error>
         </mat-form-field>
     </div>
-    <div class="col-12">
+    <div class="col-12" *ngIf="paymentAggregator">
         <mat-form-field class="d-block">
-            <mat-placeholder [vi-translate]="'payment.transaction.amount'"></mat-placeholder>
-            <mat-select #amountInput="ngModel" name="amount" [(ngModel)]="amounts.selectedItem" required>
-                <mat-option *ngFor="let item of amounts.collection" [value]="item" [innerHTML]="item.label"></mat-option>
+            <mat-placeholder [vi-translate]="'paymentWidget.amount'"></mat-placeholder>
+            <mat-select #amountInput="ngModel" name="amount" [(ngModel)]="paymentAggregator.amount" required>
+                <mat-option *ngFor="let item of amounts.collection" [value]="item.data" [innerHTML]="item.label"></mat-option>
             </mat-select>
             <mat-error *ngIf="!(amountInput.valid || !amountInput.touched)" [innerHTML]="amountInput.errors | viNgModelError"></mat-error>
         </mat-form-field>
@@ -20,7 +20,7 @@
 
     <div class="col-12 d-flex justify-content-center">
         <button class="flex-grow-1" mat-raised-button color="primary" (click)="submit()">
-            <span [vi-translate]="'payment.payment'"></span>
+            <span [vi-translate]="'paymentWidget.payment'"></span>
         </button>
     </div>
     

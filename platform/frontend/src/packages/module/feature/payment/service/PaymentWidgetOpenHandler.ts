@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Logger } from '@ts-core/common/logger';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
-import { Client } from '@common/platform/api';
 import { PaymentWidgetOpenCommand } from '../transport';
 import { IPaymentWidgetOpenDto, IPaymentWidgetOpenDtoResponse } from '../transport';
 import { PaymentService } from './PaymentService';
@@ -15,7 +14,7 @@ export class PaymentWidgetOpenHandler extends TransportCommandAsyncHandler<IPaym
     //
     // --------------------------------------------------------------------------
 
-    constructor(transport: Transport, logger: Logger, private api: Client, private service: PaymentService) {
+    constructor(transport: Transport, logger: Logger, private service: PaymentService) {
         super(logger, transport, PaymentWidgetOpenCommand.NAME);
     }
 

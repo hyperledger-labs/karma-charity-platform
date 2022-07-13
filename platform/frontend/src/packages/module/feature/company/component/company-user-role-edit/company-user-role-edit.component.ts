@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { PipeService } from '../../../../core/service';
+import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { } from '@common/platform/company';
@@ -8,12 +8,12 @@ import { Transport } from '@ts-core/common/transport';
 import {
     CompanyPreferences
 } from '@project/common/platform/company';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
 import { ICompanyUserRoleEditDtoResponse } from '../../transport';
-import { UserCompany } from 'common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 import { CompanyUser } from '@project/common/platform/company';
-import { LedgerCompanyRole } from 'common/ledger/role';
+import { LedgerCompanyRole } from '@project/common/ledger/role';
 import { ICompanyUserRoleSetDto } from '@project/common/platform/api/company';
 
 @Component({

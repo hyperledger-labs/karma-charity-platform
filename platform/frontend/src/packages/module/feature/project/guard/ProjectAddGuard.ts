@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, UrlTree } from '@angular/router';
 import * as _ from 'lodash';
-import { CompanyService } from '../../../core/service';
+import { CompanyService } from '@core/service';
 import { CompanyUtil } from '@project/common/platform/company';
 
 @Injectable({ providedIn: 'root' })

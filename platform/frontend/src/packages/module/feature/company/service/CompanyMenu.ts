@@ -3,10 +3,10 @@ import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Transport } from '@ts-core/common/transport';
-import { UserService } from '../../../core/service';
-import { UserCompany } from 'common/platform/user';
+import { UserService } from '@core/service';
+import { UserCompany } from '@project/common/platform/user';
 import { CompanyVerifyCommand, CompanyToVerifyCommand, CompanyRejectCommand, CompanyActivateCommand, CompanyEditCommand } from '../transport';
-import { ProjectAddCommand } from '../../project/transport';
+import { ProjectAddCommand } from '@feature/project/transport';
 import { CompanyUtil } from '@project/common/platform/company';
 
 @Injectable({ providedIn: 'root' })

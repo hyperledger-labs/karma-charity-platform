@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, NgModuleRef } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { TransportLazyModule } from '@ts-core/angular';
 import { CompanyAddHandler, CompanyUserAddHandler, CompanyToVerifyHandler, CompanyUserRoleEditHandler, CompanyVerifyHandler, CompanyRejectHandler, CompanyActivateHandler } from './service';
 import { Transport } from '@ts-core/common/transport';
@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { CompanyAddComponent, CompanyUserRoleEditComponent, CompanyUsersComponent, CompanyNalogPreferencesComponent, CompanyContainerComponent, CompanyDetailsComponent, CompanyUserAddComponent, CompanyEditComponent } from './component';
 import { CompanyOpenHandler } from './service/CompanyOpenHandler';
-import { PaymentModule } from '../payment';
+import { PaymentModule } from '@feature/payment';
 import { CompanyEditHandler } from './service/CompanyEditHandler';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 

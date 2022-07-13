@@ -33,7 +33,7 @@ const fs = require('fs');
 let path = `${directory}/config.json`;
 let config = JSON.parse(fs.readFileSync(path, 'utf8'));
 let isChanged = false;
-let envKeys = ['API_URL', 'USER'];
+let envKeys = ['API_URL', 'USER', 'GOOGLE_REDIRECT_URI'];
 for (let key of envKeys) {
     let value = process.env[key];
     key = _.camelCase(key);

@@ -2,15 +2,15 @@ import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
-import { CompanyUserMapCollection, CompanyUserTableSettings } from '../../../../core/lib/company';
+import { CompanyUserMapCollection, CompanyUserTableSettings } from '@core/lib/company';
 import { CompanyUser } from '@project/common/platform/company/CompanyUser';
-import { PipeService, UserService } from '../../../../core/service';
+import { PipeService, UserService } from '@core/service';
 import { CompanyUserMenu } from '../../service';
-import { UserOpenCommand } from '../../../user/transport';
+import { UserOpenCommand } from '@feature/user/transport';
 import { Transport } from '@ts-core/common/transport';
 import { Company, CompanyUtil } from '@project/common/platform/company';
-import { UserCompany } from 'common/platform/user';
-import { PermissionUtil } from 'common/util';
+import { UserCompany } from '@project/common/platform/user';
+import { PermissionUtil } from '@project/common/util';
 import { CompanyUserAddCommand } from '../../transport';
 
 @Component({

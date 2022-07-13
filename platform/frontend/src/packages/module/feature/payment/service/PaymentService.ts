@@ -1,10 +1,10 @@
 import { Logger, LoggerWrapper } from '@ts-core/common/logger';
 import * as _ from 'lodash';
-import { Transport } from '@ts-core/common/transport';
 import { Injectable } from '@angular/core';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import { PaymentAggregatorManager } from '../lib';
 import { CloudPaymentsAggregator } from '../lib/aggregator';
+import { NativeWindowService } from '@ts-core/frontend/service';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService extends LoggerWrapper {
@@ -22,10 +22,10 @@ export class PaymentService extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private transport: Transport) {
+    constructor(logger: Logger, nativeWindow: NativeWindowService) {
         super(logger);
         this.aggregators = new Map();
-        this.aggregators.set(PaymentAggregatorType.CLOUD_PAYMENTS, new CloudPaymentsAggregator());
+        this.aggregators.set(PaymentAggregatorType.CLOUD_PAYMENTS, new CloudPaymentsAggregator(nativeWindow));
     }
 
     // --------------------------------------------------------------------------

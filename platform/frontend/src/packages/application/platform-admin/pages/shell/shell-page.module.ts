@@ -8,8 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { ShellHeaderComponent } from './component/shell-header/shell-header.component';
 import { ShellMenu } from './service';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { SharedModule } from '../../../../module/shared/shared.module';
-import { ProfileModule } from '../../../../module/feature/profile';
+import { SharedModule } from '@shared/shared.module';
+import { ProfileModule } from '@feature/profile';
 
 @NgModule({
     imports: [

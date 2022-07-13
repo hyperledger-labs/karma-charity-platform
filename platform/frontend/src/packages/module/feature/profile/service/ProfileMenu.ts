@@ -3,12 +3,12 @@ import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { ListItems, IListItem, ListItem } from '@ts-core/angular';
-import { LoginService, UserService } from '../../../core/service';
+import { LoginService, UserService } from '@core/service';
 import { Transport } from '@ts-core/common/transport';
-import { LoginOpenCommand } from '../../login/transport';
+import { LoginOpenCommand } from '@feature/login/transport';
 import { merge } from 'rxjs';
 import { takeUntil } from 'rxjs';
-import { UserEditCommand } from '../../user/transport';
+import { UserEditCommand } from '@feature/user/transport';
 
 @Injectable()
 export class ProfileMenu extends ListItems<IListItem<void>> {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { UsersPageRoutingModule } from './users-page.routing.module';
 import { UsersPageComponent } from './users-page.component';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '../../module/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({

@@ -1,0 +1,24 @@
+{
+    "login": {
+        "login": {
+            "login": "Войти",
+            "description": "Вы можете войти, используя один из предложенных ниже способов, это даст вам дополнительные возможности и доступ к новым разделам."
+        },
+        "logout": {
+            "logout": "Выйти",
+            "confirmation": "Вы точно хотите выйти?"
+        },
+        "isNotLoggedIn": {
+            "isNotLoggedIn": "Уже есть аккаунт?",
+            "description": "Войти..."
+        },
+        "resource": {
+            "GOOGLE": "Google",
+            "FACEBOOK": "Facebook",
+            "VK": "VK"
+        }
+    },
+    "error": {
+        "unauthorized": "Необходимо войти в систему"
+    }
+}

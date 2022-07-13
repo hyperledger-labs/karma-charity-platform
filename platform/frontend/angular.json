@@ -52,7 +52,7 @@
                             "node_modules/csshake/dist/csshake-horizontal.css",
 
                             "htdocs/common/assets/font/awesome/css/all.css",
-                            "htdocs/platform-admin/assets/font/google/roboto/all.css",
+                            "htdocs/common/assets/font/google/roboto/all.css",
 
                             "src/packages/module/feature/ckeditor/style/ckeditor.css",
                             "src/packages/application/platform-admin/style/preloader.css",
@@ -76,7 +76,7 @@
                             "aot": false,
                             "optimization": false,
                             "buildOptimizer": false,
-                            "vendorChunk": false,
+                            "vendorChunk": true,
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": false
@@ -113,6 +113,97 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "platform-admin:build:production"
+                        }
+                    }
+                }
+            }
+        },
+        "platform-payment-widget": {
+            "root": "src/packages/application/platform-payment-widget",
+            "sourceRoot": "src/packages/application/platform-payment-widget",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "sass"
+                },
+                "@schematics/angular:application": {
+                    "strict": true
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "build/platform-payment-widget",
+                        "index": "src/packages/application/platform-payment-widget/index.html",
+                        "main": "src/packages/application/platform-payment-widget/main.ts",
+                        "polyfills": "polyfills.ts",
+                        "aot": true,
+                        "tsConfig": "src/packages/application/platform-payment-widget/tsconfig.json",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@ts-core/angular/asset/language",
+                                "output": "/assets/language"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/common",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/platform-payment-widget",
+                                "output": "/"
+                            }
+                        ],
+                        "styles": [],
+                        "scripts": [],
+                        "allowedCommonJsDependencies": ["validator"]
+                    },
+                    "configurations": {
+                        "development": {
+                            "aot": false,
+                            "optimization": false,
+                            "buildOptimizer": false,
+                            "vendorChunk": false,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": false
+                        },
+                        "production": {
+                            "optimization": true,
+                            "outputHashing": "none",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": false,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "10mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "platform-payment-widget:build:development"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "platform-payment-widget:build:production"
                         }
                     }
                 }

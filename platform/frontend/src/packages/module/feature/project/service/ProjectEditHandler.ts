@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { IProjectEditDtoResponse } from '@project/common/platform/api/project';
 import { UserUid, WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
 import { Logger } from '@ts-core/common/logger';
@@ -7,7 +7,7 @@ import { PromiseHandler } from '@ts-core/common/promise';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
 import { takeUntil } from 'rxjs';
-import { ProjectService } from '../../../core/service';
+import { ProjectService } from '@core/service';
 import { ProjectEditComponent } from '../component';
 import { ProjectEditCommand } from '../transport';
 

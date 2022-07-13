@@ -1,2 +1,2 @@
 export * from './PaymentAggregatorManager';
-export * from './ScriptLoader';
+export * from './PaymentReferenceLoader';

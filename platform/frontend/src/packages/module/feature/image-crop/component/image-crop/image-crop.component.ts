@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewContainerRef } from '@angul
 import { IWindowContent, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
-import { Uploader, UploaderFile } from '../../../file/lib';
+import { Uploader, UploaderFile } from '@feature/file/lib';
 import { takeUntil } from 'rxjs';
 import { ISerializable } from '@ts-core/common';
 import { Base64Source } from '../../../file/lib/base64';

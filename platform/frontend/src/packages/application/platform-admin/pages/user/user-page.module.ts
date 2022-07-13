@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { UserPageRoutingModule } from './user-page.routing.module';
 import { UserPageComponent } from './user-page.component';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '../../../../module/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
-import { UserModule } from '../../../../module/feature/user';
+import { UserModule } from '@feature/user';
 
 @NgModule({
     imports: [CommonModule, MatButtonModule, MatMenuModule, SharedModule, UserPageRoutingModule, UserModule],
