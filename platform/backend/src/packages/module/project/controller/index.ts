@@ -1,6 +1,7 @@
 export * from './ProjectGetController';
 export * from './ProjectAddController';
 export * from './ProjectListController';
+export * from './ProjectEditController';
 export * from './ProjectRejectController';
 export * from './ProjectVerifyController';
 export * from './ProjectUserListController';
@@ -8,3 +9,4 @@ export * from './ProjectActivateController';
 export * from './ProjectToVerifyController';
 export * from './ProjectUserRoleGetController';
 export * from './ProjectUserRoleSetController';
+export * from './ProjectReportSubmitController';

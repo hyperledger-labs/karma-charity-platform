@@ -10,6 +10,7 @@ import { DateUtil } from '@ts-core/common/util';
 // import { TransportCryptoManagerRSA } from '@ts-core/crypto-rsa/transport';
 import { PromiseHandler } from "@ts-core/common/promise";
 import { CryptoLedgerSignCommand } from '@project/module/crypto/transport';
+import { User } from '@project/common/platform/user';
 
 export class LedgerApiClient extends CommonLedgerApiClient {
 
@@ -50,16 +51,17 @@ export class LedgerApiClient extends CommonLedgerApiClient {
             return item;
         }
         options = item.options;
-        options['userId'] = this.signer.uid;
+
+        let uid = _.isString(this.signer.uid) ? this.signer.uid : this.signer.uid.ledgerUid;
+        options['userId'] = uid;
         options['signature'] = await this.transport.sendListen(new CryptoLedgerSignCommand({
-            uid: this.signer.uid,
-            isDisableDecryption: this.signer.isDisableDecryption,
-            command
+            uid, command, isDisableDecryption: this.signer.isDisableDecryption,
         }));
+        
         if (!this.signer.isKeepAfterSigning) {
             this.setSigner(null);
         }
-        this.batch();
+        // this.batch();
         return item;
     }
 
@@ -85,6 +87,7 @@ export class LedgerApiClient extends CommonLedgerApiClient {
         return item;
     }
 
+    /*
     public async batch(delay: number = 3000): Promise<void> {
         if (delay > 0) {
             await PromiseHandler.delay(delay);
@@ -103,6 +106,7 @@ export class LedgerApiClient extends CommonLedgerApiClient {
         await this.ledgerRequestSendListen(command, options, 'Karma');
         this.signer = signer;
     }
+    */
 
     public setSigner(settings: ISignerSettings): void {
         this.signer = settings;
@@ -110,7 +114,7 @@ export class LedgerApiClient extends CommonLedgerApiClient {
 }
 
 export interface ISignerSettings {
-    uid: string;
+    uid: string | User;
     isKeepAfterSigning?: boolean;
     isDisableDecryption?: boolean;
 }

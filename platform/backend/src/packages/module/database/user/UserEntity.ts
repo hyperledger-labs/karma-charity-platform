@@ -4,15 +4,16 @@ import { CompanyUser } from '@project/common/platform/company';
 import { ProjectUser } from '@project/common/platform/project';
 import { User, UserStatus, UserType } from '@project/common/platform/user';
 import { UserRoleEntity } from '@project/module/database/user';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
 import { INotifable } from '@ts-core/notification';
-import { Exclude, Transform } from 'class-transformer';
+import { Exclude, Expose, ClassTransformOptions, Type } from 'class-transformer';
 import { ValidateNested, Matches, IsDefined, IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
-import { Column, CreateDateColumn, JoinColumn, OneToMany, Entity, Index, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, BeforeUpdate, BeforeInsert, JoinColumn, OneToMany, Entity, Index, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CompanyEntity } from '../company';
 import { PaymentEntity } from '../payment';
 import { ProjectEntity } from '../project/ProjectEntity';
+import { TransformGroup } from '../TransformGroup';
 import { UserCryptoKeyEntity } from './UserCryptoKeyEntity';
 import { UserPreferencesEntity } from './UserPreferencesEntity';
 
@@ -34,11 +35,13 @@ export class UserEntity implements User, INotifable {
     @IsString()
     public uid: string;
 
+    @Expose({ groups: [TransformGroup.PRIVATE] })
     @Column()
     @Index({ unique: true })
     @IsString()
     public login: string;
 
+    @Expose({ groups: [TransformGroup.PRIVATE] })
     @Column({ type: 'varchar' })
     @IsEnum(LoginResource)
     public resource: LoginResource;
@@ -47,6 +50,7 @@ export class UserEntity implements User, INotifable {
     @IsEnum(UserType)
     public type: UserType;
 
+    @Expose({ groups: [TransformGroup.PRIVATE] })
     @Column({ type: 'varchar' })
     @IsEnum(UserStatus)
     public status: UserStatus;
@@ -57,22 +61,14 @@ export class UserEntity implements User, INotifable {
     @Matches(LedgerUser.UID_REGXP)
     public ledgerUid?: string;
 
+    @Expose({ groups: [TransformGroup.PRIVATE] })
     @CreateDateColumn({ name: 'created_date' })
     public createdDate: Date;
 
+    @Expose({ groups: [TransformGroup.PRIVATE] })
     @UpdateDateColumn({ name: 'updated_date' })
     public updatedDate: Date;
 
-    /*
-    @Transform(params => (params.value ? params.value.map(item => item.toObject()) : null), { toPlainOnly: true })
-    @OneToMany(() => UserRoleEntity, item => item.user)
-    @IsOptional()
-    @IsArray()
-    @ValidateNested({ each: true })
-    public roles?: Array<UserRoleEntity>;
-    */
-
-    @Transform(params => (params.value ? params.value.toObject() : null), { toPlainOnly: true })
     @OneToOne(
         () => UserPreferencesEntity,
         preferences => preferences.user,
@@ -80,6 +76,7 @@ export class UserEntity implements User, INotifable {
     )
     @IsDefined()
     @ValidateNested()
+    @Type(() => UserPreferencesEntity)
     public preferences: UserPreferencesEntity;
 
     @Exclude()
@@ -90,6 +87,7 @@ export class UserEntity implements User, INotifable {
     )
     @IsDefined()
     @ValidateNested()
+    @Type(() => UserCryptoKeyEntity)
     public cryptoKey: UserCryptoKeyEntity;
 
     @Exclude()
@@ -97,24 +95,27 @@ export class UserEntity implements User, INotifable {
     @IsOptional()
     @ValidateNested()
     @JoinColumn({ name: "company_id" })
+    @Type(() => CompanyEntity)
     public company?: CompanyEntity;
 
     @Exclude()
     @Column({ name: 'company_id', nullable: true })
     @IsOptional()
     @IsNumber()
-    public companyId?: string;
+    public companyId?: number;
 
     @Exclude()
     @OneToMany(() => ProjectEntity, item => item.user)
+    @Type(() => ProjectEntity)
     public projects?: Array<ProjectEntity>;
 
     @Exclude()
     @OneToMany(() => PaymentEntity, item => item.user)
+    @Type(() => PaymentEntity)
     public payments?: Array<PaymentEntity>;
 
     @Exclude()
-    @OneToMany(() => UserRoleEntity, item => item.user)
+    @Type(() => UserRoleEntity)
     public userRoles?: Array<UserRoleEntity>;
 
     // --------------------------------------------------------------------------
@@ -127,24 +128,30 @@ export class UserEntity implements User, INotifable {
         return `${this.login}(${this.notifableUid})`;
     }
 
-    public toObject(): User {
-        return TransformUtil.fromClass<User>(this, { excludePrefixes: ['__'] });
+    public toObject(options?: ClassTransformOptions): User {
+        return TransformUtil.fromClass<User>(this, options);
     }
 
-    public toCompanyObject(): CompanyUser {
-        let item = { ...this.toObject(), roles: [] };
+    public toCompanyObject(options?: ClassTransformOptions): CompanyUser {
+        let item = { ...this.toObject(options), roles: [] };
         if (!_.isEmpty(this.userRoles)) {
             item.roles = this.userRoles.map(item => item.name);
         }
         return item;
     }
 
-    public toProjectObject(): ProjectUser {
-        let item = { ...this.toObject(), roles: [] };
+    public toProjectObject(options?: ClassTransformOptions): ProjectUser {
+        let item = { ...this.toObject(options), roles: [] };
         if (!_.isEmpty(this.userRoles)) {
             item.roles = this.userRoles.map(item => item.name);
         }
         return item;
+    }
+
+    @BeforeUpdate()
+    @BeforeInsert()
+    public validate(): void {
+        ValidateUtil.validate(this);
     }
 
     // --------------------------------------------------------------------------
@@ -156,5 +163,30 @@ export class UserEntity implements User, INotifable {
     @Exclude({ toPlainOnly: true })
     public get notifableUid(): number {
         return this.id;
+    }
+
+    @Exclude({ toPlainOnly: true })
+    public get isDonor(): boolean {
+        return this.type === UserType.DONOR;
+    }
+    @Exclude({ toPlainOnly: true })
+    public get isEditor(): boolean {
+        return this.type === UserType.EDITOR;
+    }
+    @Exclude({ toPlainOnly: true })
+    public get isUndefined(): boolean {
+        return this.type === UserType.UNDEFINED;
+    }
+    @Exclude({ toPlainOnly: true })
+    public get isAdministrator(): boolean {
+        return this.type === UserType.ADMINISTRATOR;
+    }
+    @Exclude({ toPlainOnly: true })
+    public get isCompanyWorker(): boolean {
+        return this.type === UserType.COMPANY_WORKER;
+    }
+    @Exclude({ toPlainOnly: true })
+    public get isCompanyManager(): boolean {
+        return this.type === UserType.COMPANY_MANAGER;
     }
 }

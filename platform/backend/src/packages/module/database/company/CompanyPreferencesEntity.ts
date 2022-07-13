@@ -7,10 +7,12 @@ import {
     COMPANY_PREFERENCES_STRING_MAX_LENGTH,
     COMPANY_PREFERENCES_PICTURE_MAX_LENGTH,
     COMPANY_PREFERENCES_LOCATION_MAX_LENGTH,
+    COMPANY_PREFERENCES_WEBSITE_MAX_LENGTH,
+    COMPANY_PREFERENCES_DESCRIPTION_MIN_LENGTH,
+    COMPANY_PREFERENCES_DESCRIPTION_MAX_LENGTH,
 } from '@project/common/platform/company';
 import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsEmail, IsDate, Length, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { CompanyEntity } from './CompanyEntity';
@@ -68,11 +70,21 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @Column()
     @IsString()
     @MaxLength(COMPANY_PREFERENCES_STRING_MAX_LENGTH)
-    public address: string;;
+    public address: string;
 
     @Column()
     @IsDate()
     public founded: Date;
+
+    @Column()
+    @IsString()
+    @MaxLength(COMPANY_PREFERENCES_PICTURE_MAX_LENGTH)
+    public picture: string;
+
+    @Column()
+    @IsString()
+    @Length(COMPANY_PREFERENCES_DESCRIPTION_MIN_LENGTH, COMPANY_PREFERENCES_DESCRIPTION_MAX_LENGTH)
+    public description: string;
 
     @Column({ nullable: true })
     @IsString()
@@ -89,8 +101,8 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @Column({ nullable: true })
     @IsString()
     @IsOptional()
-    @MaxLength(COMPANY_PREFERENCES_PICTURE_MAX_LENGTH)
-    public picture?: string;
+    @MaxLength(COMPANY_PREFERENCES_WEBSITE_MAX_LENGTH)
+    public website?: string;
 
     @Column({ nullable: true })
     @IsString()
@@ -117,33 +129,14 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @Exclude()
     @OneToOne(() => CompanyEntity, company => company.preferences)
     @JoinColumn({ name: 'company_id' })
+    @Type(() => CompanyEntity)
     public company: CompanyEntity;
-
-    // --------------------------------------------------------------------------
-    //
-    //  Constructor
-    //
-    // --------------------------------------------------------------------------
-
-    constructor(data?: Partial<CompanyPreferences>) {
-        if (!_.isNil(data)) {
-            this.update(data);
-        }
-    }
 
     // --------------------------------------------------------------------------
     //
     //  Public Methods
     //
     // --------------------------------------------------------------------------
-
-    public update(data: Partial<CompanyPreferences>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
-
-    public toObject(): CompanyPreferences {
-        return TransformUtil.fromClass<CompanyPreferences>(this, { excludePrefixes: ['__'] });
-    }
 
     public toGeo(): IGeo {
         if (_.isNil(this.location) || _.isNil(this.latitude) || _.isNil(this.longitude)) {

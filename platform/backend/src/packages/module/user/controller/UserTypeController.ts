@@ -9,11 +9,11 @@ import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { IUserHolder } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common/util';
 import { IUserTypeDto, IUserTypeDtoResponse } from '@project/common/platform/api/user';
 import { User, UserPreferences, UserStatus, UserType } from '@project/common/platform/user';
 import { RequestInvalidError } from '@project/module/core/middleware';
 import { USER_TYPE_URL } from '@project/common/platform/api';
+import { LedgerService } from '@project/module/ledger/service';
 
 // --------------------------------------------------------------------------
 //
@@ -40,7 +40,7 @@ export class UserTypeController extends DefaultController<IUserTypeDto, IUserTyp
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService) {
+    constructor(logger: Logger, private database: DatabaseService, private ledger: LedgerService) {
         super(logger);
     }
 
@@ -56,13 +56,16 @@ export class UserTypeController extends DefaultController<IUserTypeDto, IUserTyp
     @UserGuardOptions({ type: UserType.UNDEFINED })
     public async executeExtended(@Body() params: UserSetDto, @Req() request: IUserHolder): Promise<IUserTypeDtoResponse> {
         let user = request.user;
+
         if (params.type !== UserType.COMPANY_MANAGER && params.type !== UserType.COMPANY_WORKER) {
             throw new RequestInvalidError({ name: 'type', value: params.type, expected: [UserType.COMPANY_MANAGER, UserType.COMPANY_WORKER] })
         }
 
         user.type = params.type;
 
-        user = await this.database.userSave(user);
+        await this.ledger.userAdd(user);
+
+        user = await this.database.user.save(user);
         return user.toObject();
     }
 }

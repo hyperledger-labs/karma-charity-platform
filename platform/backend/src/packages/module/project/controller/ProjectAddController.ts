@@ -1,23 +1,28 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 import { DefaultController } from '@ts-core/backend/controller';
-import { ExtendedError } from '@ts-core/common/error';
 import { Logger } from '@ts-core/common/logger';
-import { IsDefined, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDefined, IsNumber, IsNotEmpty, IsBase64, ValidateNested, IsEnum, MaxLength, Length, IsArray, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
-import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
+import { IUserHolder, UserRoleEntity } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { ObjectUtil, ValidateUtil } from '@ts-core/common/util';
-import { UserType } from '@project/common/platform/user';
-import { COMPANY_URL, PROJECT_URL } from '@project/common/platform/api';
+import { PROJECT_URL } from '@project/common/platform/api';
 import { IProjectAddDto, IProjectAddDtoResponse } from '@project/common/platform/api/project';
-import { Project, ProjectPreferences, ProjectStatus } from '@project/common/platform/project';
+import { Project, ProjectFileType, ProjectPreferences, ProjectPurpose, ProjectStatus, ProjectTag, PROJECT_PREFERENCES_DESCRIPTION_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MIN_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH, PROJECT_PREFERENCES_LOCATION_MAX_LENGTH, PROJECT_PREFERENCES_PICTURE_MAX_LENGTH, PROJECT_PREFERENCES_TAGS_MAX_LENGTH, PROJECT_PREFERENCES_TITLE_MAX_LENGTH, PROJECT_PREFERENCES_TITLE_MIN_LENGTH } from '@project/common/platform/project';
 import { ProjectEntity, ProjectPreferencesEntity } from '@project/module/database/project';
-import { NalogService } from '@project/module/nalog/service';
-import { LedgerCompanyRole, LedgerProjectRole } from '@project/common/ledger/role';
-import { RequestInvalidError } from '@project/module/core/middleware';
+import { LedgerProjectRole } from '@project/common/ledger/role';
+import { ProjectPurposeEntity } from '@project/module/database/project';
+import { TransformGroup } from '@project/module/database';
+import { ProjectUtil as CoreProjectUtil } from '../util';
+import { PROJECT_ADD_ROLE, PROJECT_ADD_TYPE } from '@project/common/platform/project';
+import { TraceUtil } from '@ts-core/common/trace';
+import { FileService } from '@project/module/file/service';
+import { FileEntity } from '@project/module/database/file';
+import { ObjectUtil } from '@ts-core/common/util';
+import { FileLinkType } from '@project/common/platform/file';
 
 // --------------------------------------------------------------------------
 //
@@ -25,11 +30,21 @@ import { RequestInvalidError } from '@project/module/core/middleware';
 //
 // --------------------------------------------------------------------------
 
+class ProjectAddPreferences extends ProjectPreferences {
+    @IsBase64()
+    declare public picture: string;
+}
+
 export class ProjectAddDto implements IProjectAddDto {
-    @ApiPropertyOptional()
-    @IsOptional()
+    @ApiProperty()
+    @IsArray()
+    purposes: Array<ProjectPurpose>;
+
+    @ApiProperty()
     @IsDefined()
-    preferences: Partial<ProjectPreferences>;
+    @ValidateNested()
+    @Type(() => ProjectAddPreferences)
+    preferences: ProjectAddPreferences;
 
     @ApiPropertyOptional()
     @IsOptional()
@@ -39,13 +54,14 @@ export class ProjectAddDto implements IProjectAddDto {
 
 @Controller(PROJECT_URL)
 export class ProjectAddController extends DefaultController<IProjectAddDto, IProjectAddDtoResponse> {
+
     // --------------------------------------------------------------------------
     //
     //  Constructor
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService) {
+    constructor(logger: Logger, private database: DatabaseService, private file: FileService) {
         super(logger);
     }
 
@@ -59,43 +75,54 @@ export class ProjectAddController extends DefaultController<IProjectAddDto, IPro
     @Post()
     @UseGuards(UserGuard)
     @UserGuardOptions({
-        type: [UserType.COMPANY_MANAGER, UserType.COMPANY_WORKER],
+        type: PROJECT_ADD_TYPE,
         company: {
+            role: PROJECT_ADD_ROLE,
             required: true,
-            role: [LedgerCompanyRole.PROJECT_MANAGER]
         }
     })
     public async executeExtended(@Body() params: ProjectAddDto, @Req() request: IUserHolder): Promise<IProjectAddDtoResponse> {
         let user = request.user;
         let company = request.company;
 
-        let project = new ProjectEntity();
-        project.status = ProjectStatus.DRAFT;
-        project.preferences = new ProjectPreferencesEntity(params.preferences);
+        let item = new ProjectEntity();
+        item.status = ProjectStatus.DRAFT;
+        item.accounts = [];
+        item.purposes = [];
+        item.preferences = new ProjectPreferencesEntity();
+        ObjectUtil.copyPartial(params.preferences, item.preferences, null, ['picture']);
+        item.preferences.picture = '';
 
-        project.userId = user.id;
-        project.companyId = company.id;
+        item.userId = user.id;
+        item.companyId = company.id;
 
         await this.database.getConnection().transaction(async manager => {
-            let userRepository = manager.getRepository(UserEntity);
+            let fileRepository = manager.getRepository(FileEntity);
+            let roleRepository = manager.getRepository(UserRoleEntity);
             let projectRepository = manager.getRepository(ProjectEntity);
-            let userRoleRepository = manager.getRepository(UserRoleEntity);
 
-            ValidateUtil.validate(project);
-            project = await projectRepository.save(project);
+            item.purposes = params.purposes.map(purpose => new ProjectPurposeEntity(purpose));
+            CoreProjectUtil.checkRequiredAccounts(item);
 
-            ValidateUtil.validate(user);
-            await userRepository.save(user);
+            item = await projectRepository.save(item);
+            await roleRepository.save(Object.values(LedgerProjectRole).map(name => new UserRoleEntity(user.id, name, null, item.id)));
 
-            project.userRoles = [];
-            for (let role of Object.values(LedgerProjectRole)) {
-                let item = new UserRoleEntity(user.id, role, null, project.id);
+            let picture = await this.file.storage.upload(Buffer.from(params.preferences.picture, 'base64'), `${TraceUtil.generate()}.png`, '/project/');
 
-                ValidateUtil.validate(item);
-                await userRoleRepository.save(item);
-                project.userRoles.push(item);
-            }
+            let file = new FileEntity();
+            ObjectUtil.copyPartial(picture, file);
+            file.type = ProjectFileType.PICTURE;
+            file.linkId = item.id
+            file.linkType = FileLinkType.PROJECT;
+            file.mime = 'image/png';
+            file.extension = 'png';
+            file = await fileRepository.save(file);
+
+            item.preferences.picture = file.path;
+            item = await projectRepository.save(item);
         });
-        return project.toUserObject();
+
+        item = await this.database.projectGet(item.id, request.user);
+        return item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
     }
 }

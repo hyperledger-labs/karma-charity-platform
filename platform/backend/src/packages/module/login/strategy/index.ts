@@ -1,2 +1,2 @@
-export * from './GoogleStrategy';
+export * from './GoogleSiteStrategy';
 export * from './JwtStrategy';

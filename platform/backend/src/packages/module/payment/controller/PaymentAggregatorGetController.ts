@@ -5,20 +5,22 @@ import { Logger } from '@ts-core/common/logger';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { IPaymentAggregatorGetDto, IPaymentAggregatorGetDtoResponse } from '@project/common/platform/api/payment';
-import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
+import { PaymentAggregator } from '@project/common/platform/payment/aggregator';
 import { ValidateNested, IsEnum, IsNumber, IsOptional, IsDefined, IsString } from 'class-validator';
-import { CoinObject, CoinObjectType } from '@project/common/transport/command/coin';
+import { CoinObjectType } from '@project/common/transport/command/coin';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { PAYMENT_AGGREGATOR_URL } from '@project/common/platform/api';
 import { CloudPaymentsCurrency } from '@project/common/platform/payment/aggregator/cloudpayments';
 import { Type } from 'class-transformer';
-import { PaymentUtil } from '../util';
-import { PaymentTarget } from '@project/common/platform/payment';
+import { PaymentTarget, PaymentUtil } from '@project/common/platform/payment';
 import { CompanyEntity } from '@project/module/database/company';
 import { ProjectEntity } from '@project/module/database/project';
 import { UnreachableStatementError } from '@ts-core/common/error';
 import { IUserHolder } from '@project/module/database/user';
+import { Transport } from '@ts-core/common/transport';
+import { CryptoDecryptCommand } from '@project/module/crypto/transport';
+import { CryptoKeyType } from '@project/common/platform/crypto';
 
 // --------------------------------------------------------------------------
 //
@@ -60,12 +62,12 @@ export class PaymentAggregatorGetDtoResponse implements IPaymentAggregatorGetDto
     @ApiPropertyOptional()
     @IsOptional()
     @IsString()
-    currency?: string;
+    coinId?: string;
 
     @ApiPropertyOptional()
     @IsOptional()
     @IsString({ each: true })
-    currencies?: Array<string>;
+    coinIds?: Array<string>;
 
     @ApiProperty()
     @Type(() => PaymentTarget)
@@ -92,7 +94,7 @@ export class PaymentAggregatorGetController extends DefaultController<IPaymentAg
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService) {
+    constructor(logger: Logger, private transport: Transport, private database: DatabaseService) {
         super(logger);
     }
 
@@ -105,6 +107,9 @@ export class PaymentAggregatorGetController extends DefaultController<IPaymentAg
     @Swagger({ name: 'Get payment aggregator by project or company', response: PaymentAggregatorGetDtoResponse, isDisableBearer: true })
     @Get()
     @UseGuards(UserGuard)
+    @UserGuardOptions({
+        required: false
+    })
     public async executeExtended(@Query() params: PaymentAggregatorGetDto, @Req() request: IUserHolder): Promise<IPaymentAggregatorGetDtoResponse> {
         let target: CompanyEntity | ProjectEntity = null;
         let company: CompanyEntity = null;
@@ -116,24 +121,29 @@ export class PaymentAggregatorGetController extends DefaultController<IPaymentAg
             case CoinObjectType.PROJECT:
                 target = await this.database.projectGet(params.id);
                 UserGuard.checkProject({ isProjectRequired: true }, target);
-                company = target.company;
+
+                company = await this.database.companyGet(target.companyId);
                 break;
             default:
                 throw new UnreachableStatementError(params.type);
         }
 
+        UserGuard.checkCompany({ isCompanyRequired: true }, company);
+
+        let userId = !_.isNil(request.user) ? request.user.id : null;
+        let privateKey = await this.transport.sendListen(new CryptoDecryptCommand({ type: CryptoKeyType.DATABASE, value: company.paymentAggregator.key }));
         let item: IPaymentAggregatorGetDtoResponse = {
             amount: 1000,
             amounts: [10, 50, 100, 500, 1000],
-            currency: CloudPaymentsCurrency.RUB,
-            currencies: Object.values(CloudPaymentsCurrency),
+            coinId: CloudPaymentsCurrency.RUB,
+            coinIds: Object.values(CloudPaymentsCurrency),
 
             target: {
                 id: params.id,
                 type: params.type,
                 value: target.toObject()
             },
-            details: PaymentUtil.createDetails({ target: params, userId: request.user.id }),
+            details: PaymentUtil.createDetails(params, privateKey, userId),
             aggregator: company.paymentAggregator.toObject(),
         }
         return item;

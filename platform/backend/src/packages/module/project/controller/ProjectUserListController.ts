@@ -8,12 +8,13 @@ import { IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { Swagger } from '@project/module/swagger';
-import { UserGuard, UserGuardOptions } from '@project/module/guard';
-import { UserProject, UserType } from '@project/common/platform/user';
+import { UserGuard } from '@project/module/guard';
+import { UserProject } from '@project/common/platform/user';
 import { PROJECT_URL } from '@project/common/platform/api';
-import { IUserHolder, UserEntity } from '@project/module/database/user';
+import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
 import { ProjectUser } from '@project/common/platform/project';
-import { LedgerProjectRole } from '@project/common/ledger/role';
+import { TransformGroup } from '@project/module/database';
+import { PROJECT_USER_LIST_ROLE } from '@project/common/platform/project';
 
 // --------------------------------------------------------------------------
 //
@@ -84,33 +85,18 @@ export class ProjectUserListController extends DefaultController<ProjectUserList
     @Swagger({ name: 'Get project users list', response: ProjectUserListDtoResponse })
     @Get()
     @UseGuards(UserGuard)
-    @UserGuardOptions({
-        type: [UserType.ADMINISTRATOR, UserType.COMPANY_MANAGER, UserType.COMPANY_WORKER]
-    })
     public async executeExtended(@Param('id', ParseIntPipe) id: number, @Query({ transform: Paginable.transform }) params: ProjectUserListDto, @Req() request: IUserHolder): Promise<ProjectUserListDtoResponse> {
         let user = request.user;
-        let project = await this.database.projectGet(id, user)
+        let item = await this.database.projectGet(id, user)
 
-        if (user.type !== UserType.ADMINISTRATOR) {
-            UserGuard.checkProject({
-                isProjectRequired: true,
-                projectRole: [LedgerProjectRole.PROJECT_MANAGER, LedgerProjectRole.USER_MANAGER]
-            }, project);
-        }
-        else {
-            UserGuard.checkProject({
-                isProjectRequired: true
-            }, project);
-        }
+        let projectRole = !user.isAdministrator ? PROJECT_USER_LIST_ROLE : null;
+        UserGuard.checkProject({ isProjectRequired: true, projectRole }, item);
 
-        if (_.isNil(params.conditions)) {
-            params.conditions = {};
-        }
         let query = this.database.user.createQueryBuilder('user')
             .innerJoinAndSelect('user.preferences', 'preferences')
-            .innerJoinAndSelect("user.userRoles", 'role', `role.projectId = ${project.id}`)
+            .innerJoinAndMapMany("user.userRoles", UserRoleEntity, 'userRole', `userRole.projectId = ${id} AND userRole.userId = user.id`)
         return TypeormUtil.toPagination(query, params as any, this.transform);
     }
 
-    protected transform = async (item: UserEntity): Promise<ProjectUser> => item.toProjectObject();
+    protected transform = async (item: UserEntity): Promise<ProjectUser> => item.toProjectObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
 }

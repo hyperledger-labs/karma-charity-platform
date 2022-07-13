@@ -22,13 +22,15 @@ export class AddCompanyPreferences1627121250001 implements MigrationInterface {
                 "kpp" varchar not null,
                 "ogrn" varchar not null,
                 "name" varchar not null,
-                "name_short" varchar not null,
+                "picture" varchar not null,
                 "address" varchar not null,
                 "founded" timestamp not null,
-       
+                "name_short" varchar not null,
+
+                "description" varchar not null,
+
                 "phone" varchar,
                 "email" varchar,
-                "picture" varchar,
                 "website" varchar,
                 "location" varchar,
                 "latitude" numeric,

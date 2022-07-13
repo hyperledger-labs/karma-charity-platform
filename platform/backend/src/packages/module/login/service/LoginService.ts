@@ -1,18 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UnreachableStatementError } from '@ts-core/common/error';
 import { Logger, LoggerWrapper } from '@ts-core/common/logger';
-import { ExtendedError } from '@ts-core/common/error';
 import { JwtService } from '@nestjs/jwt';
 import * as _ from 'lodash';
 import { ILoginDto, ILoginDtoResponse, LoginResource } from '@project/common/platform/api/login';
 import { UserEntity } from '@project/module/database/user';
-import { GoogleStrategy } from '../strategy';
 import { UserStatus, USER_PREFERENCES_NAME_MIN_LENGTH } from '@project/common/platform/user';
 import { DatabaseService } from '@project/module/database/service';
-import { RandomUtil, ValidateUtil } from '@ts-core/common/util';
-import { Transport } from '@ts-core/common/transport';
+import { RandomUtil } from '@ts-core/common/util';
 import { ILoginStrategy } from '../strategy/ILoginStrategy';
-import { UserStatusInvalidError } from '@project/module/core/middleware';
+import { UserGuard } from '@project/module/guard';
+import { GoogleSiteStrategy } from '../strategy';
 
 @Injectable()
 export class LoginService extends LoggerWrapper {
@@ -32,7 +30,7 @@ export class LoginService extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService, private jwt: JwtService, private google: GoogleStrategy) {
+    constructor(logger: Logger, private database: DatabaseService, private jwt: JwtService, private google: GoogleSiteStrategy) {
         super(logger);
     }
 
@@ -49,7 +47,6 @@ export class LoginService extends LoggerWrapper {
         } else if (preference.name.length < USER_PREFERENCES_NAME_MIN_LENGTH) {
             preference.name += RandomUtil.randomString(USER_PREFERENCES_NAME_MIN_LENGTH - preference.name.length);
         }
-        ValidateUtil.validate(user);
     }
 
     private getStrategy(data: ILoginDto): ILoginStrategy {
@@ -74,19 +71,16 @@ export class LoginService extends LoggerWrapper {
         let strategy = this.getStrategy(params);
         let profile = await strategy.getProfile(params);
 
-        let user = await this.database.userGet(profile.login);
-
-        if (_.isNil(user)) {
-            user = await strategy.createUser(profile);
-            this.parseBeforeSave(user);
-            user = await this.database.userSave(user);
+        let item = await this.database.userGet(profile.login);
+        if (_.isNil(item)) {
+            item = await strategy.createUser(profile);
+            this.parseBeforeSave(item);
+            item = await this.database.user.save(item);
         }
 
-        if (user.status !== UserStatus.ACTIVE) {
-            throw new UserStatusInvalidError({ value: user.status, expected: UserStatus.ACTIVE });
-        }
+        UserGuard.checkUser({ isRequired: true, status: [UserStatus.ACTIVE] }, item);
 
-        let payload: LoginUser = { id: user.id, login: user.login, status: user.status };
+        let payload: LoginUser = { id: item.id, login: item.login, status: item.status };
         return { sid: this.jwt.sign(payload) };
     }
 }

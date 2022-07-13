@@ -1,8 +1,9 @@
 import { IDatabaseSettings, IWebSettings, EnvSettingsStorage } from '@ts-core/backend/settings';
 import { ILogger, LoggerLevel } from '@ts-core/common/logger';
 import { ICryptoSettings } from '@project/module/crypto/service';
+import { IGoogleSiteStrategySettings } from '@project/module/login/strategy';
 
-export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, IWebSettings, IDatabaseSettings {
+export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, IGoogleSiteStrategySettings ,IWebSettings, IDatabaseSettings {
     // --------------------------------------------------------------------------
     //
     //  Public Properties
@@ -104,22 +105,16 @@ export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, 
     //
     // --------------------------------------------------------------------------
 
-    public get googleScope(): Array<string> {
-        return this.getValue('GOOGLE_SCOPE', [])
-            .toString()
-            .split(',');
+    public get googleSiteId(): string {
+        return this.getValue('GOOGLE_SITE_ID');
     }
 
-    public get googleSecret(): string {
-        return this.getValue('GOOGLE_SECRET');
+    public get googleSiteSecret(): string {
+        return this.getValue('GOOGLE_SITE_SECRET');
     }
 
-    public get googleClientId(): string {
-        return this.getValue('GOOGLE_CLIENT_ID');
-    }
-
-    public get googleCallbackUrl(): string {
-        return this.getValue('GOOGLE_CALLBACK_URL');
+    public get googleSiteRedirectUri(): string {
+        return this.getValue('GOOGLE_SITE_REDIRECT_URI');
     }
 
     // --------------------------------------------------------------------------
@@ -130,5 +125,22 @@ export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, 
 
     public get loggerLevel(): LoggerLevel {
         return this.getValue('LOGGER_LEVEL', LoggerLevel.ALL);
+    }
+
+    // --------------------------------------------------------------------------
+    //
+    //  Logger Properties
+    //
+    // --------------------------------------------------------------------------
+
+    public get s3FileBucketName(): string {
+        return this.getValue('S3_FILE_BUCKET_NAME');
+    }
+
+    public get s3AccessKeyId(): string {
+        return this.getValue('S3_ACCESS_KEY_ID');
+    }
+    public get s3SecretAccessKey(): string {
+        return this.getValue('S3_SECRET_ACCESS_KEY');
     }
 }

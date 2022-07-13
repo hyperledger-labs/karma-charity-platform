@@ -7,8 +7,6 @@ import { CoreExtendedError } from './CoreExtendedError';
 
 @Catch(CoreExtendedError)
 export class CoreExtendedErrorFilter extends ExtendedErrorFilter {
-
-
     // --------------------------------------------------------------------------
     //
     //  Public Methods

@@ -7,7 +7,7 @@ import { Logger } from '@ts-core/common/logger';
 import { IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
-import { IUserHolder, UserEntity } from '@project/module/database/user';
+import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
 import { User, UserType } from '@project/common/platform/user';
 import { USER_URL } from '@project/common/platform/api';
 import { Swagger } from '@project/module/swagger';
@@ -98,12 +98,9 @@ export class UserListController extends DefaultController<UserListDto, UserListD
         if (isCompanyUser) {
             query.innerJoinAndSelect('user.company', 'company');
             query.where(`company.id  = :id`, { id: company.id });
-            query.leftJoinAndSelect("company.userRoles", 'role', `role.userId = user.id and role.companyId = company.id`)
+            query.leftJoinAndMapMany('company.userRoles', UserRoleEntity, 'companyRole', `companyRole.userId = user.id AND companyRole.companyId = company.id`)
         }
 
-        if (_.isNil(params.conditions)) {
-            params.conditions = {};
-        }
         return TypeormUtil.toPagination(query, params, this.transform);
     }
 

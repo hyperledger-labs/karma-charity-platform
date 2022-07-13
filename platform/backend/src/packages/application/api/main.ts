@@ -9,8 +9,7 @@ import { TransportHttp } from '@ts-core/common/transport/http';
 import { rawBodyParser } from '@project/module/shared/parser/RawBodyParser';
 import { AppModule } from './src/AppModule';
 import { AppSettings } from './src/AppSettings';
-
-
+import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as path from 'path';
 import * as _ from 'lodash';
@@ -37,11 +36,15 @@ async function bootstrap(): Promise<void> {
     let application = await NestFactory.create(AppModule.forRoot(settings), { logger, bodyParser: true, });
     application.useLogger(logger);
 
+    application.use(bodyParser.json({ limit: '5mb' }));
+    // application.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
+
     application.use(helmet());
     application.use(compression());
     application.use(rawBodyParser());
 
-    application.enableCors({ origin: true });
+    // application.enableCors({ origin: true });
+    application.enableCors();
     application.useGlobalPipes(new ValidationPipe({ transform: true }));
     application.useGlobalFilters(new AllErrorFilter(new ValidationExceptionFilter(), new CoreExtendedErrorFilter(), new ExtendedErrorFilter(), new HttpExceptionFilter()));
 

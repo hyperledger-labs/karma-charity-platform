@@ -3,7 +3,7 @@ import { Logger, LoggerWrapper } from '@ts-core/common/logger';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { Transport } from '@ts-core/common/transport';
-import { IPaymentAggregatorData } from '../util';
+import { IPaymentAggregatorData } from '@project/common/platform/payment';
 
 @Injectable()
 export class PaymentService extends LoggerWrapper {
@@ -24,7 +24,7 @@ export class PaymentService extends LoggerWrapper {
     // --------------------------------------------------------------------------
 
     public getPaymentAggregatorApiKey(details: IPaymentAggregatorData): string {
-        return '484fad603e581acc459923ac9476e4b9';
+        return null;
     }
 
 }

@@ -1,15 +1,13 @@
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude } from 'class-transformer';
-import { IsString, IsJSON, IsEnum, IsNumber, IsOptional, ValidateNested } from 'class-validator';
-import { CreateDateColumn, JoinColumn, ManyToOne, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { Exclude, ClassTransformOptions, Type } from 'class-transformer';
+import { IsString, IsJSON, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { CreateDateColumn, OneToMany, BeforeUpdate, BeforeInsert, OneToOne, JoinColumn, ManyToOne, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as _ from 'lodash';
-import { TypeormJSONTransformer, TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
-import { CompanyEntity } from '../company';
+import { TypeormJSONTransformer } from '@ts-core/backend/database/typeorm';
 import { UserEntity } from '../user';
-import { ProjectEntity } from '../project';
-import { Payment, PaymentCurrency, PaymentStatus } from '@project/common/platform/payment';
+import { Payment, PaymentStatus } from '@project/common/platform/payment';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
-import { LedgerCoinId } from '@project/common/ledger/coin';
+import { PaymentTransactionEntity } from './PaymentTransactionEntity';
 
 @Entity({ name: 'payment' })
 export class PaymentEntity implements Payment {
@@ -37,31 +35,9 @@ export class PaymentEntity implements Payment {
     @IsJSON()
     public details: any;
 
-    @Column({ type: 'numeric', transformer: TypeormDecimalTransformer.instance })
-    @IsString()
-    public amount: string;
-
-    @Column({ type: 'varchar' })
-    @IsEnum(LedgerCoinId)
-    public currency: PaymentCurrency;
-
-    @Column({ name: 'company_id' })
-    @IsNumber()
-    public companyId: number;
-
     @Column({ name: 'transaction_id' })
     @IsString()
     public transactionId: string;
-
-    @Column({ name: 'user_id', nullable: true })
-    @IsOptional()
-    @IsNumber()
-    public userId?: number;
-
-    @Column({ name: 'project_id' })
-    @IsOptional()
-    @IsNumber()
-    public projectId?: number;
 
     @CreateDateColumn({ name: 'created_date' })
     public createdDate: Date;
@@ -69,24 +45,27 @@ export class PaymentEntity implements Payment {
     @UpdateDateColumn({ name: 'updated_date' })
     public updatedDate: Date;
 
-    @Exclude()
+    @Column({ name: 'user_id', nullable: true })
+    @IsOptional()
+    @IsNumber()
+    public userId?: number;
+
+    @Column({ name: 'reference_id', nullable: true  })
+    @IsOptional()
+    @IsString()
+    public referenceId?: string;
+
     @ManyToOne(() => UserEntity, user => user.payments)
     @IsOptional()
     @ValidateNested()
     @JoinColumn({ name: "user_id" })
+    @Type(() => UserEntity)
     public user?: UserEntity;
 
-    @Exclude()
-    @IsOptional()
+    @OneToMany(() => PaymentTransactionEntity, transaction => transaction.payment, { cascade: true, eager: true })
     @ValidateNested()
-    @JoinColumn({ name: "company_id" })
-    public company?: CompanyEntity;
-
-    @Exclude()
-    @IsOptional()
-    @ValidateNested()
-    @JoinColumn({ name: "project_id" })
-    public project?: ProjectEntity;
+    @Type(() => PaymentTransactionEntity)
+    public transactions: Array<PaymentTransactionEntity>;
 
     // --------------------------------------------------------------------------
     //
@@ -94,11 +73,13 @@ export class PaymentEntity implements Payment {
     //
     // --------------------------------------------------------------------------
 
-    public update(data: Partial<Payment>): void {
-        ObjectUtil.copyProperties(data, this);
+    public toObject(options?: ClassTransformOptions): Payment {
+        return TransformUtil.fromClass<Payment>(this, options);
     }
 
-    public toObject(): Payment {
-        return TransformUtil.fromClass<Payment>(this, { excludePrefixes: ['__'] });
+    @BeforeUpdate()
+    @BeforeInsert()
+    public validate(): void {
+        ValidateUtil.validate(this);
     }
 }

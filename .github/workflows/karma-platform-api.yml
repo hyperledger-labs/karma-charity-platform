@@ -1,0 +1,33 @@
+name: Building Karma Platform Backend
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'platform/backend/*'
+      - 'docker/platform/backend/api/Dockerfile'
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ghcr.io/hyperledger-labs/karma-charity-platform/karma-platform-api
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          docker build -f docker/platform/backend/api/Dockerfile -t $IMAGE_NAME:${{ github.sha }} .
+          docker tag $IMAGE_NAME:${{ github.sha }} $IMAGE_NAME:latest
+
+      - name: Push
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          
+          docker push $IMAGE_NAME:${{ github.sha }}
+          docker push $IMAGE_NAME:latest

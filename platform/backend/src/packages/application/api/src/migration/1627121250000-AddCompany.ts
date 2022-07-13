@@ -15,6 +15,7 @@ export class AddCompany1627121250000 implements MigrationInterface {
                     constraint "company_id_pkey" primary key,
                 "ledger_uid" varchar
                     constraint "company_ledger_uid_ukey" unique,
+                "type" varchar not null,
                 "status" varchar not null,
                 "created_date" timestamp default now() not null,
                 "updated_date" timestamp default now() not null

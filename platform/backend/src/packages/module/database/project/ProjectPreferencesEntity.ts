@@ -15,7 +15,7 @@ import {
 } from '@project/common/platform/project';
 import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
 import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { Length, IsEnum, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProjectEntity } from './ProjectEntity';
@@ -50,13 +50,12 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
     @Length(PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH)
     public descriptionShort: string;
 
-    /*
     @Column({ array: true, type: 'varchar' })
     @IsEnum(ProjectTag, { each: true })
+    @IsOptional()
     @MaxLength(PROJECT_PREFERENCES_TAGS_MAX_LENGTH, { each: true })
     public tags?: Array<ProjectTag>;
-    */
-   
+
     @Column({ nullable: true })
     @IsString()
     @IsOptional()
@@ -85,6 +84,7 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
         project => project.preferences
     )
     @JoinColumn({ name: 'project_id' })
+    @Type(() => ProjectEntity)
     public project: ProjectEntity;
 
     // --------------------------------------------------------------------------
@@ -92,26 +92,6 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
     //  Public Methods
     //
     // --------------------------------------------------------------------------
-
-    constructor(data?: Partial<ProjectPreferences>) {
-        if (!_.isNil(data)) {
-            this.update(data);
-        }
-    }
-
-    // --------------------------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    // --------------------------------------------------------------------------
-
-    public update(data: Partial<ProjectPreferences>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
-
-    public toObject(): ProjectPreferences {
-        return TransformUtil.fromClass<ProjectPreferences>(this, { excludePrefixes: ['__'] });
-    }
 
     public toGeo(): IGeo {
         if (_.isNil(this.location) || _.isNil(this.latitude) || _.isNil(this.longitude)) {

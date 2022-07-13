@@ -6,10 +6,7 @@ import * as _ from 'lodash';
 import { PAYMENT_AGGREGATOR_CLOUD_PAYMENTS_PAY_CALLBACK } from '@project/common/platform/api';
 import { Swagger } from '@project/module/swagger';
 import { RawBody } from '@project/module/shared/decorator';
-
-import * as hmacSHA256 from 'crypto-js/hmac-sha256';
-import * as Base64 from 'crypto-js/enc-base64';
-import { PaymentUtil } from '@project/module/payment/util';
+import { PaymentUtil } from '@project/common/platform/payment';
 import { PaymentService } from '@project/module/payment/service';
 import { ValidateUtil } from '@ts-core/common/util';
 import { Transport } from '@ts-core/common/transport';
@@ -47,6 +44,22 @@ export class CloudPaymentsPayController extends DefaultController<any, CloudPaym
 
     // --------------------------------------------------------------------------
     //
+    //  Private Methods
+    //
+    // --------------------------------------------------------------------------
+
+    /*
+    private checkSignature():void {
+        let key = await this.service.getPaymentAggregatorApiKey(details);
+        let hashInBase64 = Base64.stringify(hmacSHA256(bodyRaw, key));
+        if (hmac !== hashInBase64) {
+            throw new ExtendedError(`Unable to parse Cloud Payments callback: received hmac signature doesn't match calculated one`);
+        }
+    }
+    */
+
+    // --------------------------------------------------------------------------
+    //
     //  Public Methods
     //
     // --------------------------------------------------------------------------
@@ -54,8 +67,6 @@ export class CloudPaymentsPayController extends DefaultController<any, CloudPaym
     @Swagger({ name: 'Callback handler for Cloud Payments pay event', response: CloudPaymentsSuccessDtoResponse, isDisableBearer: true })
     @Post()
     public async executeExtended(@Req() request: any, @Res() response: any, @Body() body: any, @RawBody() bodyRaw: any, @Headers('content-hmac') hmac: any): Promise<CloudPaymentsSuccessDtoResponse> {
-        this.log(`Received callback:\n\n${JSON.stringify(body, null, 4)}`);
-
         if (_.isNil(bodyRaw)) {
             throw new ExtendedError(`Unable to parse Cloud Payments callback: bodyRaw is nil`);
         }
@@ -73,6 +84,7 @@ export class CloudPaymentsPayController extends DefaultController<any, CloudPaym
         }
 
         let details = PaymentUtil.parseDetails(body.AccountId);
+
         try {
             ValidateUtil.validate(details);
         }
@@ -81,11 +93,7 @@ export class CloudPaymentsPayController extends DefaultController<any, CloudPaym
             throw ExtendedError.create(error);
         }
 
-        let key = await this.service.getPaymentAggregatorApiKey(details);
-        let hashInBase64 = Base64.stringify(hmacSHA256(bodyRaw, key));
-        if (hmac !== hashInBase64) {
-            throw new ExtendedError(`Unable to parse Cloud Payments callback: received hmac signature doesn't match calculated one`);
-        }
+        this.log(`Received payment :`, JSON.stringify(details));
 
         let status = body.Status === "Completed" ? PaymentStatus.COMPLETED : PaymentStatus.AUTHORIZED;
         this.transport.send(new PaymentPayCommand({ type: PaymentAggregatorType.CLOUD_PAYMENTS, data: body, transactionId: body.TransactionId, details, status }));

@@ -14,6 +14,7 @@ import { UserCompany, UserType } from '@project/common/platform/user';
 import { CompanyEntity } from '@project/module/database/company';
 import { COMPANY_URL } from '@project/common/platform/api';
 import { IUserHolder, UserRoleEntity } from '@project/module/database/user';
+import { TransformGroup } from '@project/module/database';
 
 
 // --------------------------------------------------------------------------
@@ -85,16 +86,11 @@ export class CompanyListController extends DefaultController<CompanyListDto, Com
     @Swagger({ name: 'Get company list', response: CompanyListDtoResponse })
     @Get()
     @UseGuards(UserGuard)
-    @UserGuardOptions({ type: [UserType.ADMINISTRATOR, UserType.EDITOR] })
     public async executeExtended(@Query({ transform: Paginable.transform }) params: CompanyListDto, @Req() request: IUserHolder): Promise<CompanyListDtoResponse> {
-        if (_.isNil(params.conditions)) {
-            params.conditions = {};
-        }
-        let query = this.database.company.createQueryBuilder('company')
-            .innerJoinAndSelect('company.preferences', 'preferences')
-            .leftJoinAndMapMany("company.userRoles", UserRoleEntity, 'role', `role.userId = ${request.user.id} and role.companyId = company.id`)
+        let query = this.database.company.createQueryBuilder('company');
+        this.database.addCompanyRelations(query, request.user);
         return TypeormUtil.toPagination(query, params, this.transform);
     }
 
-    protected transform = async (item: CompanyEntity): Promise<UserCompany> => item.toUserObject();
+    protected transform = async (item: CompanyEntity): Promise<UserCompany> => item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
 }

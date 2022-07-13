@@ -12,6 +12,7 @@ import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { DatabaseService } from '@project/module/database/service';
 import { UserCompany } from '@project/common/platform/user';
 import * as _ from 'lodash';
+import { TransformGroup } from '@project/module/database';
 
 // --------------------------------------------------------------------------
 //
@@ -63,8 +64,10 @@ export class InitController extends DefaultController<void, IInitDtoResponse> {
         }
     })
     public async executeExtended(@Req() request: IUserHolder): Promise<InitDtoResponse> {
-        let user = !_.isNil(request.user) ? request.user.toObject() : null;
-        let company = !_.isNil(request.company) ? request.company.toUserObject() : null;
+        let groups = [TransformGroup.PRIVATE, TransformGroup.PUBLIC_DETAILS];
+        
+        let user = !_.isNil(request.user) ? request.user.toObject({ groups }) : null;
+        let company = !_.isNil(request.company) ? request.company.toUserObject({ groups }) : null;
         return { user, company }
     }
 }

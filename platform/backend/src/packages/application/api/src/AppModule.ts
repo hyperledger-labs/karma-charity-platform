@@ -6,7 +6,7 @@ import MemoryStore from 'cache-manager-memory-store';
 import { AppSettings } from './AppSettings';
 import { DatabaseModule } from '@project/module/database';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ILogger, Logger } from '@ts-core/common/logger';
+import { Logger } from '@ts-core/common/logger';
 import { IDatabaseSettings } from '@ts-core/backend/settings';
 import { modulePath } from '@project/module';
 import { AbstractService } from '@project/module/core/service';
@@ -18,7 +18,13 @@ import { LoginModule } from '@project/module/login';
 import { NalogModule } from '@project/module/nalog';
 import { CompanyModule } from '@project/module/company';
 import { ProjectModule } from '@project/module/project';
+import { LedgerModule } from '@project/module/ledger';
 import { CloudPaymentsModule } from '@project/module/cloud-payments';
+import { FileModule } from '@project/module/file';
+import { MulterModule } from '@nestjs/platform-express';
+import { DatabaseService } from '@project/module/database/service';
+import { FileService } from '@project/module/file/service';
+import { ExtendedError } from '@ts-core/common/error';
 
 export class AppModule extends AbstractService implements OnApplicationBootstrap {
     // --------------------------------------------------------------------------
@@ -32,7 +38,6 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
             module: AppModule,
             imports: [
                 DatabaseModule,
-
                 CacheModule.forRoot({ store: MemoryStore }),
 
                 LoggerModule.forRoot(settings),
@@ -40,13 +45,20 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 TransportModule.forRoot({ type: TransportType.LOCAL }),
 
                 CoreModule.forRoot(settings),
-                CryptoModule.forRoot(settings),
+                FileModule.forRoot({
+                    bucketName: settings.s3FileBucketName,
+                    accessKeyId: settings.s3AccessKeyId,
+                    secretAccessKey: settings.s3SecretAccessKey
+                }),
                 LoginModule.forRoot(settings),
-                
+                CryptoModule.forRoot(settings),
+
                 UserModule,
                 NalogModule,
+                LedgerModule,
                 CompanyModule,
                 ProjectModule,
+
                 CloudPaymentsModule
             ],
             controllers: [
@@ -57,7 +69,6 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                     useValue: settings
                 },
                 InitializeService,
-
             ]
         };
     }

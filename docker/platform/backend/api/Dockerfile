@@ -1,14 +1,11 @@
 FROM node:14 as build
 # Set directory
 WORKDIR /build
+# Copy the source code
+COPY ./platform/backend .
+COPY ./common ./src/externals/common
 # Install dependencies and building
-COPY . .
 RUN npm i
-
-# ----------------------------------- Patching package.json -----------#
-RUN cp /build/patch/package.json /build/src/packages/application/api/package.json
-# ------------------------------------------------------------------------------#
-
 RUN cd /build/src/packages/application/api && npm i && npm run build
 
 FROM node:14
@@ -22,9 +19,7 @@ COPY --from=build /build/src/packages/application/api/node_modules /application/
 COPY --from=build /build/src/packages/application/api/build/node_modules /application/build/node_modules
 # Copy compiled files to working directory
 COPY --from=build /build/src/packages/application/api/build/src/packages/application/api /application/build
-# Copy package.json
-COPY --from=build /build/src/packages/application/api/* /application/build/
 # Set directory
 WORKDIR /application/build
 # Run command
-CMD npm run typeorm migration:run && npm run seed:run
+CMD node main.js
