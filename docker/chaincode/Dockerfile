@@ -3,7 +3,7 @@ FROM node:14 as build
 WORKDIR /build
 # Copy the source code
 COPY ./chaincode .
-COPY ./common ./src/packages/common
+COPY ./common ./src/externals/common
 # Install dependencies and building
 RUN npm i
 # ----------------------------------- Patching corrupted fabric-shim -----------#
