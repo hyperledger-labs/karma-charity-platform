@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'platform/backend/*'
+      - 'platform/backend/**'
       - 'docker/platform/backend/database/Dockerfile'
 
   workflow_dispatch:

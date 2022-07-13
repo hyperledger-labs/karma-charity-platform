@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'explorer/frontend/*'
+      - 'explorer/frontend/**'
       - 'docker/explorer/frontend/Dockerfile'
 
   workflow_dispatch:

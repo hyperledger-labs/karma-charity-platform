@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'platform/frontend/*'
+      - 'platform/frontend/**'
       - 'docker/platform/frontend/platform-payment-widget/Dockerfile'
 
   workflow_dispatch:
