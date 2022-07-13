@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'chaincode/*'
+      - 'chaincode/**'
       - 'docker/chaincode/Dockerfile'
 
   workflow_dispatch:
