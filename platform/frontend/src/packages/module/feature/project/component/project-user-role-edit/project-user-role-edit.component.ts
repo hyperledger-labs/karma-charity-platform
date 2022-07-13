@@ -1,12 +1,12 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { PipeService } from '../../../../core/service';
+import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { } from '@common/platform/project';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { ProjectUser } from '@project/common/platform/project';
-import { LedgerProjectRole } from 'common/ledger/role';
+import { LedgerProjectRole } from '@project/common/ledger/role';
 import { IProjectUserRoleSetDto } from '@project/common/platform/api/project';
 
 @Component({

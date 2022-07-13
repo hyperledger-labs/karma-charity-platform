@@ -23,13 +23,15 @@ export class PaymentWidgetOpenCommand extends TransportCommandAsync<IPaymentWidg
     }
 }
 
-export interface IPaymentWidgetOpenDto {
+export interface IPaymentWidgetOpenDto<T = any> {
     target: PaymentTarget;
-    details: string;
     aggregator: Partial<PaymentAggregator>;
 
     amount: number;
     coinId: string;
+    details: string;
+
+    data?: T;
 }
 export interface IPaymentWidgetOpenDtoResponse { }
 

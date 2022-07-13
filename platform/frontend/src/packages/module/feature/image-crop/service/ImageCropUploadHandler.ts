@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
 import { Logger } from '@ts-core/common/logger';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
-import { SettingsService } from '../../../core/service';
+import { SettingsService } from '@core/service';
 import { PromiseHandler } from '@ts-core/common/promise';
 import { takeUntil } from 'rxjs';
 import { ImageCropCommand, IImageCropDto, IImageCropDtoResponse } from '../transport';
 import { ImageCropComponent } from '../component';
-import { Base64Source } from '../../file/lib/base64';
+import { Base64Source } from '@feature/file/lib/base64';
 
 @Injectable({ providedIn: 'root' })
 export class ImageCropHandler extends TransportCommandAsyncHandler<IImageCropDto, IImageCropDtoResponse, ImageCropCommand> {

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ProjectsPageRoutingModule } from './projects-page.routing.module';
 import { ProjectsPageComponent } from './projects-page.component';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '../../module/shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({

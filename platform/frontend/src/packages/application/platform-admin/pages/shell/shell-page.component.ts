@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { NotificationService, ShellBaseComponent, ViewUtil } from '@ts-core/angular';
-import { RouterService, PipeService, SettingsService } from '../../../../module/core/service';
+import { RouterService, PipeService, SettingsService } from '@core/service';
 import { filter, takeUntil } from 'rxjs';
 import { ShellMenu } from './service';
 import { MatSidenavContent } from '@angular/material/sidenav';

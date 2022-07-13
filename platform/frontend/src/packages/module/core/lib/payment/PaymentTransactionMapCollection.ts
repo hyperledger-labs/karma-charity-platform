@@ -1,10 +1,10 @@
 import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings, PrettifyPipe } from '@ts-core/angular';
 import * as _ from 'lodash';
-import { PipeService, UserService } from '../../service';
+import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
 import { Payment, PaymentTransaction } from '@project/common/platform/payment';
 import { IPagination } from '@ts-core/common/dto';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 
 @Injectable()
 export class PaymentTransactionMapCollection extends CdkTablePaginableMapCollection<PaymentTransaction, PaymentTransaction> {

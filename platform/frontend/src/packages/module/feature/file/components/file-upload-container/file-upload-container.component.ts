@@ -6,10 +6,10 @@ import * as _ from 'lodash';
 import { Uploader, IFileAddingError, IFileError, UploaderEvent, UploaderEventData } from '../../lib';
 import { takeUntil } from 'rxjs/operators';
 import { File } from '@project/common/platform/file';
-import { SettingsService, LoginService } from '../../../../core/service';
-import { FileMapCollection } from '../../../../core/lib/file';
+import { SettingsService, LoginService } from '@core/service';
+import { FileMapCollection } from '@core/lib/file';
 import { IFileUploadDto } from '../../transport';
-import { FILE_URL } from 'common/platform/api';
+import { FILE_URL } from '@project/common/platform/api';
 
 @Component({
     templateUrl: 'file-upload-container.component.html'

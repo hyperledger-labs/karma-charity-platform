@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <base href="/" />
+        <title>Test Page</title>
+        <script type="text/javascript" src="http://localhost:4200/Karma.js"></script>
+        <!-- <script type="text/javascript" src="https://vk.occultist.one/test/Karma.js"></script>-->
+    </head>
+
+    <body class="dark-theme">
+        <button onclick="clickHandler()">Click me!</button>
+        <div id="container2" style="width: 454px; height: 576px"></div>
+
+        <script>
+            function onFail(details) {
+                console.log(`Fail error details : ${JSON.stringify(details, null, 4)}`);
+            }
+            function onSuccess(details) {
+                console.log(`Success payment details: ${JSON.stringify(details, null, 4)}`);
+            }
+            function clickHandler() {
+                window.Karma.widget(2, 'COMPANY', {
+                    // containerId: 'container2',
+                    isWaitCallback: false,
+                    onFail,
+                    onSuccess,
+
+                    coinId: 'RUB',
+                    coinIds: ['RUB', 'USD'],
+                    amount: 200,
+                    amounts: [100, 200],
+                    data: {
+                        email: 'renat@mail.ru',
+                        accountId: 'ACCOUNT_ID_5',
+                        description: 'Описание платежа',
+                        invoiceId: '123213',
+                        skin: 'mini',
+                        data: {
+                            name: 'Вася',
+                            nick: 'Tester',
+                            phone: '+79099790296',
+                            address: 'Moscow, Russia',
+                            comment: 'Комментарий',
+                            birthDate: '07.12.1986',
+                            firstName: 'Вася',
+                            middleName: 'Петров',
+                            lastName: 'Иванович'
+                        }
+                    }
+                });
+            }
+            // clickHandler();
+        </script>
+    </body>
+</html>

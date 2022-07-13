@@ -8,7 +8,7 @@ import { UserPreferences, UserType } from '@common/platform/user';
 import * as _ from 'lodash';
 import { ExtendedError } from '@ts-core/common/error';
 import { Transport } from '@ts-core/common/transport';
-import { UserSaveCommand } from '../../feature/user/transport';
+import { UserSaveCommand } from '@feature/user/transport';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends UserBaseService<User, UserServiceEvent> {

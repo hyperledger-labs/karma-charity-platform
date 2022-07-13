@@ -1,14 +1,14 @@
 import { Component, Input, ViewContainerRef } from '@angular/core';
 import { SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { CkeditorService, PipeService, UserService } from '../../../../core/service';
+import { CkeditorService, PipeService, UserService } from '@core/service';
 import * as _ from 'lodash';
 import { CompanyPreferences, CompanyStatus } from '@common/platform/company';
 import { ISerializable } from '@ts-core/common';
 import { ICompanyEditDto } from '@common/platform/api/company';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
-import { UserCompany } from 'common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
-import Editor from '../../../ckeditor/script/ckeditor.js';
+import Editor from '@feature/ckeditor/script/ckeditor.js';
 
 @Component({
     selector: 'company-edit',

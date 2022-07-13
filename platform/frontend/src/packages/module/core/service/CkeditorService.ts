@@ -3,7 +3,7 @@ import { LoginService } from './LoginService';
 import * as _ from 'lodash';
 import { Destroyable } from '@ts-core/common';
 import { SettingsService } from './SettingsService';
-import { FILE_TEMPORARY_IMAGE_URL } from 'common/platform/api';
+import { FILE_TEMPORARY_IMAGE_URL } from '@project/common/platform/api';
 import { PipeService } from './PipeService';
 
 @Injectable({ providedIn: 'root' })

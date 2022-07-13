@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { WindowConfig, WindowService } from '@ts-core/angular';
 import { Logger } from '@ts-core/common/logger';
 import { Transport, TransportCommandHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
-import { UserService } from '../../../core/service';
+import { UserService } from '@core/service';
 import { ProfileQuizComponent } from '../component/profile-quiz/profile-quiz.component';
 import { ProfileQuizOpenCommand } from '../transport';
 import { takeUntil } from 'rxjs';
-import { CompanyAddCommand } from '../../company/transport';
+import { CompanyAddCommand } from '@feature/company/transport';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileQuizOpenHandler extends TransportCommandHandler<void, ProfileQuizOpenCommand> {

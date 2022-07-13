@@ -3,16 +3,16 @@ import { IRouterDeactivatable, SelectListItem, SelectListItems, ViewUtil, Window
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { CompanyPreferences } from '@project/common/platform/company';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { ObjectUtil } from '@ts-core/common/util';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
 import { ICompanyAddDto } from '@project/common/platform/api/company';
 import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
-import { PipeService, RouterService, CkeditorService, CompanyService } from '../../../../core/service';
-import { UserCompany } from 'common/platform/user';
-import { ImageCropCommand } from '../../../image-crop/transport';
+import { PipeService, RouterService, CkeditorService, CompanyService } from '@core/service';
+import { UserCompany } from '@project/common/platform/user';
+import { ImageCropCommand } from '@feature/image-crop/transport';
 import { Transport } from '@ts-core/common/transport';
-import Editor from '../../../ckeditor/script/ckeditor.js';
+import Editor from '@feature/ckeditor/script/ckeditor.js';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -59,14 +59,11 @@ export class CompanyAddComponent extends CompanyBaseComponent implements IRouter
 
         this.company = new UserCompany();
         this.company.preferences = new CompanyPreferences();
-        this.company.preferences.inn = '7751161170';
         this.company.preferences.description = '';
 
         this.company.paymentAggregator = new PaymentAggregator();
         this.company.paymentAggregator.type = PaymentAggregatorType.CLOUD_PAYMENTS;
-        this.company.paymentAggregator.uid = 'pk_7cf84ef18b04bbe7611e317958dc0';
-        this.company.paymentAggregator.key = '484fad603e581acc459923ac9476e4b9';
-
+        
         this.descriptionEditor = Editor;
     }
 

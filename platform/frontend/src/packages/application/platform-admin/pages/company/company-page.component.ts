@@ -1,7 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import { ViewUtil } from '@ts-core/angular';
-import { CompanyService } from '../../../../module/core/service';
+import { CompanyService } from '@core/service';
 import * as _ from 'lodash';
 
 @Component({

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@common/platform/api';
 import { LoginBaseService, CookieService, LoginNotGuard, LoginGuard, WindowService, LoginBaseServiceEvent } from '@ts-core/angular';
-import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
 import { ILoginDto, ILoginDtoResponse, IInitDtoResponse, LoginResource } from '@common/platform/api/login';
 import { ExtendedError } from '@ts-core/common/error';
 import * as _ from 'lodash';
 import { RouterService } from './RouterService';
+import { GoExternalLoginCommand, GoExternalLogoutCommand } from '@feature/go-external/transport';
+import { Transport, TransportNoConnectionError, TransportTimeoutError } from '@ts-core/common/transport';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoResponse, IInitDtoResponse> {
@@ -17,13 +18,15 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
 
     public isAutoLogin: boolean = true;
 
+    protected _resource: LoginResource;
+
     //--------------------------------------------------------------------------
     //
     // 	Constructor
     //
     //--------------------------------------------------------------------------
 
-    constructor(router: RouterService, windows: WindowService, private cookies: CookieService, private api: Client, private social: SocialAuthService) {
+    constructor(router: RouterService, windows: WindowService, private transport: Transport, private cookies: CookieService, private api: Client) {
         super();
 
         this.events.subscribe(data => {
@@ -36,6 +39,7 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
                     break;
                 case LoginBaseServiceEvent.LOGOUT_STARTED:
                     windows.removeAll();
+                    this.logoutSocial()
                     break;
             }
         });
@@ -61,29 +65,34 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
         }
     }
 
+    protected parseLoginSidErrorResponse(error: ExtendedError): void {
+        if (error instanceof TransportTimeoutError || error instanceof TransportNoConnectionError) {
+            return;
+        }
+        this.logoutSocial();
+        this.reset();
+    }
+
     protected loginSidRequest(): Promise<IInitDtoResponse> {
         this.api.sid = this.sid;
         return this.api.init();
     }
 
     protected async logoutRequest(): Promise<void> {
-        await this.logoutSocial();
-        try {
-            await this.api.logout();
-        }
-        catch (error) { }
+        return this.api.logout();
     }
 
     protected async logoutSocial(): Promise<void> {
-        try {
-            await this.social.signOut(true);
+        switch (this.resource) {
+            case LoginResource.GOOGLE:
+                this.transport.send(new GoExternalLogoutCommand());
+                break;
         }
-        catch (error) { }
     }
 
     protected reset(): void {
         super.reset();
-        this.logoutSocial();
+        this._resource = null;
         this.cookies.remove('sid');
         this.cookies.remove('resource');
     }
@@ -98,21 +107,18 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
         super.loginByParam(param);
     }
 
-    public async loginSocial(providerId: string, resource: LoginResource): Promise<SocialUser> {
-        let item: SocialUser = null;
-        try {
-            item = await this.social.signIn(providerId);
-            this.login({ data: { token: item.authToken }, resource });
-        } catch (error: any) {
-            if (!_.isString(error)) {
-                error = JSON.stringify(error, null, 4);
-            }
-            try {
-                await this.social.signOut(true);
-            } catch (error: any) { }
-            throw new ExtendedError(error, ExtendedError.HTTP_CODE_UNAUTHORIZED);
+    public async loginSocial(resource: LoginResource): Promise<void> {
+        let item: ILoginDto = null;
+        switch (resource) {
+            case LoginResource.GOOGLE:
+                item = await this.transport.sendListen(new GoExternalLoginCommand());
+                break;
+            default:
+                throw new ExtendedError(`Unable to login: "${resource}" resource doesn't support`)
         }
-        return item;
+        if (!_.isNil(item)) {
+            this.login(item);
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -133,6 +139,10 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
 
     public get sid(): string {
         return this._sid;
+    }
+
+    public get resource(): LoginResource {
+        return this._resource;
     }
 }
 

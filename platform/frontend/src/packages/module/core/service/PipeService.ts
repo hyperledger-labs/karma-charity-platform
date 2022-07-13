@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LanguageService } from '@ts-core/frontend/language';
 import { PipeBaseService } from '@ts-core/angular';
-import { UserTitlePipe, RolePipe, AccountPipe, AmountPipe } from '../../shared/pipe';
-import { PaymentAmountPipe } from '../../feature/payment/pipe';
+import { UserTitlePipe, RolePipe, AccountPipe, AmountPipe } from '@shared/pipe';
+import { PaymentAmountPipe } from '@feature/payment/pipe';
 
 @Injectable({ providedIn: 'root' })
 export class PipeService extends PipeBaseService {

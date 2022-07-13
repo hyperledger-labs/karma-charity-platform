@@ -2,10 +2,10 @@ import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings } fr
 import { IPagination } from '@ts-core/common/dto';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
-import { PipeService, UserService } from '../../service';
+import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
 import { TransformUtil } from '@ts-core/common/util';
-import { UserPreferences } from 'common/platform/user';
+import { UserPreferences } from '@project/common/platform/user';
 import { CompanyUser } from '@project/common/platform/company';
 
 @Injectable()

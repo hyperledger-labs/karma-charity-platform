@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
 import { Logger } from '@ts-core/common/logger';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
-import { SettingsService } from '../../../core/service';
-import { FileUploadContainerComponent } from '../components';
+import { SettingsService } from '@core/service';
+import { FileUploadContainerComponent } from '@feature/file/components';
 import { PromiseHandler } from '@ts-core/common/promise';
 import { takeUntil } from 'rxjs';
 import { FileUploadCommand, IFileUploadDto, IFileUploadDtoResponse } from '../transport';

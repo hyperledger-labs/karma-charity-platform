@@ -1,11 +1,11 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { IWindowContent, SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
 import { takeUntil } from 'rxjs';
-import { UserService, PipeService } from '../../../../core/service';
+import { UserService, PipeService } from '@core/service';
 import { merge } from 'rxjs';
 import * as _ from 'lodash';
-import { UserType } from 'common/platform/user';
-import { Client } from 'common/platform/api';
+import { UserType } from '@project/common/platform/user';
+import { Client } from '@project/common/platform/api';
 import { ISerializable } from '@ts-core/common';
 
 @Component({

@@ -1,4 +1,4 @@
-import { UserProject } from 'common/platform/user';
+import { UserProject } from '@project/common/platform/user';
 import { TransportCommandAsync } from '@ts-core/common/transport';
 
 export class ProjectActivateCommand extends TransportCommandAsync<IProjectActivateDto, IProjectActivateDtoResponse> {

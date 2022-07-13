@@ -2,16 +2,16 @@ import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
-import { ProjectUserMapCollection, ProjectUserTableSettings } from '../../../../core/lib/project';
+import { ProjectUserMapCollection, ProjectUserTableSettings } from '@core/lib/project';
 import { ProjectUser } from '@project/common/platform/project/ProjectUser';
-import { PipeService, UserService } from '../../../../core/service';
+import { PipeService, UserService } from '@core/service';
 import { ProjectUserMenu } from '../../service';
-import { UserOpenCommand } from '../../../user/transport';
+import { UserOpenCommand } from '@feature/user/transport';
 import { Transport } from '@ts-core/common/transport';
 import { Project } from '@project/common/platform/project';
 import { ProjectUserAddCommand } from '../../transport';
-import { PermissionUtil } from 'common/util';
-import { UserProject } from 'common/platform/user';
+import { PermissionUtil } from '@project/common/util';
+import { UserProject } from '@project/common/platform/user';
 
 @Component({
     selector: 'project-users',

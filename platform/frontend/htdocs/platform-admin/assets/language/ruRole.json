@@ -1,0 +1,18 @@
+{
+    "role": {
+        "role": "Роль",
+        "roles": "Роли",
+        "name": {
+            "USER_MANAGER": "Менеджер пользователей",
+            "COIN_MANAGER": "Платежный агрегатор",
+            "COMPANY_MANAGER": "Управляющий компаниями",
+            "COMPANY_USER_MANAGER": "Менеджер пользователей в компании",
+            "COMPANY_COIN_MANAGER": "Бухгалтер в компании",
+            "COMPANY_COMPANY_MANAGER": "Управляющий компании",
+            "COMPANY_PROJECT_MANAGER": "Управляющий проектами",
+            "PROJECT_USER_MANAGER": "Менеджер пользователей в проекте",
+            "PROJECT_COIN_MANAGER": "Бухгалтер в проекте",
+            "PROJECT_PROJECT_MANAGER": "Управляющий проектом"
+        }
+    }
+}

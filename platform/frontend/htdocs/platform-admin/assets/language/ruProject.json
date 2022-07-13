@@ -1,0 +1,87 @@
+{
+    "project": {
+        "project": "Проект",
+        "projects": "Проекты",
+        "createdDate": "Создан",
+        "id": "ID",
+        "ledgerUid": "UID в реестре",
+        "purpose": {
+            "add": "Добавить статью расходов",
+            "name": "⇛project.purpose.purpose",
+            "purpose": "Статья расходов",
+            "amount": "⇛payment.transaction.amount",
+            "purposes": "Статьи расходов"
+        },
+        "tag": {
+            "tag": "Тег",
+            "tags": "Теги",
+            "AGED": "Пожилым",
+            "ADULT": "Взрослым",
+            "ANIMAL": "Животным",
+            "CHILDREN": "Детям"
+        },
+        "account": {
+            "required": "Нужно собрать",
+            "collected": "Собрано"
+        },
+        "action": {
+            "add": {
+                "add": "Добавить проект",
+                "confirmation": "Вы уверены что хотите добавить проект?",
+                "notification": "Проект добавлен"
+            },
+            "save": {
+                "save": "Сохранить",
+                "confirmation": "Вы уверены что хотите сохранить изменения в проекте?",
+                "notification": "Изменения в проекте сохранены"
+            },
+            "edit": {
+                "edit": "Редактировать",
+                "confirmation": "Вы уверены что хотите сохранить изменения в проекте?",
+                "notification": "Изменения в проекте сохранены"
+            },
+            "toVerify": {
+                "toVerify": "На верификацию",
+                "confirmation": "Вы уверены что хотите отправить проект на одобрение?",
+                "notification": "Проект отправлен на одобрение"
+            },
+            "activate": {
+                "activate": "Активировать",
+                "confirmation": "Вы уверены что хотите активировать проект?",
+                "notification": "Проект активирован"
+            },
+            "verify": {
+                "verify": "Одобрить",
+                "confirmation": "Вы уверены что хотите одобрить проект?",
+                "notification": "Проект одобрен"
+            },
+            "reject": {
+                "reject": "Отклонить",
+                "confirmation": "Вы уверены что хотите отклонить проект?",
+                "notification": "Проект отклонен"
+            }
+        },
+        "preferences": {
+            "title": "Название",
+            "description": "Описание",
+            "descriptionShort": "Краткое описание",
+            "picture": "Логотип",
+            "location": "⇛geo.location"
+        },
+        "status": {
+            "status": "Статус",
+            "DRAFT": "Черновик",
+            "DRAFTDescription": "Проект создан, но требуется заполнить необходимую информацию и отправить не проверку.",
+            "ACTIVE": "Активен",
+            "ACTIVEDescription": "Проект активен, на него можно принимать платежи",
+            "NON_ACTIVE": "Не активен",
+            "NON_ACTIVEDescription": "Проект не активен",
+            "VERIFIED": "Одобрен",
+            "VERIFIEDDescription": "Проект одобрен - для начала работы необходимо ее активировать",
+            "REJECTED": "Отклонен",
+            "REJECTEDDescription": "Проект отклонена - необходимо проверить и исправить заполненные ранее данные и отправить на повторную проверку",
+            "VERIFICATION_PROCESS": "В процессе верификации",
+            "VERIFICATION_PROCESSDescription": "Проект находится на рассмотрении, дождитесь рассмотрения"
+        }
+    }
+}

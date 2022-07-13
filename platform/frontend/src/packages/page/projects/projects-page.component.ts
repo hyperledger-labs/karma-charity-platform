@@ -3,11 +3,11 @@ import { DestroyableContainer } from '@ts-core/common';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
 import { Transport } from '@ts-core/common/transport';
 import { LedgerUser } from '@common/ledger/user';
-import { PipeService, UserService } from '../../module/core/service';
+import { PipeService, UserService } from '@core/service';
 import * as _ from 'lodash';
-import { ProjectMapCollection, ProjectTableSettings } from '../../module/core/lib/project';
-import { UserProject } from 'common/platform/user';
-import { ProjectMenu } from '../../module/feature/project/service';
+import { ProjectMapCollection, ProjectTableSettings } from '@core/lib/project';
+import { UserProject } from '@project/common/platform/user';
+import { ProjectMenu } from '@feature/project/service';
 import { ProjectOpenCommand } from '../../module/feature/project/transport';
 
 @Component({

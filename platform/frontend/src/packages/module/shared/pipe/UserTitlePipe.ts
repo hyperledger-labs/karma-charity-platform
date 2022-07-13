@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import * as _ from 'lodash';
-import { User } from 'common/platform/user';
+import { User } from '@project/common/platform/user';
 import { LanguageService } from '@ts-core/frontend/language';
 import { PrettifyPipe } from '@ts-core/angular';
 

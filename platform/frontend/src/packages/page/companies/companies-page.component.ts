@@ -1,13 +1,13 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
-import { PipeService, UserService } from '../../module/core/service';
+import { PipeService, UserService } from '@core/service';
 import * as _ from 'lodash';
-import { CompanyMapCollection, CompanyTableSettings } from '../../module/core/lib/company';
-import { UserCompany } from 'common/platform/user';
-import { CompanyMenu } from '../../module/feature/company/service';
+import { CompanyMapCollection, CompanyTableSettings } from '@core/lib/company';
+import { UserCompany } from '@project/common/platform/user';
+import { CompanyMenu } from '@feature/company/service';
 import { Transport } from '@ts-core/common/transport';
-import { CompanyOpenCommand } from '../../module/feature/company/transport';
+import { CompanyOpenCommand } from '@feature/company/transport';
 
 @Component({
     templateUrl: 'companies-page.component.html',

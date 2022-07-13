@@ -1,9 +1,13 @@
 
 import { LoggerWrapper } from "@ts-core/common/logger";
-import { PipeService, UserService } from "../../../core/service";
+import { PipeService, UserService } from "@core/service";
 import { IPaymentWidgetOpenDto, IPaymentWidgetOpenDtoResponse } from "../transport";
-import { ScriptLoader } from "./ScriptLoader";
 import { APPLICATION_INJECTOR } from "@ts-core/angular";
+import { ScriptLoader } from "@ts-core/frontend/lib";
+import * as _ from 'lodash';
+import { LanguageService } from "@ts-core/frontend/language";
+import { PaymentTarget } from "@project/common/platform/payment";
+import { CoinObjectType } from "@project/common/transport/command/coin";
 
 export abstract class PaymentAggregatorManager extends LoggerWrapper {
     // --------------------------------------------------------------------------
@@ -27,6 +31,37 @@ export abstract class PaymentAggregatorManager extends LoggerWrapper {
 
     // --------------------------------------------------------------------------
     //
+    //  Protected Methods
+    //
+    // --------------------------------------------------------------------------
+
+    protected abstract getApi<T = any>(): Promise<T>;
+
+    protected getDataParam<U = any, V = any>(item: U, name: string, defaultValue?: V): V {
+        return !_.isNil(item) && !_.isNil(item[name]) ? item[name] : defaultValue;
+    }
+
+    protected getEmail(): string {
+        try {
+            return !_.isNil(this.user.preferences) ? this.user.preferences.email : null;
+        }
+        catch (error) {
+            return null;
+        };
+    }
+
+    protected getDescription(item: PaymentTarget): string {
+        try {
+            return this.language.translate(`paymentWidget.description.${item.type === CoinObjectType.COMPANY ? 'company' : 'project'}`, { name: item.value.preferences.title });
+        }
+        catch (error) {
+            return null;
+        };
+    }
+    
+
+    // --------------------------------------------------------------------------
+    //
     //  Public Methods
     //
     // --------------------------------------------------------------------------
@@ -43,8 +78,8 @@ export abstract class PaymentAggregatorManager extends LoggerWrapper {
         return APPLICATION_INJECTOR().get(UserService);
     }
 
-    public get pipe(): PipeService {
-        return APPLICATION_INJECTOR().get(PipeService);
+    public get language(): LanguageService {
+        return APPLICATION_INJECTOR().get(LanguageService);
     }
 
 }

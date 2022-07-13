@@ -2,7 +2,7 @@ import { Component, Input, ViewContainerRef } from '@angular/core';
 import { ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
-import { UserCompany } from 'common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 
 @Component({
     selector: 'company-nalog-preferences',

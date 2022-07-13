@@ -5,8 +5,8 @@ import { Project } from '@common/platform/project';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { LanguageService } from '@ts-core/frontend/language';
 import { ProjectMenu } from '../../service';
-import { PaymentTransactionMapCollection } from '../../../../core/lib/payment';
-import { UserProject } from 'common/platform/user';
+import { PaymentTransactionMapCollection } from '@core/lib/payment';
+import { UserProject } from '@project/common/platform/user';
 
 @Component({
     selector: 'project-container',

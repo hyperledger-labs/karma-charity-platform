@@ -1,0 +1,19 @@
+{
+    "paymentWidget": {
+        "header": "Платежный виджет",
+        
+        "coinId": "Валюта",
+        "amount": "Сумма",
+        "payment": "Сделать платеж",
+        "description": {
+            "company": "Пожертвование в пользу организации \"{name}\"",
+            "project": "Пожертвование в пользу проекта \"{name}\""
+        },
+        "error": {
+            "noIdOrType": "Не задан ни один из параметров \"id\" или \"type\"",
+            "invalidDetails": "Параметр \"details\" не валиден<br/><br/>{error}",
+            "invalidId": "Параметр \"id\" не положительное целое число",
+            "invalidType": "Параметр \"type\" не валиден<br/><br/>{error}"
+        }
+    }
+}

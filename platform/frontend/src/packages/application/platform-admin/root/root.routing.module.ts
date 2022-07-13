@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, NoPreloading } from '@angular/router';
 import { LanguageResolver, LoginResolver, LoginNotGuard, LoginIfCanGuard } from '@ts-core/angular';
-import { RouterService } from '../../module/core/service';
+import { RouterService } from '@core/service';
 
 const routes: Routes = [
     {

@@ -4,7 +4,7 @@ import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transpo
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
 import { IUserEditDto, IUserEditDtoResponse } from '@common/platform/api/user';
-import { UserService } from '../../../core/service';
+import { UserService } from '@core/service';
 import { UserSaveCommand } from '../transport';
 import { ExtendedError } from '@ts-core/common/error';
 

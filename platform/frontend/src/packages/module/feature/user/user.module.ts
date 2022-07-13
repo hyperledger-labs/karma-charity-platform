@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, NgModuleRef } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { TransportLazyModule } from '@ts-core/angular';
 import { UserEditHandler, UserOpenHandler, UserSaveHandler } from './service';
 import { Transport } from '@ts-core/common/transport';

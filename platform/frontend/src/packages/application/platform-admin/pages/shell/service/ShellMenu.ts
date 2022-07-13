@@ -2,13 +2,13 @@ import { ISelectListItem, SelectListItem, SelectListItems } from '@ts-core/angul
 import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { UserService, CompanyService, RouterService } from '../../../../../module/core/service';
+import { UserService, CompanyService, RouterService } from '@core/service';
 import { takeUntil } from 'rxjs';
-import { CompanyGuard, CompaniesGuard } from '../../../../../module/feature/company/guard';
+import { CompanyGuard, CompaniesGuard } from '@feature/company/guard';
 import { merge } from 'rxjs';
-import { UsersGuard } from '../../../../../module/feature/user/guard';
-import { ProjectsGuard } from '../../../../../module/feature/project/guard';
-import { PaymentsGuard } from '../../../../../module/feature/payment/guard';
+import { UsersGuard } from '@feature/user/guard';
+import { ProjectsGuard } from '@feature/project/guard';
+import { PaymentsGuard } from '@feature/payment/guard';
 
 @Injectable()
 export class ShellMenu extends SelectListItems<ISelectListItem<string>> {

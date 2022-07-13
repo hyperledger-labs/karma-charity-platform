@@ -1,11 +1,11 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { IWindowContent, ViewUtil, WindowService } from '@ts-core/angular';
-import { PipeService } from '../../../../core/service';
+import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { DestroyableContainer, ISerializable } from '@ts-core/common';
 import { } from '@common/platform/company';
-import { Client } from 'common/platform/api';
-import { User } from 'common/platform/user';
+import { Client } from '@project/common/platform/api';
+import { User } from '@project/common/platform/user';
 
 @Component({
     selector: 'company-user-add',

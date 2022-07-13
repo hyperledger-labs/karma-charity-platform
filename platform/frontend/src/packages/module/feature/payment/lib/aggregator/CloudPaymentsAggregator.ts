@@ -5,7 +5,8 @@ import { IPaymentAggregatorGetDtoResponse } from "@project/common/platform/api/p
 import * as _ from 'lodash';
 import { PromiseHandler } from "@ts-core/common/promise";
 import { ExtendedError } from "@ts-core/common/error";
-import { CoinObjectType } from "common/transport/command/coin";
+import { CoinObjectType } from "@project/common/transport/command/coin";
+import { NativeWindowService } from "@ts-core/frontend/service";
 
 export class CloudPaymentsAggregator extends PaymentAggregatorManager {
     // --------------------------------------------------------------------------
@@ -14,8 +15,19 @@ export class CloudPaymentsAggregator extends PaymentAggregatorManager {
     //
     // --------------------------------------------------------------------------
 
-    constructor() {
+    constructor(private nativeWindow: NativeWindowService) {
         super('//widget.cloudpayments.ru/bundles/cloudpayments.js');
+    }
+
+    // --------------------------------------------------------------------------
+    //
+    //  Protected Methods
+    //
+    // --------------------------------------------------------------------------
+
+    protected async getApi(): Promise<any> {
+        await this.script.load();
+        return this.nativeWindow.window['cp']
     }
 
     // --------------------------------------------------------------------------
@@ -25,32 +37,43 @@ export class CloudPaymentsAggregator extends PaymentAggregatorManager {
     // --------------------------------------------------------------------------
 
     public async open(item: IPaymentWidgetOpenDto): Promise<IPaymentWidgetOpenDtoResponse> {
-        await this.script.load();
+        let api = await this.getApi();
+
+        let email = this.getEmail();
+        let accountId = `${item.target.id}/${item.target.type}`;
+        let description = this.getDescription(item.target);
+
+        let data = this.getDataParam(item.data, 'data', {} as any);
+        data.karmaDetails = item.details;
 
         let options = {
             amount: item.amount,
             publicId: item.aggregator.uid,
             currency: item.coinId,
-            accountId: item.details,
-            description: this.pipe.language.translate(`payment.description.${item.target.type === CoinObjectType.COMPANY ? 'company' : 'project'}`, { name: item.target.value.preferences.title }),
-            email: null
-        }
 
-        if (!_.isNil(this.user.preferences)) {
-            options.email = this.user.preferences.email;
+            skin: this.getDataParam(item.data, 'skin', 'classic'),
+            email: this.getDataParam(item.data, 'email', email),
+            invoiceId: this.getDataParam(item.data, 'invoiceId'),
+            accountId: this.getDataParam(item.data, 'accountId', accountId),
+            description: this.getDataParam(item.data, 'description', description),
+            retryPayment: this.getDataParam(item.data, 'retryPayment', true),
+            requireEmail: this.getDataParam(item.data, 'requireEmail', false),
+            data
         }
 
         let promise = PromiseHandler.create<IPaymentWidgetOpenDtoResponse, ExtendedError>();
-        let widget = new window['cp'].CloudPayments();
+        let widget = new api.CloudPayments();
         widget.pay('charge', options,
             {
                 onFail: (reason, options) => {
-                    promise.reject(new ExtendedError(reason));
+                    promise.reject(new ExtendedError(reason, null, options));
                 },
-                onSuccess: (options) => promise.resolve({}),
+                onSuccess: (options) => {
+                    promise.resolve(options)
+                },
                 onComplete: (result, options) => {
                     if (result.success) {
-                        promise.resolve({});
+                        promise.resolve(options);
                     }
                     else {
                         promise.reject(new ExtendedError(`Unable to make payment code "${result.code}"`))

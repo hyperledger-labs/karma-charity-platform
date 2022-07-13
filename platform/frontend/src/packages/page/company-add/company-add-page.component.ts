@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { IRouterDeactivatable, ViewUtil } from '@ts-core/angular';
 import { DestroyableContainer } from '@ts-core/common';
 import { UrlTree } from '@angular/router';
-import { CompanyAddComponent } from '../../module/feature/company/component';
+import { CompanyAddComponent } from '@feature/company/component';
 
 @Component({
     templateUrl: './company-add-page.component.html'

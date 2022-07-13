@@ -7,7 +7,7 @@ import { Company } from '@project/common/platform/company';
 import { Destroyable } from '@ts-core/common';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
 import { ObservableData } from '@ts-core/common/observer';
-import { UserCompany } from 'common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService extends Destroyable {

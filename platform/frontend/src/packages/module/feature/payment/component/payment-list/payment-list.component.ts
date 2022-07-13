@@ -1,12 +1,12 @@
 import { Component, ElementRef, ViewChild, Input, ViewContainerRef } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
-import { PipeService } from '../../../../core/service';
+import { PipeService } from '@core/service';
 import * as _ from 'lodash';
-import { PaymentMapCollection, PaymentTableSettingsType, PaymentTableSettings } from '../../../../core/lib/payment';
-import { PaymentMenu } from '../../service';
+import { PaymentMapCollection, PaymentTableSettingsType, PaymentTableSettings } from '@core/lib/payment';
+import { PaymentMenu } from '@feature/payment/service';
 import { Transport } from '@ts-core/common/transport';
-import { PaymentOpenCommand } from '../../transport';
+import { PaymentOpenCommand } from '@feature/payment/transport';
 import { Payment } from '@project/common/platform/payment';
 
 @Component({

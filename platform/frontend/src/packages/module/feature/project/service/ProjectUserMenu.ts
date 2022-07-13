@@ -3,11 +3,11 @@ import { LanguageService } from '@ts-core/frontend/language';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Transport } from '@ts-core/common/transport';
-import { UserService } from '../../../core/service';
-import { UserProject } from 'common/platform/user';
+import { UserService } from '@core/service';
+import { UserProject } from '@project/common/platform/user';
 import { ProjectUser } from '@project/common/platform/project';
 import { ProjectUserRoleEditCommand } from '../transport';
-import { PermissionUtil } from 'common/util';
+import { PermissionUtil } from '@project/common/util';
 
 
 @Injectable({ providedIn: 'root' })

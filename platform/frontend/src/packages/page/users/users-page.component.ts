@@ -3,14 +3,14 @@ import { DestroyableContainer } from '@ts-core/common';
 import { ICdkTableCellEvent, ICdkTableSettings, MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
 import { Transport } from '@ts-core/common/transport';
 import { LedgerUser } from '@common/ledger/user';
-import { PipeService, UserService } from '../../module/core/service';
-import { UserMapCollection, UserTableSettings } from '../../module/core/lib/user';
+import { PipeService, UserService } from '@core/service';
+import { UserMapCollection, UserTableSettings } from '@core/lib/user';
 import * as _ from 'lodash';
 import { User } from '@common/platform/user';
-import { PaymentWidgetOpenCommand } from '../../module/feature/payment/transport';
+import { PaymentWidgetOpenCommand } from '@feature/payment/transport';
 import { CoinObjectType } from '@common/transport/command/coin';
-import { UserMenu } from '../../module/feature/user/service';
-import { UserOpenCommand } from '../../module/feature/user/transport';
+import { UserMenu } from '@feature/user/service';
+import { UserOpenCommand } from '@feature/user/transport';
 
 @Component({
     templateUrl: 'users-page.component.html',

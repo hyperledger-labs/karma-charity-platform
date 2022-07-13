@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Transport } from '@ts-core/common/transport';
 import { UserEditCommand } from '../transport';
-import { UserService } from '../../../core/service';
+import { UserService } from '@core/service';
 
 @Injectable({ providedIn: 'root' })
 export class UserMenu extends ListItems<IListItem<void>> {

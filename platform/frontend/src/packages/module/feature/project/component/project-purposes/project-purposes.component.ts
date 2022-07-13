@@ -2,13 +2,13 @@ import { Component, Input, ViewContainerRef } from '@angular/core';
 import { ICdkTableCellEvent, ICdkTableSettings, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
-import { ProjectPurposeMapCollection, ProjectPurposeTableSettings } from '../../../../core/lib/project';
+import { ProjectPurposeMapCollection, ProjectPurposeTableSettings } from '@core/lib/project';
 import { ProjectUser } from '@project/common/platform/project';
-import { PipeService, UserService } from '../../../../core/service';
+import { PipeService, UserService } from '@core/service';
 import { Transport } from '@ts-core/common/transport';
 import { Project, ProjectPurpose } from '@project/common/platform/project';
 import { ProjectPurposeAddCommand } from '../../transport';
-import { UserProject } from 'common/platform/user';
+import { UserProject } from '@project/common/platform/user';
 
 @Component({
     selector: 'project-purposes',

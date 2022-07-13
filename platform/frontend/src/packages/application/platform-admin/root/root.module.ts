@@ -1,17 +1,18 @@
 import { ApplicationRef, Injector, NgModule } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { APPLICATION_INJECTOR } from '@ts-core/angular';
-import { CoreModule } from '../../module/core/core.module';
+import { CoreModule } from '@core/core.module';
 import { RootComponent } from './root.component';
 import { RootRoutingModule } from './root.routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { LanguageService } from '@ts-core/frontend/language';
 import { LanguageFileLoader } from '@ts-core/language/loader';
 import { CommonModule } from '@angular/common';
+import { PaymentModule } from '@feature/payment';
 
 @NgModule({
     declarations: [RootComponent],
-    imports: [CoreModule, CommonModule, RootRoutingModule, MatButtonModule, MatProgressBarModule]
+    imports: [CoreModule, CommonModule, RootRoutingModule, MatButtonModule, MatProgressBarModule, PaymentModule]
 })
 export class RootModule {
     //--------------------------------------------------------------------------
@@ -31,10 +32,12 @@ export class RootModule {
             'Role.json',
             'Login.json',
             'Wallet.json',
-            'Payment.json',
             'Profile.json',
             'Project.json',
             'Company.json',
+
+            'Payment.json',
+            'PaymentWidget.json',
         );
     }
 

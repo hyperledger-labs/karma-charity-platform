@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, NgModuleRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';

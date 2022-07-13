@@ -1,7 +1,7 @@
 import { Component, Input, ViewContainerRef } from '@angular/core';
 import { IWindowContent, SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
 import { LanguageService } from '@ts-core/frontend/language';
-import { UserService, PipeService } from '../../../../core/service';
+import { UserService, PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { User, UserPreferences, UserPreferencesProjectCancelStrategy } from '@common/platform/user';
 import { ISerializable } from '@ts-core/common';

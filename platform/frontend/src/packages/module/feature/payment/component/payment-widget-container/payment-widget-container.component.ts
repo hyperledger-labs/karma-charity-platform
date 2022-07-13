@@ -1,14 +1,16 @@
-import { Component, Input, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewContainerRef } from '@angular/core';
 import { ISelectListItem, IWindowContent, SelectListItem, SelectListItems, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
-import { PipeService, UserService } from '../../../../core/service';
+import { PipeService, UserService } from '@core/service';
 import { Transport } from '@ts-core/common/transport';
 import { IPaymentAggregatorGetDtoResponse } from '@project/common/platform/api/payment';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { Company } from '@project/common/platform/company';
-import { CoinObjectType } from 'common/transport/command/coin';
-import { PaymentWidgetOpenCommand } from '../../transport';
-import { PaymentTarget, PaymentTargetValue } from '@project/common/platform/payment';
+import { CoinObjectType } from '@project/common/transport/command/coin';
+import { IPaymentWidgetOpenDtoResponse, PaymentWidgetOpenCommand } from '../../transport';
+import { IPaymentAggregatorData, PaymentTargetValue, PaymentUtil, PaymentWidgetDetails } from '@project/common/platform/payment';
+import { ObjectUtil } from '@ts-core/common/util';
+import { ExtendedError } from '@ts-core/common/error';
 
 @Component({
     selector: 'payment-widget-container',
@@ -21,7 +23,13 @@ export class PaymentWidgetContainer extends IWindowContent {
     //
     //--------------------------------------------------------------------------
 
+    @Output()
+    public failed: EventEmitter<ExtendedError> = new EventEmitter();
+    @Output()
+    public completed: EventEmitter<IPaymentAggregatorData> = new EventEmitter();
+
     protected _target: PaymentTargetValue;
+    protected _details: PaymentWidgetDetails;
     protected _paymentAggregator: IPaymentAggregatorGetDtoResponse;
 
     public amounts: SelectListItems<ISelectListItem<number>>;
@@ -56,17 +64,14 @@ export class PaymentWidgetContainer extends IWindowContent {
         this.load();
     }
 
+    protected commitDetailsProperties(): void {
+        this.checkDetails();
+        this.checkAutoOpen();
+    }
+
     protected commitPaymentAggregatorProperties(): void {
-        this.coinIds.clear();
-        if (!_.isEmpty(this.paymentAggregator.coinIds)) {
-            this.paymentAggregator.coinIds.forEach((item, index) => this.coinIds.add(new SelectListItem(item, index, item)));
-            this.coinIds.complete(!_.isNil(this.paymentAggregator.coinId) ? this.paymentAggregator.coinId : 0);
-        }
-        this.amounts.clear();
-        if (!_.isEmpty(this.paymentAggregator.amounts)) {
-            this.paymentAggregator.amounts.forEach((item, index) => this.amounts.add(new SelectListItem(item.toString(), index, item)));
-            this.amounts.complete(0);
-        }
+        this.checkDetails();
+        this.checkAutoOpen();
     }
 
     protected async load(): Promise<void> {
@@ -76,12 +81,42 @@ export class PaymentWidgetContainer extends IWindowContent {
         this.isDisabled = true;
         try {
             this.paymentAggregator = await this.api.paymentAggregatorGet({
-                id: this.target.id,
-                type: this.target instanceof Company ? CoinObjectType.COMPANY : CoinObjectType.PROJECT
-            })
+                id: this.target.id, type: this.target instanceof Company ? CoinObjectType.COMPANY : CoinObjectType.PROJECT
+            });
+            this.details = {};
         }
         finally {
             this.isDisabled = false;
+        }
+    }
+
+    protected checkDetails(): void {
+        if (_.isNil(this.details) || _.isNil(this.paymentAggregator)) {
+            return;
+        }
+
+        ObjectUtil.copyPartial(this.details, this.paymentAggregator, ['coinId', 'coinIds', 'amount', 'amounts']);
+
+        this.coinIds.clear();
+        this.amounts.clear();
+
+        if (!_.isEmpty(this.paymentAggregator.coinIds)) {
+            this.paymentAggregator.coinIds.forEach((item, index) => this.coinIds.add(new SelectListItem(item, index, item)));
+            this.coinIds.complete();
+        }
+
+        if (!_.isEmpty(this.paymentAggregator.amounts)) {
+            this.paymentAggregator.amounts.forEach((item, index) => this.amounts.add(new SelectListItem(item.toString(), index, item)));
+            this.amounts.complete();
+        }
+    }
+
+    protected checkAutoOpen(): void {
+        if (_.isNil(this.details) || _.isNil(this.paymentAggregator)) {
+            return;
+        }
+        if (!_.isNil(this.details.coinId) && !_.isNil(this.details.amount)) {
+            this.submit();
         }
     }
 
@@ -91,15 +126,22 @@ export class PaymentWidgetContainer extends IWindowContent {
     //
     // --------------------------------------------------------------------------
 
-    public submit(): void {
-        this.transport.send(new PaymentWidgetOpenCommand({
-            amount: this.amounts.selectedData,
-            coinId: this.coinIds.selectedData,
+    public async submit(): Promise<void> {
+        try {
+            await this.transport.sendListen(new PaymentWidgetOpenCommand({
+                amount: this.paymentAggregator.amount,
+                coinId: this.paymentAggregator.coinId,
 
-            target: this.paymentAggregator.target,
-            details: this.paymentAggregator.details,
-            aggregator: this.paymentAggregator.aggregator,
-        }))
+                data: this.details.data,
+
+                target: this.paymentAggregator.target,
+                details: this.paymentAggregator.details,
+                aggregator: this.paymentAggregator.aggregator,
+            }));
+            this.completed.emit(PaymentUtil.parseDetails(this.paymentAggregator.details));
+        } catch (error) {
+            this.failed.emit(ExtendedError.create(error));
+        }
     }
 
     public destroy(): void {
@@ -154,5 +196,15 @@ export class PaymentWidgetContainer extends IWindowContent {
             this.commitPaymentAggregatorProperties();
         }
     }
-
+    public get details(): PaymentWidgetDetails {
+        return this._details;
+    }
+    @Input()
+    public set details(value: PaymentWidgetDetails) {
+        if (value === this._details) {
+            return;
+        }
+        this._details = value;
+        this.commitDetailsProperties();
+    }
 }

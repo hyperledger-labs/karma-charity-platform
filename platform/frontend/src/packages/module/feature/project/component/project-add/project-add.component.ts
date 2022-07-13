@@ -1,19 +1,19 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { IRouterDeactivatable, SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { LoginService, PipeService, SettingsService } from '../../../../core/service';
+import { LoginService, PipeService, SettingsService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { Transport } from '@ts-core/common/transport';
 import { Project, ProjectPreferences, ProjectTag } from '@project/common/platform/project';
-import { Client } from 'common/platform/api';
+import { Client } from '@project/common/platform/api';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { IProjectAddDto } from '@project/common/platform/api/project';
-import { UserProject } from 'common/platform/user';
-import { ImageCropCommand } from '../../../image-crop/transport';
-import Editor from '../../../ckeditor/script/ckeditor.js';
+import { UserProject } from '@project/common/platform/user';
+import { ImageCropCommand } from '@feature/image-crop/transport';
+import Editor from '@feature/ckeditor/script/ckeditor.js';
 import { NgForm } from '@angular/forms';
 import { ProjectOpenCommand } from '../../transport';
-import { RouterService, CkeditorService } from '../../../../core/service';
+import { RouterService, CkeditorService } from '@core/service';
 
 @Component({
     selector: 'project-add',

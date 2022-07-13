@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, NgModuleRef } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 import { ProfileInfoComponent } from './component/profile-info/profile-info.component';
 import { ProfileMenu } from './service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
