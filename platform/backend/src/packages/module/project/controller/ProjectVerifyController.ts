@@ -12,6 +12,7 @@ import { PROJECT_URL } from '@project/common/platform/api';
 import { IProjectVerifyDtoResponse } from '@project/common/platform/api/project';
 import { Project, ProjectStatus } from '@project/common/platform/project';
 import { IUserHolder } from '@project/module/database/user';
+import { TransformGroup } from '@project/module/database';
 
 @Controller(`${PROJECT_URL}/:id/verify`)
 export class ProjectVerifyController extends DefaultController<number, IProjectVerifyDtoResponse> {
@@ -36,14 +37,13 @@ export class ProjectVerifyController extends DefaultController<number, IProjectV
     @UseGuards(UserGuard)
     @UserGuardOptions({ type: [UserType.EDITOR, UserType.ADMINISTRATOR] })
     public async executeExtended(@Param('id', ParseIntPipe) projectId: number, @Req() request: IUserHolder): Promise<IProjectVerifyDtoResponse> {
-        let project = await this.database.projectGet(projectId);
-        UserGuard.checkProject({
-            isProjectRequired: true,
-            projectStatus: [ProjectStatus.VERIFICATION_PROCESS],
-        }, project);
+        let item = await this.database.projectGet(projectId);
 
-        project = await this.database.projectStatus(project, ProjectStatus.VERIFIED);
-        return project.toObject();
+        let projectStatus = [ProjectStatus.VERIFICATION_PROCESS];
+        UserGuard.checkProject({ isProjectRequired: true, projectStatus }, item);
+
+        item = await this.database.projectStatus(item, ProjectStatus.VERIFIED);
+        return item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
     }
 }
 

@@ -2,14 +2,11 @@ import {
     UserRoleName,
     UserRole
 } from '@project/common/platform/user';
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { ValidateUtil } from '@ts-core/common/util';
 import { Exclude } from 'class-transformer';
-import { IsString, IsNumber, IsOptional, ValidateNested } from 'class-validator';
-import { CreateDateColumn, JoinColumn, ManyToOne, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { CreateDateColumn, BeforeUpdate, BeforeInsert, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as _ from 'lodash';
-import { CompanyEntity } from '../company';
-import { UserEntity } from './UserEntity';
-import { ProjectEntity } from '../project';
 
 @Entity({ name: 'user_role' })
 export class UserRoleEntity implements UserRole {
@@ -49,27 +46,6 @@ export class UserRoleEntity implements UserRole {
     @UpdateDateColumn({ name: 'updated_date' })
     public updatedDate: Date;
 
-    @Exclude()
-    @ManyToOne(() => UserEntity, user => user.userRoles, { nullable: true })
-    @IsOptional()
-    @ValidateNested()
-    @JoinColumn({ name: "user_id" })
-    public user?: UserEntity;
-
-    @Exclude()
-    @ManyToOne(() => CompanyEntity, company => company.userRoles, { nullable: true })
-    @IsOptional()
-    @ValidateNested()
-    @JoinColumn({ name: "company_id" })
-    public company?: CompanyEntity;
-
-    @Exclude()
-    @ManyToOne(() => ProjectEntity, project => project.userRoles, { nullable: true })
-    @IsOptional()
-    @ValidateNested()
-    @JoinColumn({ name: "project_id" })
-    public project?: ProjectEntity;
-
     // --------------------------------------------------------------------------
     //
     //  Public Methods
@@ -97,11 +73,9 @@ export class UserRoleEntity implements UserRole {
     //
     // --------------------------------------------------------------------------
 
-    public update(data: Partial<UserRole>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
-
-    public toObject(): UserRole {
-        return TransformUtil.fromClass<UserRole>(this, { excludePrefixes: ['__'] });
+    @BeforeUpdate()
+    @BeforeInsert()
+    public validate(): void {
+        ValidateUtil.validate(this);
     }
 }

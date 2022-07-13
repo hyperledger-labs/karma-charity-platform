@@ -2,7 +2,7 @@ import {
     UserPreferences
 } from '@project/common/platform/user';
 import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, Matches, IsString } from 'class-validator';
 import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './UserEntity';
@@ -23,6 +23,7 @@ export class UserCryptoKeyEntity implements CryptoKey {
     @IsNumber()
     public id: number;
 
+    
     @Column({ type: 'varchar' })
     @IsEnum(CryptoKeyStatus)
     public status: CryptoKeyStatus;
@@ -45,20 +46,7 @@ export class UserCryptoKeyEntity implements CryptoKey {
         user => user.cryptoKey
     )
     @JoinColumn({ name: 'user_id' })
+    @Type(() => UserEntity)
     public user: UserEntity;
-
-    // --------------------------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    // --------------------------------------------------------------------------
-
-    public update(data: Partial<UserPreferences>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
-
-    public toObject(): UserPreferences {
-        return TransformUtil.fromClass<UserPreferences>(this, { excludePrefixes: ['__'] });
-    }
 
 }

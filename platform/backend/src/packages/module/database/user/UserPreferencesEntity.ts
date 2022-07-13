@@ -12,7 +12,7 @@ import {
 } from '@project/common/platform/user';
 import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
 import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { IsEmail, IsDate, IsEnum, Length, IsBoolean, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './UserEntity';
@@ -104,6 +104,7 @@ export class UserPreferencesEntity implements UserPreferences {
         user => user.preferences
     )
     @JoinColumn({ name: 'user_id' })
+    @Type(() => UserEntity)
     public user: UserEntity;
 
     // --------------------------------------------------------------------------
@@ -111,14 +112,6 @@ export class UserPreferencesEntity implements UserPreferences {
     //  Public Methods
     //
     // --------------------------------------------------------------------------
-
-    public update(data: Partial<UserPreferences>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
-
-    public toObject(): UserPreferences {
-        return TransformUtil.fromClass<UserPreferences>(this, { excludePrefixes: ['__'] });
-    }
 
     public toGeo(): IGeo {
         if (_.isNil(this.location) || _.isNil(this.latitude) || _.isNil(this.longitude)) {

@@ -4,12 +4,12 @@ import { Logger } from '@ts-core/common/logger';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { Swagger } from '@project/module/swagger';
-import { UserGuard, UserGuardOptions } from '@project/module/guard';
-import { UserCompany, UserType } from '@project/common/platform/user';
+import { UserGuard } from '@project/module/guard';
+import { UserCompany } from '@project/common/platform/user';
 import { COMPANY_URL } from '@project/common/platform/api';
 import { IUserHolder } from '@project/module/database/user';
 import { ICompanyUserRoleGetDtoResponse } from '@project/common/platform/api/company';
-import { LedgerCompanyRole } from '@project/common/ledger/role';
+import { COMPANY_USER_ROLE_GET_ROLE } from '@project/common/platform/company';
 
 @Controller(`${COMPANY_URL}/:companyId/role/:userId`)
 export class CompanyUserRoleGetController extends DefaultController<void, ICompanyUserRoleGetDtoResponse> {
@@ -32,19 +32,13 @@ export class CompanyUserRoleGetController extends DefaultController<void, ICompa
     @Swagger({ name: 'Get company user roles list', response: UserCompany })
     @Get()
     @UseGuards(UserGuard)
-    @UserGuardOptions({
-        type: [UserType.ADMINISTRATOR, UserType.COMPANY_MANAGER]
-    })
     public async executeExtended(@Param('companyId', ParseIntPipe) companyId: number, @Param('userId', ParseIntPipe) userId: number, @Req() request: IUserHolder): Promise<ICompanyUserRoleGetDtoResponse> {
         let user = request.user;
-        let company = request.company;
 
-        if (user.type !== UserType.ADMINISTRATOR) {
-            UserGuard.checkCompany({ isCompanyRequired: true, companyRole: [LedgerCompanyRole.COMPANY_MANAGER] }, company);
-            companyId = company.id;
-        }
+        let item = await this.database.companyGet(companyId, userId);
+        let companyRole = !user.isAdministrator ? COMPANY_USER_ROLE_GET_ROLE: null;
+        UserGuard.checkCompany({ isCompanyRequired: true, companyRole }, await this.database.companyGet(companyId, user));
 
-        company = await this.database.companyGet(companyId, userId);
-        return company.toUserObject().roles as Array<LedgerCompanyRole>;
+        return item.toUserObject().roles;
     }
 }

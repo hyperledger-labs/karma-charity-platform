@@ -1,18 +1,24 @@
 import { LedgerProject } from '@project/common/ledger/project';
 import { Project, ProjectStatus } from '@project/common/platform/project';
-import { TransformUtil } from '@ts-core/common/util';
-import { Exclude, Expose, Transform } from 'class-transformer';
+import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { Exclude, Expose, ClassTransformOptions, Type } from 'class-transformer';
 import { ValidateNested, Matches, IsDefined, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import * as _ from 'lodash';
-import { Column, ManyToOne, JoinColumn, OneToMany, CreateDateColumn, Entity, Index, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, BaseEntity, ManyToOne, BeforeUpdate, BeforeInsert, JoinColumn, OneToMany, CreateDateColumn, Entity, Index, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { UserProject } from '@project/common/platform/user';
 import { UserEntity, UserRoleEntity } from '../user';
 import { ProjectPreferencesEntity } from './ProjectPreferencesEntity';
 import { CompanyEntity } from '../company';
-import { PaymentEntity } from '../payment';
+import { PaymentEntity, PaymentTransactionEntity } from '../payment';
+import { AccountEntity } from '../account';
+import { Account, AccountType } from '@project/common/platform/account';
+import { IProjectBalance } from '@project/common/platform/project';
+import { ProjectPurposeEntity } from './ProjectPurposeEntity';
+import { ExtendedError } from '@ts-core/common/error';
+import { ProjectUtil } from '@project/module/project/util';
 
 @Entity({ name: 'project' })
-export class ProjectEntity implements Project {
+export class ProjectEntity extends BaseEntity implements Project {
     // --------------------------------------------------------------------------
     //
     //  Properties
@@ -40,7 +46,6 @@ export class ProjectEntity implements Project {
     @UpdateDateColumn({ name: 'updated_date' })
     public updatedDate: Date;
 
-    @Transform(params => (params.value ? params.value.toObject() : null), { toPlainOnly: true })
     @OneToOne(
         () => ProjectPreferencesEntity,
         preferences => preferences.project,
@@ -48,19 +53,8 @@ export class ProjectEntity implements Project {
     )
     @IsDefined()
     @ValidateNested()
+    @Type(() => ProjectPreferencesEntity)
     public preferences: ProjectPreferencesEntity;
-
-    @Exclude()
-    @ManyToOne(() => CompanyEntity, company => company.projects)
-    @ValidateNested()
-    @JoinColumn({ name: "company_id" })
-    public company: CompanyEntity;
-
-    @Exclude()
-    @ManyToOne(() => UserEntity, user => user.projects)
-    @ValidateNested()
-    @JoinColumn({ name: "user_id" })
-    public user: UserEntity;
 
     @Column({ name: "user_id" })
     @IsNumber()
@@ -70,12 +64,38 @@ export class ProjectEntity implements Project {
     @IsNumber()
     public companyId: number;
 
-    @Exclude()
-    public userRoles?: Array<UserRoleEntity>;
+    @OneToMany(() => ProjectPurposeEntity, item => item.project, { cascade: true, eager: true })
+    @ValidateNested()
+    @Type(() => ProjectPurposeEntity)
+    public purposes: Array<ProjectPurposeEntity>;
 
     @Exclude()
-    @OneToMany(() => PaymentEntity, item => item.project)
-    public payments?: Array<PaymentEntity>;
+    @ManyToOne(() => UserEntity, user => user.projects)
+    @ValidateNested()
+    @JoinColumn({ name: "user_id" })
+    @Type(() => UserEntity)
+    public user: UserEntity;
+
+    @Exclude()
+    @ManyToOne(() => CompanyEntity, company => company.projects)
+    @ValidateNested()
+    @JoinColumn({ name: "company_id" })
+    @Type(() => CompanyEntity)
+    public company?: CompanyEntity;
+
+    @Exclude()
+    @OneToMany(() => AccountEntity, item => item.project, { cascade: true, eager: true })
+    @Type(() => AccountEntity)
+    public accounts?: Array<AccountEntity>;
+
+    @Exclude()
+    @OneToMany(() => PaymentTransactionEntity, item => item.project)
+    @Type(() => PaymentTransactionEntity)
+    public transactions?: Array<PaymentTransactionEntity>;
+
+    @Exclude()
+    @Type(() => UserRoleEntity)
+    public userRoles?: Array<UserRoleEntity>;
 
     // --------------------------------------------------------------------------
     //
@@ -83,16 +103,32 @@ export class ProjectEntity implements Project {
     //
     // --------------------------------------------------------------------------
 
-    public toObject(): Project {
-        return TransformUtil.fromClass<Project>(this, { excludePrefixes: ['__'] });
+    public toObject(options?: ClassTransformOptions): Project {
+        return TransformUtil.fromClass<Project>(this, options);
     }
 
-    public toUserObject(): UserProject {
-        let item = { ...this.toObject(), roles: [] };
+    public toUserObject(options?: ClassTransformOptions): UserProject {
+        let item = { ...this.toObject(options), roles: [] };
         if (!_.isEmpty(this.userRoles)) {
             item.roles = this.userRoles.map(item => item.name);
         }
         return item;
     }
 
+    @BeforeUpdate()
+    @BeforeInsert()
+    public validate(): void {
+        ValidateUtil.validate(this);
+    }
+
+    // --------------------------------------------------------------------------
+    //
+    //  Public Properties
+    //
+    // --------------------------------------------------------------------------
+
+    @Expose()
+    public get balance(): IProjectBalance {
+        return ProjectUtil.getBalance(this);
+    }
 }

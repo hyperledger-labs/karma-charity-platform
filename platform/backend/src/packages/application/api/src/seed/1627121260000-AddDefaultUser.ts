@@ -10,15 +10,9 @@ import { CryptoKeyStatus } from '@project/common/platform/crypto';
 import { ROOT_USER_CRYPTO_ALGORITHM, ROOT_USER_DESCRIPTION, ROOT_USER_CRYPTO_KEY_PRIVATE, ROOT_USER_CRYPTO_KEY_PUBLIC } from '@project/common/ledger';
 import { LedgerUser } from '@project/common/ledger/user';
 import { UserService } from '@project/module/login/service';
+import { LedgerService } from '@project/module/ledger/service';
 
 export class AddDefaultUser1627121260000 implements MigrationInterface {
-    // --------------------------------------------------------------------------
-    //
-    //  Constants
-    //
-    // --------------------------------------------------------------------------
-
-    public static DEFAULT_LOGIN = LoginService.createLogin('111452810894131754642', LoginResource.GOOGLE);
 
     // --------------------------------------------------------------------------
     //
@@ -28,7 +22,7 @@ export class AddDefaultUser1627121260000 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         let repository = queryRunner.connection.getRepository(UserEntity);
-        let login = AddDefaultUser1627121260000.DEFAULT_LOGIN;
+        let login = LedgerService.USER_ROOT_LOGIN;
 
         let item = await repository.findOne({ login });
         if (!_.isNil(item)) {

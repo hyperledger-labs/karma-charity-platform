@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ExtendedError } from '@ts-core/common/error';
 import { Logger } from '@ts-core/common/logger';
-import { TransportCommand } from 'platform/backend/src/packages/module/crypto/transport/handler/CryptoLedgerSignHandler';
+import { TransportCommand } from '@ts-core/common/transport/';
 import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
 import * as _ from 'lodash';
 import { CryptoLedgerSignCommand, ICryptoLedgerSignDto } from '../CryptoLedgerSignCommand';

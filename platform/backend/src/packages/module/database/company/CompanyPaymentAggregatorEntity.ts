@@ -1,11 +1,11 @@
-import { Project } from '@project/common/platform/project';
 import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose, Type, ClassTransformOptions } from 'class-transformer';
 import { IsString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import * as _ from 'lodash';
-import { Column, JoinColumn, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CompanyEntity } from './index';
+import { Column, JoinColumn, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { CompanyEntity } from '../company';
 import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
+import { TransformGroup } from '../TransformGroup';
 
 @Entity({ name: 'company_payment_aggregator' })
 export class CompanyPaymentAggregatorEntity implements PaymentAggregator {
@@ -37,6 +37,7 @@ export class CompanyPaymentAggregatorEntity implements PaymentAggregator {
     @Exclude()
     @OneToOne(() => CompanyEntity, company => company.paymentAggregator)
     @JoinColumn({ name: 'company_id' })
+    @Type(() => CompanyEntity)
     public company: CompanyEntity;
 
     // --------------------------------------------------------------------------
@@ -47,7 +48,7 @@ export class CompanyPaymentAggregatorEntity implements PaymentAggregator {
 
     constructor(data?: Partial<PaymentAggregator>) {
         if (!_.isNil(data)) {
-            this.update(data);
+            ObjectUtil.copyPartial(data, this);
         }
     }
 
@@ -57,12 +58,9 @@ export class CompanyPaymentAggregatorEntity implements PaymentAggregator {
     //
     // --------------------------------------------------------------------------
 
-    public update(data: Partial<PaymentAggregator>): void {
-        ObjectUtil.copyProperties(data, this);
-    }
 
-    public toObject(): PaymentAggregator {
-        return TransformUtil.fromClass<PaymentAggregator>(this, { excludePrefixes: ['__'] });
+    public toObject(options?: ClassTransformOptions): PaymentAggregator {
+        return TransformUtil.fromClass<PaymentAggregator>(this, options);
     }
 
 }

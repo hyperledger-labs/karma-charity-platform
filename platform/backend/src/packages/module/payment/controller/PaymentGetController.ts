@@ -39,18 +39,12 @@ export class PaymentGetController extends DefaultController<number, IPaymentGetD
 
     @Swagger({ name: `Get payment by id`, response: Payment })
     @Get()
-    public async executeExtends(@Param('id', ParseIntPipe) id: number, @Req() request: IUserHolder,): Promise<IPaymentGetDtoResponse> {
-        // let item = await this.cache.wrap<LedgerBlock>(this.getCacheKey(params), () => this.getItem(params), {ttl: DateUtil.MILISECONDS_DAY / DateUtil.MILISECONDS_SECOND});
-
-        let item = await this.getItem(id);
-        return item;
-    }
-
-    private async getItem(id: number): Promise<Payment> {
+    public async executeExtends(@Param('id', ParseIntPipe) id: number, @Req() request: IUserHolder): Promise<IPaymentGetDtoResponse> {
         let item = await this.database.paymentGet(id);
         if (_.isNil(item)) {
             throw new PaymentNotFoundError();
         }
         return item.toObject();
     }
+
 }

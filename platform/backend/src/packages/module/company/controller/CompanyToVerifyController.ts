@@ -12,8 +12,9 @@ import { DatabaseService } from '@project/module/database/service';
 import { UserCompany, UserType } from '@project/common/platform/user';
 import { COMPANY_TO_VERIFY_URL } from '@project/common/platform/api';
 import { ICompanyToVerifyDtoResponse } from '@project/common/platform/api/company';
-import { CompanyStatus } from '@project/common/platform/company';
+import { CompanyStatus, COMPANY_TO_VERIFY_ROLE, COMPANY_TO_VERIFY_STATUS, COMPANY_TO_VERIFY_TYPE } from '@project/common/platform/company';
 import { LedgerCompanyRole } from '@project/common/ledger/role';
+import { TransformGroup } from '@project/module/database';
 
 @Controller(COMPANY_TO_VERIFY_URL)
 export class CompanyToVerifyController extends DefaultController<number, ICompanyToVerifyDtoResponse> {
@@ -37,17 +38,17 @@ export class CompanyToVerifyController extends DefaultController<number, ICompan
     @Post()
     @UseGuards(UserGuard)
     @UserGuardOptions({
-        type: [UserType.COMPANY_MANAGER],
+        type: COMPANY_TO_VERIFY_TYPE,
         company: {
+            role: COMPANY_TO_VERIFY_ROLE,
+            status: COMPANY_TO_VERIFY_STATUS,
             required: true,
-            status: [CompanyStatus.DRAFT, CompanyStatus.REJECTED],
-            role: [LedgerCompanyRole.PROJECT_MANAGER]
         }
     })
     public async executeExtended(@Req() request: IUserHolder): Promise<ICompanyToVerifyDtoResponse> {
-        let company = request.company;
+        let item = request.company;
         
-        company = await this.database.companyStatus(company, CompanyStatus.VERIFICATION_PROCESS);
-        return company.toUserObject();
+        item = await this.database.companyStatus(item, CompanyStatus.VERIFICATION_PROCESS);
+        return item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
     }
 }

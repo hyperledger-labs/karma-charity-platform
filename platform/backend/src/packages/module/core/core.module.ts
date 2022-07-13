@@ -6,6 +6,7 @@ import { LoggerModule } from '@ts-core/backend-nestjs/logger';
 import { LedgerApiClient as CommonLedgerApiClient } from './service';
 import { TransportModule } from '@ts-core/backend-nestjs/transport';
 
+
 export class CoreModule {
     // --------------------------------------------------------------------------
     //
@@ -16,6 +17,7 @@ export class CoreModule {
     public static forRoot(settings: ICoreSettings): DynamicModule {
         return {
             module: CoreModule,
+            global: true,
             imports: [
                 LoggerModule,
                 TransportModule

@@ -17,11 +17,11 @@ export class AddProjectPreferences1627121260008 implements MigrationInterface {
                     constraint "project_preferences_project_id_key" unique
                     constraint "project_preferences_project_id_fkey" references "project",
                 "title" varchar not null,
+                "picture" varchar not null,
                 "description" varchar not null,
                 "description_short" varchar not null,
        
                 "tags" varchar array,
-                "picture" varchar,
                 "location" varchar,
                 "latitude" numeric,
                 "longitude" numeric

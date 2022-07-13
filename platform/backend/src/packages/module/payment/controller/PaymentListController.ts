@@ -87,8 +87,7 @@ export class PaymentListController extends DefaultController<PaymentListDto, Pay
             params.conditions = {};
         }
         let query = this.database.payment.createQueryBuilder('payment')
-        //.innerJoinAndSelect('payment.preferences', 'preferences')
-        //.leftJoinAndMapMany("payment.userRoles", UserRoleEntity, 'role', `role.userId = ${request.user.id} and role.paymentId = payment.id`)
+        this.database.addPaymentRelations(query);
         return TypeormUtil.toPagination(query, params, this.transform);
     }
 

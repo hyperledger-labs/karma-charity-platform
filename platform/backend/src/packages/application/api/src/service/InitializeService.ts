@@ -16,6 +16,12 @@ import { LedgerApiClient } from '@project/module/core/service';
 import { TransportCommandAsync, TransportCommand, ITransportCommandOptions } from '@ts-core/common/transport';
 import { TransportCryptoManagerEd25519 } from '@ts-core/common/transport/crypto';
 import { CompanyAddCommand } from '@project/common/transport/command/company';
+import { ProjectCollectedCheckCommand } from '@project/module/project/transport';
+import { LedgerService } from '@project/module/ledger/service';
+import { CompanyEntity } from '@project/module/database/company';
+import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
+import { ProjectAddCommand } from '@project/common/transport/command/project';
+import { LedgerCoinId } from '@project/common/ledger/coin';
 
 @Injectable()
 export class InitializeService extends LoggerWrapper {
@@ -37,6 +43,7 @@ export class InitializeService extends LoggerWrapper {
         logger: Logger,
         private transport: Transport,
         private database: DatabaseService,
+        private ledger: LedgerService,
         private api: LedgerApiClient
     ) {
         super(logger);
@@ -48,29 +55,29 @@ export class InitializeService extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    private async checkDefaultUser(): Promise<UserEntity> {
-        let user = await this.database.user.findOne({ login: AddDefaultUser1627121260000.DEFAULT_LOGIN });
-        if (_.isNil(user)) {
+    private async userRootCheck(): Promise<void> {
+        let userRoot = await this.ledger.userRootGet();
+        if (_.isNil(userRoot)) {
             throw new ExtendedError(`Unable to find default user: please seed database`);
         }
-        return user;
-    }
 
-    private async checkDefaultLedgerUser(user: UserEntity): Promise<void> {
-        /*
-        let uid = user.ledgerUid;
-        let rootLedgerUser = await this.api.ledgerRequestSendListen(new UserGetCommand({ uid, details: ['cryptoKey'] }));
-        if (rootLedgerUser.cryptoKey.value !== user.cryptoKey.publicKey) {
-            throw new ExtendedError(`Ledger root user has different key from the default user: probably it was changed directly`);
+        let userRootLedger = await this.ledger.userRootLegerGet();
+        if (_.isNil(userRootLedger)) {
+            throw new ExtendedError(`Unable to find default ledger user: please check ledger chaincode`);
         }
 
+        if (userRootLedger.cryptoKey.value !== userRoot.cryptoKey.publicKey) {
+            throw new ExtendedError(`Ledger root user has different key from the default user: probably it was changed directly`);
+        }
+        this.log(`User root was founded`);
+        /*
         let cryptoKey = user.cryptoKey;
         if (cryptoKey.publicKey !== ROOT_USER_CRYPTO_KEY_PUBLIC) {
             this.log(`Ledger root user crypto key matches default user key`);
             return;
         }
         this.log(`Ledger root user has default crypto key: changing it...`);
- 
+
         let keys = Ed25519.keys();
         let algorithm = Ed25519.ALGORITHM;
 
@@ -87,6 +94,20 @@ export class InitializeService extends LoggerWrapper {
         */
     }
 
+    private async companyPaymentAggregatorCheck(): Promise<void> {
+        for (let name of Object.values(PaymentAggregatorType)) {
+            let item = await this.ledger.companyPaymentAggregatorGet(name);
+            if (!_.isNil(item)) {
+                this.log(`Company for "${name}" payment aggregator was founded`);
+                continue;
+            }
+
+            this.log(`Creating company for "${name}" payment aggregator...`);
+            item = await this.ledger.companyPaymentAggregatorAdd(name);
+            this.log(`Company for "${name}" payment aggregator created`);
+        }
+    }
+
     // --------------------------------------------------------------------------
     //
     //  Public Methods
@@ -94,8 +115,7 @@ export class InitializeService extends LoggerWrapper {
     // --------------------------------------------------------------------------
 
     public async initialize(): Promise<void> {
-        let user = await this.checkDefaultUser();
-        await this.checkDefaultLedgerUser(user);
+        await this.userRootCheck();
+        await this.companyPaymentAggregatorCheck();
     }
-
 }

@@ -1,13 +1,12 @@
 import { PassportModule } from '@nestjs/passport';
-import { Transport } from '@ts-core/common/transport';
 import { TransportModule } from '@ts-core/backend-nestjs/transport';
 import { DatabaseModule } from '@project/module/database';
 import { JwtModule } from '@nestjs/jwt';
 import { LoginService, UserService } from './service';
 import { DynamicModule } from '@nestjs/common';
-import { GoogleStrategy } from './strategy/GoogleStrategy';
+import { GoogleSiteStrategy } from './strategy';
 import { JwtStrategy } from './strategy/JwtStrategy';
-import { IGoogleStrategySettings, IJwtStrategySettings } from './strategy';
+import { IGoogleSiteStrategySettings, IJwtStrategySettings } from './strategy';
 import { LoginController } from './controller/LoginController';
 import { InitController } from './controller/InitController';
 import { GuardModule } from '@project/module/guard';
@@ -39,9 +38,9 @@ export class LoginModule {
                     useFactory: (user: UserService) => new JwtStrategy(settings, user)
                 },
                 {
-                    provide: GoogleStrategy,
+                    provide: GoogleSiteStrategy,
                     inject: [UserService],
-                    useFactory: (user: UserService) => new GoogleStrategy(settings, user)
+                    useFactory: (user: UserService) => new GoogleSiteStrategy(settings, user)
                 },
                 LoginService,
                 UserService
@@ -51,4 +50,4 @@ export class LoginModule {
     }
 }
 
-export type ILoginSettings = IGoogleStrategySettings & IJwtStrategySettings;
+export type ILoginSettings = IGoogleSiteStrategySettings & IJwtStrategySettings;

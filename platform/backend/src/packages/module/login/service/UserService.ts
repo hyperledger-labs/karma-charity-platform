@@ -1,18 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Logger, LoggerWrapper } from '@ts-core/common/logger';
-import { ExtendedError } from '@ts-core/common/error';
-import { JwtService } from '@nestjs/jwt';
 import * as _ from 'lodash';
-import { LoginResource } from '@project/common/platform/api/login';
 import { UserCryptoKeyEntity, UserEntity } from '@project/module/database/user';
-import { GoogleStrategy } from '../strategy';
 import { DatabaseService } from '@project/module/database/service';
 import { Transport } from '@ts-core/common/transport';
 import { TweetNaCl, Ed25519 } from '@ts-core/common/crypto';
 import { CryptoEncryptCommand } from '@project/module/crypto/transport';
 import { CryptoKeyStatus, CryptoKeyType } from '@project/common/platform/crypto';
 import { LoginUser } from './LoginService';
-import { UserStatusInvalidError, UserUndefinedError } from '@project/module/core/middleware';
+import { UserGuard } from '@project/module/guard';
+import { UserStatus } from '@project/common/platform/user';
 
 @Injectable()
 export class UserService extends LoggerWrapper {
@@ -44,12 +41,7 @@ export class UserService extends LoggerWrapper {
 
     public async validate(payload: LoginUser): Promise<UserEntity> {
         let user = await this.database.userGet(payload.id);
-        if (_.isNil(user)) {
-            throw new UserUndefinedError();
-        }
-        if (payload.status !== user.status) {
-            throw new UserStatusInvalidError({ value: payload.status, expected: user.status });
-        }
+        UserGuard.checkUser({ isRequired: true, status: [UserStatus.ACTIVE] }, user);
         return Promise.resolve(user);
     }
 

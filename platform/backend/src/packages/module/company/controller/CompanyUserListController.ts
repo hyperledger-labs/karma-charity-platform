@@ -8,14 +8,12 @@ import { IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { Swagger } from '@project/module/swagger';
-import { UserGuard, UserGuardOptions } from '@project/module/guard';
-import { UserCompany, UserType } from '@project/common/platform/user';
-import { CompanyEntity } from '@project/module/database/company';
+import { UserGuard } from '@project/module/guard';
+import { UserCompany } from '@project/common/platform/user';
 import { COMPANY_URL } from '@project/common/platform/api';
 import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
-import { CompanyUser } from '@project/common/platform/company';
-import { LedgerCompanyRole } from '@project/common/ledger/role';
-import { CompanyNotFoundError, RequestInvalidError } from '@project/module/core/middleware';
+import { CompanyUser, COMPANY_USER_LIST_ROLE } from '@project/common/platform/company';
+import { TransformGroup } from '@project/module/database';
 
 // --------------------------------------------------------------------------
 //
@@ -86,32 +84,18 @@ export class CompanyUserListController extends DefaultController<CompanyUserList
     @Swagger({ name: 'Get company users list', response: CompanyUserListDtoResponse })
     @Get()
     @UseGuards(UserGuard)
-    @UserGuardOptions({
-        type: [UserType.ADMINISTRATOR, UserType.COMPANY_MANAGER, UserType.COMPANY_WORKER]
-    })
     public async executeExtended(@Param('id', ParseIntPipe) id: number, @Query({ transform: Paginable.transform }) params: CompanyUserListDto, @Req() request: IUserHolder): Promise<CompanyUserListDtoResponse> {
         let user = request.user;
-        let company = request.company;
+        let item = await this.database.companyGet(id, user)
 
-        if (user.type !== UserType.ADMINISTRATOR) {
-            UserGuard.checkCompany({ isCompanyRequired: true, companyRole: [LedgerCompanyRole.COMPANY_MANAGER, LedgerCompanyRole.USER_MANAGER] }, company);
-        }
-        else {
-            if (_.isNil(id)) {
-                throw new RequestInvalidError({ name: 'id', value: id })
-            }
-            company = await this.database.companyGet(id);
-            UserGuard.checkCompany({ isCompanyRequired: true }, company);
-        }
+        let companyRole = !user.isAdministrator ? COMPANY_USER_LIST_ROLE : null;
+        UserGuard.checkCompany({ isCompanyRequired: true, companyRole }, item);
 
-        if (_.isNil(params.conditions)) {
-            params.conditions = {};
-        }
         let query = this.database.user.createQueryBuilder('user')
             .innerJoinAndSelect('user.preferences', 'preferences')
-            .innerJoinAndSelect("user.userRoles", 'role', `role.companyId = ${company.id}`)
+            .innerJoinAndMapMany("user.userRoles", UserRoleEntity, 'userRole', `userRole.companyId = ${id} AND userRole.userId = user.id`)
         return TypeormUtil.toPagination(query, params as any, this.transform);
     }
 
-    protected transform = async (item: UserEntity): Promise<CompanyUser> => item.toCompanyObject();
+    protected transform = async (item: UserEntity): Promise<CompanyUser> => item.toCompanyObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
 }

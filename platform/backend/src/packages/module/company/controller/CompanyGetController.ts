@@ -6,11 +6,13 @@ import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { CompanyNotFoundError } from '@project/module/core/middleware';;
 import { Swagger } from '@project/module/swagger';
-import { UserGuard } from '@project/module/guard';
+import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { COMPANY_URL, USER_URL } from '@project/common/platform/api';
-import { UserCompany } from '@project/common/platform/user';
+import { UserCompany, UserType } from '@project/common/platform/user';
 import { IUserHolder } from '@project/module/database/user';
 import { ICompanyGetDtoResponse } from '@project/common/platform/api/company';
+import { TransformGroup } from '@project/module/database';
+import { LedgerCompanyRole } from '@project/common/ledger/role';
 
 // --------------------------------------------------------------------------
 //
@@ -36,21 +38,22 @@ export class CompanyGetController extends DefaultController<number, ICompanyGetD
     //
     // --------------------------------------------------------------------------
 
-    @Swagger({ name: `Get user by id`, response: UserCompany })
+    @Swagger({ name: `Get company by id`, response: UserCompany })
     @Get()
     @UseGuards(UserGuard)
+    @UserGuardOptions({
+        required: false
+    })
     public async executeExtends(@Param('id', ParseIntPipe) id: number, @Req() request: IUserHolder,): Promise<ICompanyGetDtoResponse> {
-        // let item = await this.cache.wrap<LedgerBlock>(this.getCacheKey(params), () => this.getItem(params), {ttl: DateUtil.MILISECONDS_DAY / DateUtil.MILISECONDS_SECOND});
+        let user = request.user;
 
-        let item = await this.getItem(id, request.user.id);
-        return item;
-    }
+        let item = await this.database.companyGet(id, !_.isNil(user) ? user.id : null);
+        UserGuard.checkCompany({ isCompanyRequired: true }, item);
 
-    private async getItem(id: number, userId: number): Promise<UserCompany> {
-        let item = await this.database.companyGet(id, userId);
-        if (_.isNil(item)) {
-            throw new CompanyNotFoundError();
+        let groups = [TransformGroup.PUBLIC_DETAILS];
+        if ((!_.isNil(user) && user.isAdministrator) || UserGuard.isHasRole([LedgerCompanyRole.COMPANY_MANAGER], item.userRoles)) {
+            groups.push(TransformGroup.PRIVATE);
         }
-        return item.toUserObject();
+        return item.toUserObject({ groups });
     }
 }

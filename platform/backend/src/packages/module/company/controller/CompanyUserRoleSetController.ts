@@ -7,10 +7,12 @@ import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { UserCompany, UserType } from '@project/common/platform/user';
 import { COMPANY_URL } from '@project/common/platform/api';
-import { IUserHolder, UserRoleEntity } from '@project/module/database/user';
+import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
 import { ICompanyUserRoleSetDtoResponse } from '@project/common/platform/api/company';
 import { LedgerCompanyRole } from '@project/common/ledger/role';
-import { ValidateUtil } from '@ts-core/common/util';
+import { COMPANY_USER_ROLE_SET_ROLE } from '@project/common/platform/company';
+import { LedgerService } from '@project/module/ledger/service';
+import { CompanyEntity } from '@project/module/database/company';
 
 @Controller(`${COMPANY_URL}/:companyId/role/:userId`)
 export class CompanyUserRoleSetController extends DefaultController<void, ICompanyUserRoleSetDtoResponse> {
@@ -20,18 +22,8 @@ export class CompanyUserRoleSetController extends DefaultController<void, ICompa
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService) {
+    constructor(logger: Logger, private database: DatabaseService, private ledger: LedgerService) {
         super(logger);
-    }
-
-   // --------------------------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    // --------------------------------------------------------------------------
-
-    private async sendToLedger(userId: number, companyId: number, roles:Array<LedgerCompanyRole>): Promise<void> {
-        // CompanyUserEditCommand
     }
 
     // --------------------------------------------------------------------------
@@ -44,24 +36,24 @@ export class CompanyUserRoleSetController extends DefaultController<void, ICompa
     @Post()
     @UseGuards(UserGuard)
     @UserGuardOptions({
-        type: [UserType.ADMINISTRATOR, UserType.COMPANY_MANAGER]
+        // type: COMPANY_USER_ROLE_SET_TYPE,
+        ledgerRequired: true,
     })
     public async executeExtended(@Param('companyId', ParseIntPipe) companyId: number, @Param('userId', ParseIntPipe) userId: number, @Body(new ParseArrayPipe()) roles: Array<LedgerCompanyRole>, @Req() request: IUserHolder): Promise<ICompanyUserRoleSetDtoResponse> {
-        let user = request.user;
-        let company = request.company;
+        let owner = request.user;
 
-        if (user.type !== UserType.ADMINISTRATOR) {
-            UserGuard.checkCompany({ isCompanyRequired: true, companyRole: [LedgerCompanyRole.COMPANY_MANAGER] }, company);
-            companyId = company.id;
-        }
+        let user = await this.database.userGet(userId);
+        UserGuard.checkUser({ isRequired: true, isLedgerRequired: true }, user);
 
-        company = await this.database.companyGet(companyId, userId);
+        let companyRole = !owner.isAdministrator ? COMPANY_USER_ROLE_SET_ROLE : null;
+        UserGuard.checkCompany({ isCompanyRequired: true, isCompanyLedgerRequired: true, companyRole }, await this.database.companyGet(companyId, owner));
+
+        let company = await this.database.companyGet(companyId, userId);
+        await this.ledger.companyUserRoleSet(owner, company, user, roles);
+  
         let exists = company.toUserObject().roles;
-
-        let toRemove = _.difference(exists, roles);
         let toAdd = _.difference(roles, exists);
-
-        await this.sendToLedger(companyId, userId, roles);
+        let toRemove = _.difference(exists, roles);
 
         await this.database.getConnection().transaction(async manager => {
             let repository = manager.getRepository(UserRoleEntity);
@@ -70,15 +62,18 @@ export class CompanyUserRoleSetController extends DefaultController<void, ICompa
                 await repository.createQueryBuilder()
                     .delete()
                     .where('userId = :userId', { userId })
-                    .where('companyId = :companyId', { companyId })
-                    .where('name IN (:...names)', { names: toRemove })
+                    .andWhere('companyId = :companyId', { companyId })
+                    .andWhere('name IN (:...names)', { names: toRemove })
                     .execute();
             }
 
             if (!_.isEmpty(toAdd)) {
-                for (let name of toAdd) {
-                    await repository.save(new UserRoleEntity(userId, name, companyId));
-                }
+                await repository.save(toAdd.map(name => new UserRoleEntity(userId, name, companyId)));
+            }
+
+            if (user.type === UserType.COMPANY_WORKER && _.isNil(user.companyId)) {
+                user.companyId = companyId;
+                await manager.getRepository(UserEntity).save(user);
             }
         });
 

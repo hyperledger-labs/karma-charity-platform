@@ -1,20 +1,18 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { DefaultController } from '@ts-core/backend/controller';
 import { Logger } from '@ts-core/common/logger';
-import { ValidateUtil } from '@ts-core/common/util';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
-import { IUserHolder } from '@project/module/database/user';
+import { IUserHolder, UserEntity } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { UserCompany, UserType } from '@project/common/platform/user';
+import { UserCompany } from '@project/common/platform/user';
 import { COMPANY_ACTIVATE_URL } from '@project/common/platform/api';
-import { CompanyStatus } from '@project/common/platform/company';
+import { COMPANY_ACTIVATE_ROLE, COMPANY_ACTIVATE_STATUS, CompanyStatus, COMPANY_ACTIVATE_TYPE } from '@project/common/platform/company';
 import { ICompanyActivateDtoResponse } from '@project/common/platform/api/company';
 import { CompanyEntity } from '@project/module/database/company';
-import { LedgerCompany, LedgerCompanyStatus } from '@project/common/ledger/company';
-import { TraceUtil } from '@ts-core/common/trace';
-import { LedgerCompanyRole } from '@project/common/ledger/role';
+import { TransformGroup } from '@project/module/database';
+import { LedgerService } from '@project/module/ledger/service';
 
 @Controller(COMPANY_ACTIVATE_URL)
 export class CompanyActivateController extends DefaultController<number, ICompanyActivateDtoResponse> {
@@ -24,23 +22,10 @@ export class CompanyActivateController extends DefaultController<number, ICompan
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService) {
+    constructor(logger: Logger, private database: DatabaseService, private ledger: LedgerService) {
         super(logger);
     }
 
-    // --------------------------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    // --------------------------------------------------------------------------
-
-    private async createInLedger(company: CompanyEntity): Promise<LedgerCompany> {
-        let item = LedgerCompany.create(new Date(), _.padStart('1', 64, '1'));
-        item.status = LedgerCompanyStatus.ACTIVE;
-        item.createdDate = new Date();
-        item.description = company.preferences.name;
-        return item;
-    }
 
     // --------------------------------------------------------------------------
     //
@@ -52,22 +37,17 @@ export class CompanyActivateController extends DefaultController<number, ICompan
     @Post()
     @UseGuards(UserGuard)
     @UserGuardOptions({
-        type: [UserType.COMPANY_MANAGER],
+        type: COMPANY_ACTIVATE_TYPE,
         company: {
-            required: true,
-            status: [CompanyStatus.VERIFIED],
-            role: [LedgerCompanyRole.COMPANY_MANAGER]
+            role: COMPANY_ACTIVATE_ROLE,
+            status: COMPANY_ACTIVATE_STATUS,
+            required: true
         }
     })
     public async executeExtended(@Req() request: IUserHolder): Promise<ICompanyActivateDtoResponse> {
-        let company = request.company;
-        company.status = CompanyStatus.ACTIVE;
+        let item = await this.ledger.companyAdd(request.user.ledgerUid, request.company);
 
-        let ledger = await this.createInLedger(company);
-        company.ledgerUid = ledger.uid;
-
-        await ValidateUtil.validate(company);
-        await this.database.company.save(company);
-        return company.toUserObject();
+        await this.database.companyStatus(item, CompanyStatus.ACTIVE);
+        return item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
     }
 }

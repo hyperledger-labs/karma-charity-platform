@@ -13,6 +13,7 @@ import { IUserEditDto, IUserEditDtoResponse } from '@project/common/platform/api
 import { User, UserPreferences, UserStatus, UserType } from '@project/common/platform/user';
 import { RequestInvalidError } from '@project/module/core/middleware';
 import { USER_URL } from '@project/common/platform/api';
+import { TransformGroup } from '@project/module/database';
 
 // --------------------------------------------------------------------------
 //
@@ -68,28 +69,13 @@ export class UserEditController extends DefaultController<IUserEditDto, IUserEdi
     @Put()
     @UseGuards(UserGuard)
     public async executeExtended(@Param('id', ParseIntPipe) userId: number, @Body() params: UserEditDto, @Req() request: IUserHolder): Promise<IUserEditDtoResponse> {
-        if (_.isNaN(userId)) {
-            userId = request.user.id;
-        }
-
         let user = request.user;
-        let isAdministrator = request.user.type === UserType.ADMINISTRATOR;
-        if (!isAdministrator) {
-            if (!_.isNil(params.type)) {
-                throw new RequestInvalidError({ name: 'type', value: params.type, expected: null });
-            }
-            if (!_.isNil(params.status)) {
-                throw new RequestInvalidError({ name: 'status', value: params.status, expected: null });
-            }
-            if (user.id !== userId) {
-                throw new RequestInvalidError({ name: 'id', value: userId, expected: user.id });
-            }
-        }
+        let item = await this.database.userGet(userId);
 
-        if (isAdministrator) {
-            if (user.id !== userId) {
-                user = await this.database.user.findOneOrFail(userId);
-            }
+        let status = !user.isAdministrator ? [UserStatus.ACTIVE] : null;
+        UserGuard.checkUser({ isRequired: true, status }, item);
+
+        if (user.isAdministrator) {
             if (!_.isNil(params.status)) {
                 user.status = params.status;
             }
@@ -97,16 +83,17 @@ export class UserEditController extends DefaultController<IUserEditDto, IUserEdi
                 user.type = params.type;
             }
         }
-
-        if (!_.isNil(params.preferences)) {
-            let preferences = params.preferences;
-            if (!_.isNil(preferences.birthday)) {
-                preferences.birthday = new Date(preferences.birthday);
-            }
-            ObjectUtil.copyPartial(preferences, user.preferences);
+        else if (item.id !== user.id) {
+            throw new RequestInvalidError({ name: 'id', value: userId, expected: user.id })
         }
 
-        user = await this.database.userSave(user);
-        return user.toObject();
+        if (!_.isNil(params.preferences) && !_.isNil(params.preferences.birthday)) {
+            params.preferences.birthday = new Date(params.preferences.birthday);
+        }
+
+        ObjectUtil.copyPartial(params.preferences, item.preferences);
+
+        item = await this.database.user.save(item);
+        return item.toObject({ groups: [TransformGroup.PUBLIC_DETAILS, TransformGroup.PRIVATE] });
     }
 }

@@ -69,6 +69,7 @@ export class LoginController extends DefaultController<ILoginDto, ILoginDtoRespo
     @Swagger({ name: 'Login user', response: LoginDtoResponse, isDisableBearer: true })
     @Post()
     public async execute(@Body() params: ILoginDto): Promise<ILoginDtoResponse> {
+        this.warn(`Trying to login ${JSON.stringify(params, null, 4)}`);
         return this.service.login(TraceUtil.addIfNeed(params));
     }
 }
