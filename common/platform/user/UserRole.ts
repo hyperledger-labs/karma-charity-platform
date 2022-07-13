@@ -4,6 +4,7 @@ import { LedgerCompanyRole, LedgerProjectRole, LedgerRole } from '../../ledger/r
 export class UserRole {
     id: number;
     name: UserRoleName;
+    userId: number;
     companyId?: number;
     projectId?: number;
 

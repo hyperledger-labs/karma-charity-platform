@@ -5,6 +5,7 @@ export * from './CompanyEditCommand';
 export * from './CompanyRemoveCommand';
 export * from './CompanyProjectListCommand';
 export * from './CompanyUserAddCommand';
+export * from './CompanyUserIsInCommand';
 export * from './CompanyUserListCommand';
 export * from './CompanyUserEditCommand';
 export * from './CompanyUserRemoveCommand';

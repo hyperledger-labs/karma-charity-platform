@@ -1,2 +1,2 @@
-export * from './ErrorCode';
 export * from './Client';
+export * from './ErrorCode';

@@ -50,7 +50,7 @@ export class ApiClient extends TransportHttp {
     }
 
     public async getCompanyList(data?: Paginable<ILedgerAction>): Promise<IPagination<LedgerCompany>> {
-        let items = await this.call<IPagination<LedgerCompany>>(COMPANY_LIST, { data });
+        let items = await this.call<IPagination<LedgerCompany>>(COMPANY_LIST_URL, { data });
         items.items = TransformUtil.toClassMany(LedgerCompany, items.items);
         return items;
     }
@@ -67,7 +67,7 @@ export class ApiClient extends TransportHttp {
     }
 
     public async getActionList(data?: Paginable<ILedgerAction>): Promise<IPagination<ILedgerAction>> {
-        let items = await this.call<IPagination<ILedgerAction>>(ACTION_LIST, { data });
+        let items = await this.call<IPagination<ILedgerAction>>(ACTION_LIST_URL, { data });
         return items;
     }
 
@@ -90,12 +90,12 @@ export const PREFIX_URL = 'api/';
 export const USER_URL = PREFIX_URL + 'user';
 export const USER_LIST_URL = PREFIX_URL + 'users';
 export const COMPANY_URL = PREFIX_URL + 'company';
-export const COMPANY_LIST = PREFIX_URL + 'companies';
+export const COMPANY_LIST_URL = PREFIX_URL + 'companies';
 export const PROJECT_URL = PREFIX_URL + 'project';
 export const PROJECT_LIST_URL = PREFIX_URL + 'projects';
 
 export const RESET_URL = PREFIX_URL + 'reset';
 export const STATUS_URL = PREFIX_URL + 'status';
 
-export const ACTION_LIST = PREFIX_URL + 'actions';
-export const ACTION_FINANCE_LIST_URL = ACTION_LIST + '/finance';
+export const ACTION_LIST_URL = PREFIX_URL + 'actions';
+export const ACTION_FINANCE_LIST_URL = ACTION_LIST_URL + '/finance';

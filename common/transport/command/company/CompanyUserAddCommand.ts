@@ -5,6 +5,7 @@ import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCo
 import { LedgerCompany } from '../../../ledger/company';
 import { LedgerUser } from '../../../ledger/user';
 import { LedgerRole, LedgerCompanyRole } from '../../../ledger/role';
+import { ICompanyUserIsInDto } from './CompanyUserIsInCommand';
 
 export class CompanyUserAddCommand extends KarmaTransportCommandAsync<ICompanyUserAddDto, void> {
     // --------------------------------------------------------------------------
@@ -26,9 +27,7 @@ export class CompanyUserAddCommand extends KarmaTransportCommandAsync<ICompanyUs
     }
 }
 
-export interface ICompanyUserAddDto extends ITraceable {
-    userUid: string;
-    companyUid: string;
+export interface ICompanyUserAddDto extends ICompanyUserIsInDto {
     roles?: Array<LedgerCompanyRole>;
 }
 

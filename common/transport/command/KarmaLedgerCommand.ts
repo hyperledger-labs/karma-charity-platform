@@ -20,6 +20,7 @@ export enum KarmaLedgerCommand {
     COMPANY_USER_ADD = 'KARMA:CompanyUserAdd',
     COMPANY_USER_LIST = 'KARMA:CompanyUserList',
     COMPANY_USER_EDIT = 'KARMA:CompanyUserEdit',
+    COMPANY_USER_IS_IN = 'KARMA:CompanyUserIsIn',
     COMPANY_USER_REMOVE = 'KARMA:CompanyUserRemove',
     COMPANY_USER_ROLE_LIST = 'KARMA:CompanyUserRoleList',
 
@@ -35,6 +36,7 @@ export enum KarmaLedgerCommand {
     PROJECT_USER_ADD = 'KARMA:ProjectUserAdd',
     PROJECT_USER_LIST = 'KARMA:ProjectUserList',
     PROJECT_USER_EDIT = 'KARMA:ProjectUserEdit',
+    PROJECT_USER_IS_IN = 'KARMA:ProjectUserIsIn',
     PROJECT_USER_REMOVE = 'KARMA:ProjectUserRemove',
     PROJECT_USER_ROLE_LIST = 'KARMA:ProjectUserRoleList',
 
