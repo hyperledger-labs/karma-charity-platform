@@ -29,6 +29,11 @@ export class CompanyPaymentAggregatorEntity implements PaymentAggregator {
     @IsEnum(PaymentAggregatorType)
     public type: PaymentAggregatorType;
 
+    @Column({ name: 'callback_url', type: 'varchar' })
+    @IsOptional()
+    @IsString()
+    public callbackUrl?: string;
+
     @Exclude()
     @Column({ type: 'varchar' })
     @IsString()

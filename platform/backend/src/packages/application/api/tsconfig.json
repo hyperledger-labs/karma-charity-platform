@@ -1,9 +1,8 @@
 {
     "extends": "../../../../tsconfig.json",
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": ".",
         "outDir": "./build"
     },
-    "include": [
-      "main.ts", "ormconfig.ts", "src/**/*", "../../../../node_modules/@project/**/*"]
+    "include": ["main.ts", "ormconfig.ts", "src/**/*", "../../../../node_modules/@project/**/*"]
 }

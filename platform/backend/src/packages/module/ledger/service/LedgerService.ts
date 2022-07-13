@@ -22,6 +22,10 @@ import { ProjectAddCommand, ProjectUserAddCommand, ProjectUserEditCommand, Proje
 import { PROJECT_ACTIVATE_ROLE, PROJECT_ACTIVATE_STATUS } from '@project/common/platform/project';
 import { PaymentEntity, PaymentTransactionEntity } from '@project/module/database/payment';
 import { CoinEmitCommand, CoinObjectType, ICoinEmitDto } from '@project/common/transport/command/coin';
+import { Transport } from '@ts-core/common/transport';
+import { CryptoKeyType } from '@project/common/platform/crypto';
+import { Ed25519 } from '@ts-core/common/crypto';
+import { CryptoEncryptCommand } from '@project/module/crypto/transport';
 
 @Injectable()
 export class LedgerService extends LoggerWrapper {
@@ -40,7 +44,7 @@ export class LedgerService extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, private database: DatabaseService, private api: LedgerApiClient) {
+    constructor(logger: Logger, private transport: Transport, private database: DatabaseService, private api: LedgerApiClient) {
         super(logger);
     }
 
@@ -160,7 +164,7 @@ export class LedgerService extends LoggerWrapper {
         preferences.picture = 'https://picsum.photos/200';
 
         item.paymentAggregator = new CompanyPaymentAggregatorEntity({ uid: type, type });
-        item.paymentAggregator.key = type;
+        item.paymentAggregator.key = await this.transport.sendListen(new CryptoEncryptCommand({ type: CryptoKeyType.DATABASE, value: Ed25519.keys().privateKey }));
 
         await this.database.getConnection().transaction(async manager => {
             let companyRepository = manager.getRepository(CompanyEntity);
