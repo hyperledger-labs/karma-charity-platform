@@ -48,3 +48,7 @@ in an immutable distributed ledger, participants can be confident in the systemâ
 * [Ksenia Tagirova](https://github.com/niamint)
 * Nikita Loshkarev
 * [Alexander Belenov](https://github.com/BelenovAleksandr)
+
+## Maintainers
+
+See [MAINTAINERS.md](MAINTAINERS.md).
