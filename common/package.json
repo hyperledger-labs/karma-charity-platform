@@ -10,10 +10,6 @@
         "format:fix": "prettier --write \"{src}/**/*.{ts,js,json}\" --loglevel warn"
     },
     "dependencies": {
-        "@ts-core/common": "^2.0.4"
-    },
-    "devDependencies": {
-        "@types/node": "^14.14.31",
-        "gulp-npm-publisher": "^2.0.2"
+        "@ts-core/common": "^3.0.3"
     }
 }

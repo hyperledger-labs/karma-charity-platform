@@ -1,5 +1,5 @@
-import { IPaginable, IPagination } from '@ts-core/common/dto';
-import { ITraceable } from '@ts-core/common/trace';
+import { IPaginable, IPagination } from '@ts-core/common';
+import { ITraceable } from '@ts-core/common';
 import { Project } from '../../project';
 import { UserProject } from '../../user';
 

@@ -1,8 +1,8 @@
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerProject } from '../../../ledger/project';
 import { Length, Matches, ValidateNested, IsArray, ArrayMinSize, ArrayMaxSize } from 'class-validator';
-import { ITraceable } from '@ts-core/common/trace';
-import { TransformUtil } from '@ts-core/common/util';
+import { ITraceable } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { RegExpUtil, ValidateUtil } from '../../../util';
 import { LedgerCompany } from '../../../ledger/company';
 import { LedgerUser } from '../../../ledger/user';

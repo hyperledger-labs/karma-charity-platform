@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IUIDable } from '@ts-core/common/dto';
+import { IUIDable } from '@ts-core/common';
 import { LedgerWalletAccount } from './LedgerWalletAccount';
 import { LedgerCoinId } from '../coin';
 import * as _ from 'lodash';

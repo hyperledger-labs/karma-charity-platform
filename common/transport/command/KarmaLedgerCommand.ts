@@ -1,4 +1,4 @@
-import { TransportCommandAsync, TransportCommand } from '@ts-core/common/transport';
+import { TransportCommandAsync, TransportCommand } from '@ts-core/common';
 import * as _ from 'lodash';
 
 export enum KarmaLedgerCommand {

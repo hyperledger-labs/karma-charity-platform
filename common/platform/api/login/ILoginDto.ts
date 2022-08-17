@@ -1,4 +1,4 @@
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { ILoginAuthToken } from './ILoginAuthToken';
 import { LoginUser } from './ILoginUser';
 import { LoginResource } from './LoginResource';

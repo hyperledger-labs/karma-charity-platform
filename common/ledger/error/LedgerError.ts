@@ -1,4 +1,4 @@
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 
 export class LedgerError<T = any> extends ExtendedError<T> {
     // --------------------------------------------------------------------------

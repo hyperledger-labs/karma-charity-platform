@@ -1,5 +1,5 @@
 
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { ProjectPreferences, ProjectPurpose, ProjectStatus } from '../../project';
 import { UserProject } from '../../user';
 

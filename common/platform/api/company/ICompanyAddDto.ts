@@ -1,5 +1,5 @@
 
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { CompanyPreferences } from '../../company';
 import { PaymentAggregator } from '../../payment/aggregator';
 import { UserCompany } from '../../user';

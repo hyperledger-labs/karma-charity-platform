@@ -1,13 +1,17 @@
 import { Type } from 'class-transformer';
-import { LedgerCoinId } from '@project/common/ledger/coin';
 import { PaymentAccountId } from './PaymentAccountId';
 import { Project } from '../project';
 import { Company } from '../company';
 import { CoinEmitType } from '../../transport/command/coin';
+import { Payment } from '../payment';
+import { LedgerCoinId } from '../../ledger/coin';
 
 export class PaymentTransaction {
     id: number;
     type: PaymentTransactionType;
+
+    // @Type(() => Payment)
+    payment?: Payment;
     paymentId: number;
 
     @Type(() => Project)

@@ -1,5 +1,5 @@
-import { IKeyAsymmetric } from "@ts-core/common/crypto";
-import { IUIDable } from "@ts-core/common/dto";
+import { IKeyAsymmetric } from "@ts-core/common";
+import { IUIDable } from "@ts-core/common";
 
 export interface ISigner extends IUIDable {
     key: IKeyAsymmetric;

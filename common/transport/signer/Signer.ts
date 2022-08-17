@@ -1,4 +1,4 @@
-import { IKeyAsymmetric } from "@ts-core/common/crypto";
+import { IKeyAsymmetric } from "@ts-core/common";
 import { ValidateNested, IsOptional, IsDefined, IsString } from 'class-validator';
 import { ISigner } from "./ISigner";
 import { Type } from 'class-transformer';

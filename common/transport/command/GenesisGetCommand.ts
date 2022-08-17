@@ -1,7 +1,7 @@
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from './KarmaLedgerCommand';
 import { IGenesis } from '../../ledger';
 import { LedgerUser } from '../../ledger/user';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { Matches, IsDate } from 'class-validator';
 import { Type } from 'class-transformer';
 import { LedgerCompany } from '../../ledger/company';

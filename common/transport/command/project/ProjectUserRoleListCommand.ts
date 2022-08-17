@@ -1,7 +1,7 @@
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerUser } from '../../../ledger/user';
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { Matches } from 'class-validator';
 import { LedgerProject } from '../../../ledger/project';
 import { LedgerProjectRole } from '../../../ledger/role';
