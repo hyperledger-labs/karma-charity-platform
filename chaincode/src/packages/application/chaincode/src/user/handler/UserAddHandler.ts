@@ -31,6 +31,7 @@ export class UserAddHandler extends TransportCommandFabricAsyncHandler<IUserAddD
 
     @UserGuard()
     protected async execute(params: IUserAddDto, @StubHolder() holder: IUserStubHolder): Promise<LedgerUser> {
+        console.log('===: User add called');
         await rolesCheck(holder, LedgerRole.USER_MANAGER);
         return this.service.add(holder, params);
     }

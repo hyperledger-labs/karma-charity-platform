@@ -8,6 +8,7 @@ import { ProjectUserAddHandler } from './handler/ProjectUserAddHandler';
 import { ProjectUserEditHandler } from './handler/ProjectUserEditHandler';
 import { ProjectUserListHandler } from './handler/ProjectUserListHandler';
 import { ProjectUserRemoveHandler } from './handler/ProjectUserRemoveHandler';
+import { ProjectUserIsInHandler } from './handler/ProjectUserIsInHandler';
 import { ProjectUserRoleListHandler } from './handler/ProjectUserRoleListHandler';
 import { ProjectService } from './service/ProjectService';
 
@@ -18,6 +19,7 @@ import { ProjectService } from './service/ProjectService';
         ProjectGetHandler,
         ProjectAddHandler,
         ProjectRemoveHandler,
+        ProjectUserIsInHandler,
 
         ProjectUserAddHandler,
         ProjectUserEditHandler,

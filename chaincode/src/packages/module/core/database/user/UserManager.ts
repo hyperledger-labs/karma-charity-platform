@@ -156,6 +156,14 @@ export class UserManager extends EntityManager<LedgerUser> {
         await this.stub.removeState(key);
     }
 
+    public async companyIsIn(user: UID, company: UID): Promise<boolean> {
+        if (_.isNil(user) || _.isNil(company)) {
+            return;
+        }
+        let key = this.getCompanyKey(user, company);
+        return this.stub.hasState(key);
+    }
+
     protected async companiesRemove(user: UID): Promise<void> {
         let kv = await this.getKV(this.getCompanyKey(user));
         await Promise.all(kv.map(item => this.companyRemove(user, item.value)));
@@ -194,6 +202,14 @@ export class UserManager extends EntityManager<LedgerUser> {
         }
         let key = this.getProjectKey(user, project);
         await this.stub.removeState(key);
+    }
+
+    public async projectIsIn(user: UID, project: UID): Promise<boolean> {
+        if (_.isNil(user) || _.isNil(project)) {
+            return;
+        }
+        let key = this.getProjectKey(user, project);
+        return this.stub.hasState(key);
     }
 
     protected async projectsRemove(user: UID): Promise<void> {

@@ -30,6 +30,7 @@ export class UserService extends LoggerWrapper {
         let item = !isDefaultRootUser
             ? LedgerUser.create(holder.stub.transactionDate, holder.stub.transactionHash)
             : LedgerUser.createRoot();
+        this.log(`===: Adding user: ${item}`);
         item.status = LedgerUserStatus.ACTIVE;
         await holder.db.user.save(item);
 

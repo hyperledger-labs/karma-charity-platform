@@ -35,8 +35,8 @@ export class ProjectService extends LoggerWrapper {
         let wallet = (item.wallet = new LedgerWallet());
         await holder.db.project.walletSet(item, wallet);
 
+        await holder.db.project.purposesSet(item, params.purposes);
         if (!_.isNil(params.description)) {
-            params.description = params.description;
             await holder.db.project.descriptionSet(item, params.description);
         }
         await holder.stub.dispatch(new ProjectAddedEvent(holder.eventData));
