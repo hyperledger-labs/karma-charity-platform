@@ -9,6 +9,7 @@ export class ProjectPreferences {
 
     tags?: Array<ProjectTag>;
     picture?: string;
+    isUrgent?: boolean;
     location?: string;
     latitude?: number;
     longitude?: number;

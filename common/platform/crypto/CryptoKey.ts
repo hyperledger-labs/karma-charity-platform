@@ -1,4 +1,4 @@
-import { IKeyAsymmetric } from '@ts-core/common/crypto';
+import { IKeyAsymmetric } from '@ts-core/common';
 
 export class CryptoKey implements IKeyAsymmetric {
     status: CryptoKeyStatus;

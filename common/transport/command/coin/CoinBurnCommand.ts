@@ -1,9 +1,9 @@
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { ICoinObject, CoinObject } from './ICoinObject';
 import { ICoinAmount, CoinAmount } from './ICoinAmount';
 import { ILedgerPaymentDetails, LedgerPaymentDetails } from '../../../ledger/payment';
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { Type } from 'class-transformer';
 import { IsDefined, ValidateNested } from 'class-validator';
 

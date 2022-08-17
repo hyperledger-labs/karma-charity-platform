@@ -1,4 +1,4 @@
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { File, FileLinkType } from '../../file';
 
 export interface IFileUploadDto extends ITraceable {

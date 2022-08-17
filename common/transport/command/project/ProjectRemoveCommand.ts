@@ -1,8 +1,8 @@
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerProject } from '../../../ledger/project';
 import { Matches } from 'class-validator';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 
 export class ProjectRemoveCommand extends KarmaTransportCommandAsync<IProjectRemoveDto, void> {
     // --------------------------------------------------------------------------

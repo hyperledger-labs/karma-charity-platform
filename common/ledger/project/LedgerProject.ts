@@ -12,8 +12,6 @@ export enum LedgerProjectStatus {
     NON_ACTIVE = 'NON_ACTIVE'
 }
 
-
-
 export class LedgerProject implements ILedgerObject {
     // --------------------------------------------------------------------------
     //

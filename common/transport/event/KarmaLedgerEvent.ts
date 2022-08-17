@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
-import { TransformUtil } from '@ts-core/common/util';
-import { TransportEvent } from '@ts-core/common/transport';
+import { TransformUtil } from '@ts-core/common';
+import { TransportEvent } from '@ts-core/common';
 
 export enum KarmaLedgerEvent {
     USER_ADDED = 'KARMA:UserAdded',

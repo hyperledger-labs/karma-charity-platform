@@ -1,5 +1,5 @@
 import { IsEnum, IsString } from 'class-validator';
-import { IUIDable } from '@ts-core/common/dto';
+import { IUIDable } from '@ts-core/common';
 
 export class LedgerCryptoKey implements IUIDable {
     // --------------------------------------------------------------------------

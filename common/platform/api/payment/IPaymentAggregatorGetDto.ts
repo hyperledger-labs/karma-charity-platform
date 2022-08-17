@@ -1,4 +1,4 @@
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { IPaymentTarget, PaymentTarget } from '../../payment';
 import { PaymentAggregator } from '../../payment/aggregator';
 

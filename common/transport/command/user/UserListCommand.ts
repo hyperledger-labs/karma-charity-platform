@@ -1,7 +1,7 @@
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
-import { IPaginationBookmark, PaginableBookmark } from '@ts-core/common/dto';
-import { ITraceable } from '@ts-core/common/trace';
+import { IPaginationBookmark, PaginableBookmark } from '@ts-core/common';
+import { ITraceable } from '@ts-core/common';
 import { LedgerUser } from '../../../ledger/user';
 
 export class UserListCommand extends KarmaTransportCommandAsync<IUserListDto, IUserListDtoResponse> {

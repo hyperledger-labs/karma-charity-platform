@@ -1,5 +1,5 @@
 import * as Ledger from '../ledger';
-import { IUIDable } from '@ts-core/common/dto';
+import { IUIDable } from '@ts-core/common';
 
 export interface ILedgerObject<T extends Ledger.ILedgerObject> extends IUIDable {
     uid: string;

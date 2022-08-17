@@ -1,11 +1,11 @@
-import { TransportHttp } from '@ts-core/common/transport/http';
-import { ILogger } from '@ts-core/common/logger';
+import { TransportHttp } from '@ts-core/common';
+import { ILogger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { IStatusDtoResponse } from './IStatusDtoResponse';
 import { LedgerUser } from '../ledger/user';
-import { TransformUtil } from '@ts-core/common/util';
-import { Paginable, IPagination, UID, getUid } from '@ts-core/common/dto';
-import { ILedgerAction } from './action';
+import { TransformUtil } from '@ts-core/common';
+import { Paginable, IPagination, UID, getUid } from '@ts-core/common';
+import { ILedgerAction, ILedgerTransaction } from './action';
 import { LedgerCompany } from '../ledger/company';
 import { LedgerProject } from '../ledger/project';
 import { IResetDto } from './IResetDto';
@@ -66,16 +66,20 @@ export class ApiClient extends TransportHttp {
         return items;
     }
 
+    public async getTransaction(uid: string): Promise<ILedgerTransaction> {
+        let item = await this.call<ILedgerTransaction>(TRANSACTION_URL, { data: { uid: getUid(uid) } });
+        return TransformUtil.toClass(ILedgerTransaction, item);
+    }
+
     public async getActionList(data?: Paginable<ILedgerAction>): Promise<IPagination<ILedgerAction>> {
         let items = await this.call<IPagination<ILedgerAction>>(ACTION_LIST_URL, { data });
         return items;
     }
 
-    public async getActionFinanceList(objectUid: string, data?: Paginable<ILedgerActionFinance>): Promise<IPagination<ILedgerActionFinance>> {
+    public async getActionFinanceList(data?: Paginable<ILedgerActionFinance>): Promise<IPagination<ILedgerActionFinance>> {
         if (_.isNil(data)) {
             data = {} as any;
         }
-        data['objectUid'] = objectUid;
         let items = await this.call<IPagination<ILedgerActionFinance>>(ACTION_FINANCE_LIST_URL, { data });
         return items;
     }
@@ -96,6 +100,8 @@ export const PROJECT_LIST_URL = PREFIX_URL + 'projects';
 
 export const RESET_URL = PREFIX_URL + 'reset';
 export const STATUS_URL = PREFIX_URL + 'status';
+
+export const TRANSACTION_URL = PREFIX_URL + 'transaction';
 
 export const ACTION_LIST_URL = PREFIX_URL + 'actions';
 export const ACTION_FINANCE_LIST_URL = ACTION_LIST_URL + '/finance';

@@ -1,9 +1,9 @@
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerProject } from '../../../ledger/project';
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { Length, IsOptional, Matches } from 'class-validator';
 import { RegExpUtil, ValidateUtil } from '../../../util';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 
 export class ProjectEditCommand extends KarmaTransportCommandAsync<IProjectEditDto, void> {
     // --------------------------------------------------------------------------

@@ -10,10 +10,10 @@ export class ILedgerActionFinance {
 
     toUid?: string;
     fromUid?: string;
+    objectUid?: string;
+    initiatorUid?: string;
 
     amount: string;
     coinId: LedgerCoinId;
-
     isSucceed: boolean;
-    initiatorUid?: string;
 }
