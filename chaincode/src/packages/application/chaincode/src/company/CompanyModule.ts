@@ -7,6 +7,7 @@ import { CompanyRemoveHandler } from './handler/CompanyRemoveHandler';
 import { CompanyUserAddHandler } from './handler/CompanyUserAddHandler';
 import { CompanyEditHandler } from './handler/CompanyEditHandler';
 import { CompanyUserListHandler } from './handler/CompanyUserListHandler';
+import { CompanyUserIsInHandler } from './handler/CompanyUserIsInHandler';
 import { CompanyUserEditHandler } from './handler/CompanyUserEditHandler';
 import { CompanyUserRemoveHandler } from './handler/CompanyUserRemoveHandler';
 import { CompanyUserRoleListHandler } from './handler/CompanyUserRoleListHandler';
@@ -23,6 +24,7 @@ import { CompanyProjectListHandler } from './handler/CompanyProjectListHandler';
 
         CompanyUserAddHandler,
         CompanyUserListHandler,
+        CompanyUserIsInHandler,
         CompanyUserRemoveHandler,
         CompanyUserEditHandler,
         CompanyUserRoleListHandler

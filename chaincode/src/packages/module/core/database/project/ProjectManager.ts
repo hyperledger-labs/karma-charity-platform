@@ -1,5 +1,5 @@
 import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
-import { LedgerProject } from '@project/common/ledger/project';
+import { LedgerProject, LedgerProjectPurpose } from '@project/common/ledger/project';
 import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
 import * as _ from 'lodash';
 import { LedgerErrorCode, LedgerError } from '@project/common/ledger/error';
@@ -57,6 +57,7 @@ export class ProjectManager extends EntityManager<LedgerProject> {
         await this.usersRemove(item);
 
         await this.stub.removeState(this.getDescriptionKey(item));
+        await this.stub.removeState(this.getPurposesKey(item));
         await super.remove(item);
     }
 
@@ -84,6 +85,7 @@ export class ProjectManager extends EntityManager<LedgerProject> {
         ValidateUtil.validate(item);
 
         delete item.wallet;
+        delete item.purposes;
         delete item.description;
         return TransformUtil.fromClass(item);
     }
@@ -99,7 +101,7 @@ export class ProjectManager extends EntityManager<LedgerProject> {
             return;
         }
         super.destroy();
-        
+
         this.user = null;
         this.wallet = null;
         this.company = null;
@@ -217,6 +219,27 @@ export class ProjectManager extends EntityManager<LedgerProject> {
 
     protected getDescriptionKey(project: UID): string {
         return `→${this.prefix}~description:${getUid(project)}`;
+    }
+
+    // --------------------------------------------------------------------------
+    //
+    //  Purposes Methods
+    //
+    // --------------------------------------------------------------------------
+
+    public async purposesGet(project: UID): Promise<Array<LedgerProjectPurpose>> {
+        return TransformUtil.toClassMany(LedgerProjectPurpose, await this.stub.getState(this.getPurposesKey(project)));
+    }
+
+    public async purposesSet(project: UID, purposes: Array<LedgerProjectPurpose>): Promise<void> {
+        if (_.isNil(project) || _.isNil(purposes)) {
+            return;
+        }
+        await this.stub.putState(this.getPurposesKey(project), purposes);
+    }
+
+    protected getPurposesKey(project: UID): string {
+        return `→${this.prefix}~purposes:${getUid(project)}`;
     }
 
     // --------------------------------------------------------------------------

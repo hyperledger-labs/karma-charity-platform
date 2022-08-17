@@ -34,6 +34,7 @@ export class TransportFabricChaincodeModule {
                     nonSignedCommands: [UserGetCommand.NAME, CompanyGetCommand.NAME, ProjectGetCommand.NAME, GenesisGetCommand.NAME],
                     batch: settings.batch
                 });
+                console.log('===: Transport created');
                 return item;
             }
         });

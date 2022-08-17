@@ -12,7 +12,7 @@ import { getStubHolder } from '@hlf-core/transport/chaincode/stub';
 // --------------------------------------------------------------------------
 
 export const UserGuard = (options?: IUserGuardOptions): any => {
-    return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         if (_.isNil(options)) {
             options = {};
         }
@@ -30,10 +30,13 @@ export const UserGuard = (options?: IUserGuardOptions): any => {
         }
 
         let originalMethod = descriptor.value;
-        descriptor.value = async function(...args): Promise<any> {
+        descriptor.value = async function (...args): Promise<any> {
+            console.log('===: Called guard')
             let holder = await getUserStubHolder(this.logger, options, target, args);
+            console.log(`===: Received user stub holder for user: ${holder.user}`);
 
             if (options.isNeedCheckStatus) {
+                this.logger.log(`===: Checking status...`);
                 if (holder.user.status !== LedgerUserStatus.ACTIVE) {
                     throw new LedgerError(LedgerErrorCode.FORBIDDEN, `User "${holder.user.uid}" status is not ${LedgerUserStatus.ACTIVE}`);
                 }
@@ -101,7 +104,7 @@ async function getUserStubHolder<U = any>(
         if (_.isNil(holder.user)) {
             let userId = holder.stub.userId;
             holder.destroy();
-            
+
             throw new LedgerError(LedgerErrorCode.FORBIDDEN, `Unable to find user "${userId}"`);
         }
     }
