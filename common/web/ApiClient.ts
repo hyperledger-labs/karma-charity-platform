@@ -1,6 +1,6 @@
-import { TransportHttpCommandAsync, ITransportHttpRequest, ITransportHttpSettings } from '@ts-core/common/transport/http';
-import { TransportHttp } from '@ts-core/common/transport/http';
-import { ILogger } from '@ts-core/common/logger';
+import { TransportHttpCommandAsync, ITransportHttpRequest, ITransportHttpSettings } from '@ts-core/common';
+import { TransportHttp } from '@ts-core/common';
+import { ILogger } from '@ts-core/common';
 import { IUserList } from './user/IUserList';
 import { ICreateStaffDto, IUser, IInviteDto, IUserUpdatePasswordDto, IEmailDto, IResetPasswordDto, IUserExtended } from './user';
 import { ILoginDtoResponse } from './auth/ILoginDtoResponse';
@@ -28,7 +28,7 @@ import { IPaymentList, IPaymentExtended } from './payment';
 import { IImageUpload64 } from './image/IImageUpload64';
 import { IImageUrl } from './image/IImageUrl';
 import { ICompanyPublicList, ICompanyPublicExtended, ICompanyPublic } from './company';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import { IDocumentList } from './document/IDocument';
 import { IUserUpdateDto } from './user/IUserUpdateDto';
 import { ICompanyUpdateDto } from './company/dto/ICompanyUpdateDto';

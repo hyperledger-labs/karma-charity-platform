@@ -1,4 +1,4 @@
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable } from '@ts-core/common';
 import { User, UserType } from '../../user';
 
 export interface IUserTypeDto extends ITraceable {

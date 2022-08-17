@@ -1,6 +1,6 @@
-import { ITraceable } from '@ts-core/common/trace';
-import { IPaginationBookmark, PaginableBookmark } from '@ts-core/common/dto';
-import { TransformUtil } from '@ts-core/common/util';
+import { ITraceable } from '@ts-core/common';
+import { IPaginationBookmark, PaginableBookmark } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerProject } from '../../../ledger/project';
 

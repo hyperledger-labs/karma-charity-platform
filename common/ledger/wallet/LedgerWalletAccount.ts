@@ -1,6 +1,6 @@
 import { IsEnum, IsNumberString, IsString } from 'class-validator';
 import { LedgerCoinId } from '../coin';
-import { IUIDable } from '@ts-core/common/dto';
+import { IUIDable } from '@ts-core/common';
 
 export class LedgerWalletAccount implements IUIDable {
     // --------------------------------------------------------------------------

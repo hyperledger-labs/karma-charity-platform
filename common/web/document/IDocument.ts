@@ -1,4 +1,4 @@
-import { IPagination } from '@ts-core/common/dto';
+import { IPagination } from '@ts-core/common';
 
 export interface IDocument {
     name: string;

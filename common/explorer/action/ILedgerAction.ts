@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import { ILedgerActionFinance } from './finance';
 
 export class ILedgerAction {
     uid: string;
@@ -9,6 +10,8 @@ export class ILedgerAction {
 
     isSucceed: boolean;
     initiatorUid?: string;
+    
+    finance?: ILedgerActionFinance;
 }
 
 export enum LedgerActionType {
@@ -24,19 +27,21 @@ export enum LedgerActionType {
     COMPANY_USER_EDITED = 'COMPANY_USER_EDITED',
     COMPANY_USER_REMOVED = 'COMPANY_USER_REMOVED',
 
-    // From user
-    COIN_DONATE_SENT = 'COIN_DONATE_SENT',
-    COIN_DONATE_RECEIVED = 'COIN_DONATE_RECEIVED',
-    COIN_REDEEMED = 'COIN_REDEEMED',
-    COIN_FEE_AGGREGATOR_DEDUCTED = 'COIN_FEE_AGGREGATOR_DEDUCTED',
-
-    // From company and project
-    COIN_SENT = 'COIN_SENT',
-    COIN_RECEIVED = 'COIN_RECEIVED',
-
+    // General coin actions
     COIN_BURNED = 'COIN_BURNED',
     COIN_EMITTED = 'COIN_EMITTED',
+    COIN_REDEEMED = 'COIN_REDEEMED',
     COIN_TRANSFERED = 'COIN_TRANSFERED',
+
+    // Based on COIN_EMIT and details internal details (CoinEmitType)
+    COIN_DONATE_SENT = 'COIN_DONATE_SENT',
+    COIN_DONATE_RECEIVED = 'COIN_DONATE_RECEIVED',
+    COIN_FEE_AGGREGATOR_SENT = 'COIN_FEE_AGGREGATOR_SENT',
+    COIN_FEE_AGGREGATOR_RECEIVED = 'COIN_FEE_AGGREGATOR_RECEIVED',
+
+    // Base on COIN_TRANSFERED
+    COIN_SENT = 'COIN_SENT',
+    COIN_RECEIVED = 'COIN_RECEIVED',
 
     PROJECT_ADDED = 'PROJECT_ADDED',
     PROJECT_EDITED = 'PROJECT_EDITED',

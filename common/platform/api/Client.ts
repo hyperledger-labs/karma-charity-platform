@@ -1,8 +1,8 @@
-import { TransportHttp, ITransportHttpSettings } from '@ts-core/common/transport/http';
-import { ILogger } from '@ts-core/common/logger';
+import { TransportHttp, ITransportHttpSettings, UID, getUid } from '@ts-core/common';
+import { ILogger } from '@ts-core/common';
 import * as _ from 'lodash';
-import { ITraceable, TraceUtil } from '@ts-core/common/trace';
-import { TransformUtil } from '@ts-core/common/util';
+import { ITraceable, TraceUtil } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { IInitDto, IInitDtoResponse, ILoginDto, ILoginDtoResponse } from './login';
 import { User, UserCompany, UserProject } from '../user';
 import { IUserListDto, IUserListDtoResponse, IUserFindDtoResponse, IUserGetDtoResponse, IUserEditDto, IUserEditDtoResponse, IUserTypeDto, IUserTypeDtoResponse } from '../api/user';
@@ -18,6 +18,7 @@ import { Project, ProjectUser } from '../project';
 import { LedgerCompanyRole, LedgerProjectRole } from '../../ledger/role';
 import { Payment, PaymentTransaction } from '../payment';
 import { PaymentTarget } from '../payment';
+import { ILedgerObjectDetails } from './ILedgerObjectDetails';
 
 export class Client extends TransportHttp<ITransportHttpSettings> {
     // --------------------------------------------------------------------------
@@ -253,6 +254,12 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return item;
     }
 
+    public async projectPaymentTransactionList(id: number, data?: IPaymentTransactionListDto): Promise<IPaymentTransactionListDtoResponse> {
+        let item = await this.call<IPaymentTransactionListDtoResponse, IPaymentTransactionListDto>(`${PROJECT_URL}/${id}/paymentTransaction`, { data: TraceUtil.addIfNeed(data) });
+        item.items = TransformUtil.toClassMany(PaymentTransaction, item.items);
+        return item;
+    }
+
     public async projectUserRoleGet(projectId: number, userId: number): Promise<IProjectUserRoleGetDtoResponse> {
         let item = await this.call<IProjectUserRoleGetDtoResponse, void>(`${PROJECT_URL}/${projectId}/role/${userId}`);
         return item;
@@ -284,6 +291,16 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
     public async fileRemove(id: number): Promise<IFileRemoveDtoResponse> {
         let item = await this.call<IFileRemoveDtoResponse, number>(`${FILE_URL}/${id}`, { method: 'delete' });
         return TransformUtil.toClass(File, item);
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    // 	Ledger Object
+    //
+    //--------------------------------------------------------------------------
+
+    public async ledgerObjectDetails(uid: UID): Promise<ILedgerObjectDetails> {
+        return this.call<ILedgerObjectDetails>(LEDGER_OBJECT_DETAILS_URL, { data: { uid: getUid(uid) } });
     }
 
     //--------------------------------------------------------------------------
@@ -322,9 +339,11 @@ export const LOGOUT_URL = PREFIX + 'logout';
 export const PAYMENT_URL = PREFIX + 'payment';
 export const PAYMENT_REFERENCE_URL = PREFIX + 'paymentReference';
 export const PAYMENT_TRANSACTION_URL = PREFIX + 'paymentTransaction';
+export const PAYMENT_PROJECT_TRANSACTION_URL = PREFIX + 'paymentProjectTransaction';
 export const PAYMENT_AGGREGATOR_URL = PREFIX + `payment-aggregator`;
 export const PAYMENT_AGGREGATOR_CLOUD_PAYMENTS_PAY_CALLBACK = `${PAYMENT_AGGREGATOR_URL}/cloudpayments/callback/pay`
 
 export const NALOG_SERACH_URL = PREFIX + 'nalog';
+export const LEDGER_OBJECT_DETAILS_URL = PREFIX + 'ledgerObjectDetails';
 
 export const USER_PICTURE_UPLOAD_URL = PREFIX + 'user/picture/upload';

@@ -1,9 +1,9 @@
-import { RandomUtil, TransformUtil } from '@ts-core/common/util';
+import { RandomUtil, TraceUtil, TransformUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CoinObjectType } from '../../transport/command/coin';
 import { IPaymentTarget, PaymentTarget } from './IPaymentTarget';
 import { IsOptional, IsString, IsNumber, IsDefined, ValidateNested } from 'class-validator';
-import { Ed25519 } from '@ts-core/common/crypto';
+import { Ed25519 } from '@ts-core/common';
 
 export class PaymentUtil {
     // --------------------------------------------------------------------------
@@ -13,7 +13,8 @@ export class PaymentUtil {
     // --------------------------------------------------------------------------
 
     public static createDetails(target: IPaymentTarget, privateKey: string, userId?: number): string {
-        let array = [target.type, target.id, RandomUtil.randomString(10)];
+        // let array = [target.type, target.id, RandomUtil.randomString(10)];
+        let array = [target.type, target.id, TraceUtil.generate()];
         array.push(Ed25519.sign(array.join('/'), privateKey));
         if (!_.isNil(userId)) {
             array.push(userId);

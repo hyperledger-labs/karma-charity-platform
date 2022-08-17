@@ -15,6 +15,7 @@ export class Project {
     purposes: Array<ProjectPurpose>;
 
     ledgerUid?: string;
+    paymentsAmount?: number;
 
     userId: number;
     companyId: number;

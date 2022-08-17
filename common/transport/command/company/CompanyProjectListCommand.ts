@@ -1,4 +1,4 @@
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { IProjectListDtoResponse, IProjectListDto } from '../project';
 import { LedgerProject } from '../../../ledger/project';

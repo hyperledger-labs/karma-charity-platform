@@ -1,5 +1,5 @@
-import { ITraceable } from '@ts-core/common/trace';
-import { TransformUtil } from '@ts-core/common/util';
+import { ITraceable } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { Matches, IsOptional, IsEnum } from 'class-validator';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { LedgerCompany } from '../../../ledger/company';

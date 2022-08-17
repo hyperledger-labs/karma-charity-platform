@@ -1,4 +1,4 @@
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { KarmaLedgerCommand, KarmaTransportCommandAsync } from '../KarmaLedgerCommand';
 import { CompanyUserAddDto, ICompanyUserAddDto } from './CompanyUserAddCommand';
 
