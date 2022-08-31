@@ -1,4 +1,4 @@
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerErrorCode, LedgerError } from '@project/common/ledger/error';
 import { LedgerCompany } from '@project/common/ledger/company';
@@ -6,12 +6,12 @@ import { WalletManager } from '../wallet/WalletManager';
 import { UserManager } from '../user';
 import { LedgerWallet } from '@project/common/ledger/wallet';
 import { LedgerUser } from '@project/common/ledger/user';
-import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common/dto';
+import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common';
 import { LedgerProject } from '@project/common/ledger/project';
 import { ProjectManager } from '../project/ProjectManager';
 import { LedgerCompanyRole } from '@project/common/ledger/role';
-import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
-import { UID, getUid } from '@ts-core/common/dto';
+import { EntityManager } from '@hlf-core/transport-chaincode';
+import { UID, getUid } from '@ts-core/common';
 
 export class CompanyManager extends EntityManager<LedgerCompany> {
     // --------------------------------------------------------------------------

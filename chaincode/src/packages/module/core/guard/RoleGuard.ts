@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 import { LedgerRole, LedgerCompanyRole, LedgerProjectRole } from '@project/common/ledger/role';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
-import { PromiseReflector } from '@ts-core/common/promise';
+import { PromiseReflector } from '@ts-core/common';
 import { IUserStubHolder } from './IUserStubHolder';
 import { LedgerUser } from '@project/common/ledger/user';
-import { UID } from '@ts-core/common/dto';
+import { UID } from '@ts-core/common';
 
 // --------------------------------------------------------------------------
 //

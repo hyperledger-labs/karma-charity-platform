@@ -9,8 +9,8 @@
         "start": "node ./src/packages/application/chaincode/main.js"
     },
     "dependencies": {
-        "@hlf-core/transport": "^2.0.6",
-        "@ts-core/backend-nestjs": "^8.0.5",
-        "@ts-core/crypto-gost": "^2.0.1"
+        "@hlf-core/transport-chaincode": "^3.0.3",
+        "@ts-core/backend-nestjs": "^8.1.8",
+        "@ts-core/crypto-gost": "^3.0.1"
     }
 }

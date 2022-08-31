@@ -1,16 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { UserGuard, IUserStubHolder, rolesCompanyCheck, rolesProjectCheck, rolesSomeOf } from '@project/module/core/guard';
 import { CoinTransferCommand, ICoinTransferDto, CoinObjectType } from '@project/common/transport/command/coin';
 import { CoinTransferedEvent } from '@project/common/transport/event/coin';
 import { LedgerCompanyRole, LedgerProjectRole } from '@project/common/ledger/role';
 import { CoinService } from '../service/CoinService';
-import { UnreachableStatementError } from '@ts-core/common/error';
-import { PromiseReflector } from '@ts-core/common/promise';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { UnreachableStatementError } from '@ts-core/common';
+import { PromiseReflector } from '@ts-core/common';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class CoinTransferHandler extends TransportCommandFabricAsyncHandler<ICoinTransferDto, void, CoinTransferCommand> {
@@ -20,7 +18,7 @@ export class CoinTransferHandler extends TransportCommandFabricAsyncHandler<ICoi
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private service: CoinService) {
+    constructor(logger: Logger, transport: Transport, private service: CoinService) {
         super(logger, transport, CoinTransferCommand.NAME);
     }
 

@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport, PromiseReflector } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { UserGuard, IUserStubHolder, rolesSomeOf, rolesCheck, rolesProjectCheck } from '@project/module/core/guard';
 import { IProjectUserRemoveDto, ProjectUserRemoveCommand } from '@project/common/transport/command/project';
 import { ProjectUserRemovedEvent } from '@project/common/transport/event/project';
 import { LedgerProjectRole, LedgerRole } from '@project/common/ledger/role';
-import { PromiseReflector } from '@ts-core/common/promise';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class ProjectUserRemoveHandler extends TransportCommandFabricAsyncHandler<IProjectUserRemoveDto, void, ProjectUserRemoveCommand> {
@@ -19,7 +16,7 @@ export class ProjectUserRemoveHandler extends TransportCommandFabricAsyncHandler
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, ProjectUserRemoveCommand.NAME);
     }
 

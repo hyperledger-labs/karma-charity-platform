@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { IUserCryptoKeyChangeDto, UserCryptoKeyChangeCommand } from '@project/common/transport/command/user';
 import { UserCryptoKeyChangedEvent } from '@project/common/transport/event/user';
 import { UserGuard, IUserStubHolder, rolesCheck } from '@project/module/core/guard';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { LedgerRole } from '@project/common/ledger/role';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class UserCryptoKeyChangeHandler extends TransportCommandFabricAsyncHandler<
@@ -22,7 +20,7 @@ UserCryptoKeyChangeCommand
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, UserCryptoKeyChangeCommand.NAME);
     }
 

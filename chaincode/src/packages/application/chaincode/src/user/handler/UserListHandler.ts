@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport, TransformUtil, PaginableBookmark } from '@ts-core/common';
 import * as _ from 'lodash';
-import { PaginableBookmark } from '@ts-core/common/dto';
 import { UserListCommand, IUserListDto, IUserListDtoResponse } from '@project/common/transport/command/user';
-import { TransformUtil } from '@ts-core/common/util';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { TransportCommandFabricAsyncHandler, StubHolder } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class UserListHandler extends TransportCommandFabricAsyncHandler<IUserListDto, IUserListDtoResponse, UserListCommand> {
@@ -17,7 +13,7 @@ export class UserListHandler extends TransportCommandFabricAsyncHandler<IUserLis
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, UserListCommand.NAME);
     }
 
@@ -29,7 +25,6 @@ export class UserListHandler extends TransportCommandFabricAsyncHandler<IUserLis
 
     @UserGuard()
     protected async execute(params: IUserListDto, @StubHolder() holder: IUserStubHolder): Promise<IUserListDtoResponse> {
-        console.log('===: User list called');
         return holder.db.user.findPaginated(params);
     }
 

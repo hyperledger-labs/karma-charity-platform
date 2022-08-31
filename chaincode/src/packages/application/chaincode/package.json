@@ -6,8 +6,8 @@
     "description": "Karma chaincode",
     "main": "index.js",
     "scripts": {
-        "start": "CORE_CHAINCODE_LOGGING_LEVEL=INFO ts-node --transpile-only main.ts --chaincode-id-name='main_2.0.0:1f6c12a3fea6d6088a859694e1e26c8c69695af288ff33154d2d76c94153eefe' --peer.address grpc://127.0.0.1:7052",
-        "start-build": "CORE_CHAINCODE_LOGGING_LEVEL=INFO node build/src/packages/application/chaincode/main.js --chaincode-id-name='main_1.20.0:main_2.0.0:ed598336533bd48e6613fdea345ef0fcfa7b6cc9aaecce3ca553de251e54d5b2' --peer.address grpc://127.0.0.1:7052",
+        "start": "CORE_CHAINCODE_LOGGING_LEVEL=INFO ts-node --transpile-only main.ts --chaincode-id-name='main_2.0.0:404d477beee10db4b523692451a4d67b57c0636fbe30ddea03b8f4edf829fcf7' --peer.address grpc://127.0.0.1:7052",
+        "start-build": "CORE_CHAINCODE_LOGGING_LEVEL=INFO node build/src/packages/application/chaincode/main.js --chaincode-id-name='main_2.0.0:404d477beee10db4b523692451a4d67b57c0636fbe30ddea03b8f4edf829fcf7' --peer.address grpc://127.0.0.1:7052",
         "build": "tsc && cp -r build/node_modules build/src/node_modules && cp package-build.json build/package.json"
     },
     "dependencies": {},

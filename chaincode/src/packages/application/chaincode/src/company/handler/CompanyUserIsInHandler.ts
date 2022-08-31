@@ -1,11 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
 import { ICompanyUserIsInDto, ICompanyUserIsInDtoResponse } from '@project/common/transport/command/company';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 import { CompanyUserIsInCommand } from '@project/common/transport/command/company';
 
 @Injectable()
@@ -16,7 +14,7 @@ export class CompanyUserIsInHandler extends TransportCommandFabricAsyncHandler<I
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, CompanyUserIsInCommand.NAME);
     }
 

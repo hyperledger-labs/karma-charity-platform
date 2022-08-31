@@ -2,8 +2,8 @@ import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import * as _ from 'lodash';
 import { LedgerUserStatus } from '@project/common/ledger/user';
 import { IUserStubHolder, DBManager } from './IUserStubHolder';
-import { ILogger } from '@ts-core/common/logger';
-import { getStubHolder } from '@hlf-core/transport/chaincode/stub';
+import { ILogger } from '@ts-core/common';
+import { getStubHolder } from '@hlf-core/transport-chaincode';
 
 // --------------------------------------------------------------------------
 //
@@ -31,10 +31,7 @@ export const UserGuard = (options?: IUserGuardOptions): any => {
 
         let originalMethod = descriptor.value;
         descriptor.value = async function (...args): Promise<any> {
-            console.log('===: Called guard')
             let holder = await getUserStubHolder(this.logger, options, target, args);
-            console.log(`===: Received user stub holder for user: ${holder.user}`);
-
             if (options.isNeedCheckStatus) {
                 this.logger.log(`===: Checking status...`);
                 if (holder.user.status !== LedgerUserStatus.ACTIVE) {

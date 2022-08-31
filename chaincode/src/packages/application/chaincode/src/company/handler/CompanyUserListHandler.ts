@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, PaginableBookmark, TransformUtil, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
-import { PaginableBookmark } from '@ts-core/common/dto';
 import { CompanyUserListCommand, ICompanyUserListDto } from '@project/common/transport/command/company';
-import { TransformUtil } from '@ts-core/common/util';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
 import { IUserListDtoResponse } from '@project/common/transport/command/user';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class CompanyUserListHandler extends TransportCommandFabricAsyncHandler<ICompanyUserListDto, IUserListDtoResponse, CompanyUserListCommand> {
@@ -18,7 +14,7 @@ export class CompanyUserListHandler extends TransportCommandFabricAsyncHandler<I
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, CompanyUserListCommand.NAME);
     }
 

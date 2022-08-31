@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
-import { TransformUtil } from '@ts-core/common/util';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
-import { LedgerUser } from '@project/common/ledger/user';
 import { UserEditCommand, IUserEditDto } from '@project/common/transport/command/user';
 import { UserGuard, IUserStubHolder, rolesCheck } from '@project/module/core/guard';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { LedgerRole } from '@project/common/ledger/role';
 import { UserEditedEvent } from '@project/common/transport/event/user';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincode, TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
+import { } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class UserEditHandler extends TransportCommandFabricAsyncHandler<IUserEditDto, void, UserEditCommand> {
@@ -20,7 +17,7 @@ export class UserEditHandler extends TransportCommandFabricAsyncHandler<IUserEdi
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, UserEditCommand.NAME);
     }
 

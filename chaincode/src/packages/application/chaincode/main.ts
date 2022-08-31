@@ -1,5 +1,5 @@
 import { NestFactory, ModuleRef } from '@nestjs/core';
-import { DefaultLogger } from '@ts-core/backend-nestjs/logger';
+import { DefaultLogger } from '@ts-core/backend-nestjs';
 import { AppModule } from './src/AppModule';
 import { AppSettings, ChaincodeMode } from './src/AppSettings';
 import { Chaincode } from './src/Chaincode';
@@ -18,12 +18,12 @@ async function bootstrap() {
     if (settings.chaincodeMode === ChaincodeMode.INTERNAL) {
         let client = Shim.start(chaincode);
         return;
-
     }
 
     logger.log(`Chaincode server options:\n"${JSON.stringify(settings.chaincodeServerOptions, null, 4)}"`);
     let server = Shim.server(chaincode, settings.chaincodeServerOptions);
     server.start();
 }
+
 
 bootstrap();

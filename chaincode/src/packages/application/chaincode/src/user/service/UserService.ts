@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, ObjectUtil, LoggerWrapper } from '@ts-core/common';
 import { IUserStubHolder } from '@project/module/core/guard';
-import { IUserAddDto, IUserCryptoKeyChangeDto } from '@project/common/transport/command/user';
+import { IUserAddDto } from '@project/common/transport/command/user';
 import { LedgerUser, LedgerUserStatus } from '@project/common/ledger/user';
-import { ObjectUtil, DateUtil } from '@ts-core/common/util';
 import { LedgerCryptoKey } from '@project/common/ledger/cryptoKey';
-import * as _ from 'lodash';
 import { UserAddedEvent } from '@project/common/transport/event/user';
+import * as _ from 'lodash';
 
 @Injectable()
 export class UserService extends LoggerWrapper {
@@ -27,10 +26,7 @@ export class UserService extends LoggerWrapper {
     // --------------------------------------------------------------------------
 
     public async add(holder: IUserStubHolder, params: IUserAddDto, isDefaultRootUser?: boolean): Promise<LedgerUser> {
-        let item = !isDefaultRootUser
-            ? LedgerUser.create(holder.stub.transactionDate, holder.stub.transactionHash)
-            : LedgerUser.createRoot();
-        this.log(`===: Adding user: ${item}`);
+        let item = !isDefaultRootUser ? LedgerUser.create(holder.stub.transactionDate, holder.stub.transactionHash) : LedgerUser.createRoot();
         item.status = LedgerUserStatus.ACTIVE;
         await holder.db.user.save(item);
 

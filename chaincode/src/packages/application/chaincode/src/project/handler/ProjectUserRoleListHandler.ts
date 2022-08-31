@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import {
     ProjectUserRoleListCommand,
@@ -7,23 +7,17 @@ import {
     IProjectUserRoleListDto
 } from '@project/common/transport/command/project';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
-export class ProjectUserRoleListHandler extends TransportCommandFabricAsyncHandler<
-    IProjectUserRoleListDto,
-    IProjectUserRoleListDtoResponse,
-    ProjectUserRoleListCommand
-> {
+export class ProjectUserRoleListHandler extends TransportCommandFabricAsyncHandler<IProjectUserRoleListDto, IProjectUserRoleListDtoResponse, ProjectUserRoleListCommand> {
     // --------------------------------------------------------------------------
     //
     //  Constructor
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, ProjectUserRoleListCommand.NAME);
     }
 

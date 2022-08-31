@@ -1,19 +1,19 @@
 import { LedgerUser } from '@project/common/ledger/user';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import * as _ from 'lodash';
-import { ILogger } from '@ts-core/common/logger';
-import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
+import { ILogger } from '@ts-core/common';
+import { EntityManager } from '@hlf-core/transport-chaincode';
 import { CryptoKeyManager } from '../cryptoKey';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { CompanyManager } from '../company';
 import { LedgerCompany } from '@project/common/ledger/company';
 import { LedgerCryptoKey } from '@project/common/ledger/cryptoKey';
-import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common/dto';
+import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common';
 import { LedgerRole } from '@project/common/ledger/role';
 import { LedgerProject } from '@project/common/ledger/project';
 import { ProjectManager } from '../project';
-import { ITransportFabricStub } from '@hlf-core/transport/chaincode/stub';
-import { UID, getUid } from '@ts-core/common/dto';
+import { ITransportFabricStub } from '@hlf-core/transport-chaincode';
+import { UID, getUid } from '@ts-core/common';
 
 export class UserManager extends EntityManager<LedgerUser> {
     // --------------------------------------------------------------------------

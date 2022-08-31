@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, PromiseReflector, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ProjectUserAddCommand, IProjectUserAddDto } from '@project/common/transport/command/project';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { UserGuard, IUserStubHolder, rolesSomeOf, rolesCheck, rolesProjectCheck } from '@project/module/core/guard';
 import { ProjectService } from '../service/ProjectService';
 import { LedgerProjectRole, LedgerRole } from '@project/common/ledger/role';
-import { PromiseReflector } from '@ts-core/common/promise';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class ProjectUserAddHandler extends TransportCommandFabricAsyncHandler<IProjectUserAddDto, void, ProjectUserAddCommand> {
@@ -19,7 +16,7 @@ export class ProjectUserAddHandler extends TransportCommandFabricAsyncHandler<IP
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private service: ProjectService) {
+    constructor(logger: Logger, transport: Transport, private service: ProjectService) {
         super(logger, transport, ProjectUserAddCommand.NAME);
     }
 
@@ -35,7 +32,7 @@ export class ProjectUserAddHandler extends TransportCommandFabricAsyncHandler<IP
             PromiseReflector.create(rolesCheck(holder, LedgerRole.COMPANY_MANAGER)),
             PromiseReflector.create(rolesProjectCheck(holder, params.projectUid, LedgerProjectRole.USER_MANAGER))
         );
-        
+
         if (!(await holder.db.user.has(params.userUid))) {
             throw new LedgerError(LedgerErrorCode.NOT_FOUND, `Unable to find user ${params.userUid}`);
         }
