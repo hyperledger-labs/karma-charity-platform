@@ -10,6 +10,6 @@
         "format:fix": "prettier --write \"{src}/**/*.{ts,js,json}\" --loglevel warn"
     },
     "dependencies": {
-        "@ts-core/common": "^3.0.3"
+        "@ts-core/common": "^3.0.7"
     }
 }

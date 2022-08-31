@@ -1,4 +1,5 @@
 export * from './IPaymentGetDto';
 export * from './IPaymentListDto';
-export * from './IPaymentAggregatorGetDto';
+export * from './IPaymentPublicListDto';
 export * from './IPaymentTransactionListDto';
+export * from './IPaymentAggregatorGetDto';

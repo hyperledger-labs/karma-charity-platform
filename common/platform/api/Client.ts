@@ -9,10 +9,10 @@ import { IUserListDto, IUserListDtoResponse, IUserFindDtoResponse, IUserGetDtoRe
 import { IGeo } from '../geo';
 import { File } from '../file';
 import { IFileBase64UploadDto, IFileListDto, IFileListDtoResponse, IFileRemoveDtoResponse, IFileUploadDtoResponse } from './file'
-import { IPaymentAggregatorGetDto, IPaymentAggregatorGetDtoResponse, IPaymentGetDtoResponse, IPaymentListDto, IPaymentListDtoResponse, IPaymentTransactionListDto, IPaymentTransactionListDtoResponse } from './payment';
+import { IPaymentAggregatorGetDto, IPaymentAggregatorGetDtoResponse, IPaymentGetDtoResponse, IPaymentListDto, IPaymentListDtoResponse, IPaymentPublicListDto, IPaymentPublicListDtoResponse, IPaymentTransactionListDto, IPaymentTransactionListDtoResponse } from './payment';
 import { INalogSearchDtoResponse, INalogObject } from './nalog';
-import { ICompanyAddDto, ICompanyActivateDtoResponse, ICompanyAddDtoResponse, ICompanyListDto, ICompanyListDtoResponse, ICompanyRejectDtoResponse, ICompanyToVerifyDtoResponse, ICompanyVerifyDtoResponse, ICompanyGetDtoResponse, ICompanyUserListDtoResponse, ICompanyUserListDto, ICompanyUserRoleGetDtoResponse, ICompanyUserRoleSetDtoResponse, ICompanyUserRoleSetDto, ICompanyEditDtoResponse, ICompanyEditDto } from './company';
-import { IProjectAddDto, IProjectActivateDtoResponse, IProjectAddDtoResponse, IProjectListDto, IProjectListDtoResponse, IProjectRejectDtoResponse, IProjectToVerifyDtoResponse, IProjectVerifyDtoResponse, IProjectGetDtoResponse, IProjectUserListDtoResponse, IProjectUserListDto, IProjectUserRoleGetDtoResponse, IProjectUserRoleSetDtoResponse, IProjectUserRoleSetDto, IProjectReportSubmitDtoResponse, IProjectEditDtoResponse, IProjectEditDto } from './project';
+import { ICompanyAddDto, ICompanyActivateDtoResponse, ICompanyAddDtoResponse, ICompanyListDto, ICompanyListDtoResponse, ICompanyRejectDtoResponse, ICompanyToVerifyDtoResponse, ICompanyVerifyDtoResponse, ICompanyGetDtoResponse, ICompanyUserListDtoResponse, ICompanyUserListDto, ICompanyUserRoleGetDtoResponse, ICompanyUserRoleSetDtoResponse, ICompanyUserRoleSetDto, ICompanyEditDtoResponse, ICompanyEditDto, ICompanyPublicListDtoResponse, ICompanyPublicListDto } from './company';
+import { IProjectAddDto, IProjectActivateDtoResponse, IProjectAddDtoResponse, IProjectListDto, IProjectListDtoResponse, IProjectRejectDtoResponse, IProjectToVerifyDtoResponse, IProjectVerifyDtoResponse, IProjectGetDtoResponse, IProjectUserListDtoResponse, IProjectUserListDto, IProjectUserRoleGetDtoResponse, IProjectUserRoleSetDtoResponse, IProjectUserRoleSetDto, IProjectReportSubmitDtoResponse, IProjectEditDtoResponse, IProjectEditDto, IProjectPublicListDto, IProjectPublicListDtoResponse } from './project';
 import { Company, CompanyUser } from '../company';
 import { Project, ProjectUser } from '../project';
 import { LedgerCompanyRole, LedgerProjectRole } from '../../ledger/role';
@@ -98,6 +98,12 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
     public async paymentTransactionList(data?: IPaymentTransactionListDto): Promise<IPaymentTransactionListDtoResponse> {
         let item = await this.call<IPaymentTransactionListDtoResponse, IPaymentTransactionListDto>(PAYMENT_TRANSACTION_URL, { data: TraceUtil.addIfNeed(data) });
         item.items = TransformUtil.toClassMany(PaymentTransaction, item.items);
+        return item;
+    }
+
+    public async paymentListPublic(data?: IPaymentPublicListDto): Promise<IPaymentPublicListDtoResponse> {
+        let item = await this.call<IPaymentPublicListDtoResponse, IPaymentPublicListDto>(PAYMENT_PUBLIC_URL, { data: TraceUtil.addIfNeed(data) });
+        item.items = TransformUtil.toClassMany(Payment, item.items);
         return item;
     }
 
@@ -196,6 +202,12 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return item;
     }
 
+    public async companyListPublic(data?: ICompanyPublicListDto): Promise<ICompanyPublicListDtoResponse> {
+        let item = await this.call<ICompanyPublicListDtoResponse, ICompanyPublicListDto>(COMPANY_PUBLIC_URL, { data: TraceUtil.addIfNeed(data) });
+        item.items = TransformUtil.toClassMany(Company, item.items);
+        return item;
+    }
+
     // --------------------------------------------------------------------------
     //
     //  Project Methods
@@ -270,6 +282,12 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return item;
     }
 
+    public async projectListPublic(data?: IProjectPublicListDto): Promise<IProjectPublicListDtoResponse> {
+        let item = await this.call<IProjectPublicListDtoResponse, IProjectPublicListDto>(PROJECT_PUBLIC_URL, { data: TraceUtil.addIfNeed(data) });
+        item.items = TransformUtil.toClassMany(Project, item.items);
+        return item;
+    }
+
     // --------------------------------------------------------------------------
     //
     //  File Methods
@@ -324,6 +342,7 @@ export const USER_FIND_URL = PREFIX + 'userFind';
 export const USER_TYPE_URL = PREFIX + 'userType';
 
 export const COMPANY_URL = PREFIX + 'company';
+export const COMPANY_PUBLIC_URL = PREFIX + 'companyPublic';
 export const COMPANY_ACTIVATE_URL = COMPANY_URL + '/activate';
 export const COMPANY_TO_VERIFY_URL = COMPANY_URL + '/toVerify';
 
@@ -331,12 +350,14 @@ export const FILE_URL = PREFIX + 'file';
 export const FILE_BASE64_URL = PREFIX + 'fileBase64';
 export const FILE_TEMPORARY_IMAGE_URL = PREFIX + 'fileImageTemporary';
 export const PROJECT_URL = PREFIX + 'project';
+export const PROJECT_PUBLIC_URL = PREFIX + 'projectPublic';
 
 export const INIT_URL = PREFIX + 'init';
 export const LOGIN_URL = PREFIX + 'login';
 export const LOGOUT_URL = PREFIX + 'logout';
 
 export const PAYMENT_URL = PREFIX + 'payment';
+export const PAYMENT_PUBLIC_URL = PREFIX + 'paymentPublic';
 export const PAYMENT_REFERENCE_URL = PREFIX + 'paymentReference';
 export const PAYMENT_TRANSACTION_URL = PREFIX + 'paymentTransaction';
 export const PAYMENT_PROJECT_TRANSACTION_URL = PREFIX + 'paymentProjectTransaction';
@@ -344,6 +365,7 @@ export const PAYMENT_AGGREGATOR_URL = PREFIX + `payment-aggregator`;
 export const PAYMENT_AGGREGATOR_CLOUD_PAYMENTS_PAY_CALLBACK = `${PAYMENT_AGGREGATOR_URL}/cloudpayments/callback/pay`
 
 export const NALOG_SERACH_URL = PREFIX + 'nalog';
+export const STATISTICS_URL = PREFIX + 'statistics';
 export const LEDGER_OBJECT_DETAILS_URL = PREFIX + 'ledgerObjectDetails';
 
 export const USER_PICTURE_UPLOAD_URL = PREFIX + 'user/picture/upload';
