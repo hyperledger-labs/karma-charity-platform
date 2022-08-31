@@ -7,5 +7,6 @@ export * from './ICompanyRejectDto';
 export * from './ICompanyActivateDto';
 export * from './ICompanyToVerifyDto';
 export * from './ICompanyUserListDto';
+export * from './ICompanyPublicListDto';
 export * from './ICompanyUserRoleGetDto';
 export * from './ICompanyUserRoleSetDto';
