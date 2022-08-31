@@ -10,16 +10,17 @@
         "api:docker:container:run": "docker-compose up -d karma-chaincode",
         "api:docker:container:start": "docker start karma-chaincode",
         "api:docker:container:stop": "docker stop karma-chaincode",
-        "api:docker:container:remove": "docker rm karma-chaincode"
+        "api:docker:container:remove": "docker rm karma-chaincode",
+        "submodules:update": "git submodule update --init"
     },
     "author": "Renat Gubaev",
     "license": "ISC",
     "dependencies": {
-        "@hlf-core/transport": "^2.0.6",
+        "@hlf-core/transport-chaincode": "^3.0.3",
+        "@ts-core/backend-nestjs": "^8.1.8",
+        "@ts-core/crypto-gost": "^3.0.1",
         "@project/common": "file:./src/externals/common",
-        "@project/module": "file:./src/packages/module",
-        "@ts-core/backend-nestjs": "^8.0.5",
-        "@ts-core/crypto-gost": "^2.0.1"
+        "@project/module": "file:./src/packages/module"
     },
     "devDependencies": {
         "prettier": "^2.5.1",

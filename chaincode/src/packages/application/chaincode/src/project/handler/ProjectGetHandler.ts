@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
-import { TransformUtil } from '@ts-core/common/util';
+import { Transport, TransformUtil, Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ProjectGetCommand, IProjectGetDto } from '@project/common/transport/command/project';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
 import { LedgerProject } from '@project/common/ledger/project';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class ProjectGetHandler extends TransportCommandFabricAsyncHandler<IProjectGetDto, LedgerProject, ProjectGetCommand> {
@@ -18,7 +15,7 @@ export class ProjectGetHandler extends TransportCommandFabricAsyncHandler<IProje
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, ProjectGetCommand.NAME);
     }
 

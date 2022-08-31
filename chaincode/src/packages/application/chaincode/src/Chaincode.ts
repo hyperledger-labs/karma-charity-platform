@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Injectable, Inject } from '@nestjs/common';
+import { Logger, Transport } from '@ts-core/common';
 import { ChaincodeResponse, ChaincodeStub } from 'fabric-shim';
 import * as _ from 'lodash';
 import { GenesisService } from './genesis/GenesisService';
-import { TransportFabricChaincode, TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
+import { TransportFabricChaincode, TransportFabricChaincodeReceiver } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class Chaincode extends TransportFabricChaincode<void> {
@@ -13,7 +13,7 @@ export class Chaincode extends TransportFabricChaincode<void> {
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private genesis: GenesisService) {
+    constructor(logger: Logger, @Inject(Transport) transport: TransportFabricChaincodeReceiver, private genesis: GenesisService) {
         super(logger, transport);
     }
 
@@ -29,7 +29,6 @@ export class Chaincode extends TransportFabricChaincode<void> {
             this.log(`Genesis data already exists`);
             return super.Init(stub);
         }
-
         await this.genesis.add(stub);
         this.log(`Genesis data successfully added`);
         return super.Init(stub);
@@ -42,6 +41,6 @@ export class Chaincode extends TransportFabricChaincode<void> {
     // --------------------------------------------------------------------------
 
     public get name(): string {
-        return `Karma chaincode`;
+        return `Karma`;
     }
 }

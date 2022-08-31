@@ -1,5 +1,5 @@
-import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { EntityManager } from '@hlf-core/transport-chaincode';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { LedgerWalletAccount } from '@project/common/ledger/wallet';

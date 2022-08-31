@@ -1,28 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, PaginableBookmark, TransformUtil, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
-import { PaginableBookmark } from '@ts-core/common/dto';
 import { CompanyProjectListCommand, ICompanyProjectListDto } from '@project/common/transport/command/company';
-import { TransformUtil } from '@ts-core/common/util';
 import { UserGuard, IUserStubHolder } from '@project/module/core/guard';
 import { IProjectListDtoResponse } from '@project/common/transport/command/project';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincode, TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
-export class CompanyProjectListHandler extends TransportCommandFabricAsyncHandler<
-    ICompanyProjectListDto,
-    IProjectListDtoResponse,
-    CompanyProjectListCommand
-> {
+export class CompanyProjectListHandler extends TransportCommandFabricAsyncHandler<ICompanyProjectListDto, IProjectListDtoResponse, CompanyProjectListCommand> {
     // --------------------------------------------------------------------------
     //
     //  Constructor
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, CompanyProjectListCommand.NAME);
     }
 

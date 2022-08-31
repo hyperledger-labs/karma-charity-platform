@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, PromiseReflector, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerError, LedgerErrorCode } from '@project/common/ledger/error';
 import { UserGuard, IUserStubHolder, rolesSomeOf, rolesCheck, rolesCompanyCheck } from '@project/module/core/guard';
 import { ICompanyUserRemoveDto, CompanyUserRemoveCommand } from '@project/common/transport/command/company';
 import { CompanyUserRemovedEvent } from '@project/common/transport/event/company';
 import { LedgerCompanyRole, LedgerRole } from '@project/common/ledger/role';
-import { PromiseReflector } from '@ts-core/common/promise';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class CompanyUserRemoveHandler extends TransportCommandFabricAsyncHandler<ICompanyUserRemoveDto, void, CompanyUserRemoveCommand> {
@@ -19,7 +16,7 @@ export class CompanyUserRemoveHandler extends TransportCommandFabricAsyncHandler
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, CompanyUserRemoveCommand.NAME);
     }
 

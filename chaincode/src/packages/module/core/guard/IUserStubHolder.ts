@@ -4,12 +4,12 @@ import { CompanyManager } from '../database/company';
 import { WalletManager } from '../database/wallet/WalletManager';
 import { WalletAccountManager } from '../database/wallet/WalletAccountManager';
 import { ProjectManager } from '../database/project';
-import { ILogger } from '@ts-core/common/logger';
+import { ILogger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { IDestroyable, DestroyableContainer } from '@ts-core/common';
 import { IKarmaLedgerEventDto } from '@project/common/transport/event';
-import { ITransportCommand } from '@ts-core/common/transport';
-import { ITransportFabricStubHolder, ITransportFabricStub } from '@hlf-core/transport/chaincode/stub';
+import { ITransportCommand } from '@ts-core/common';
+import { ITransportFabricStubHolder, ITransportFabricStub } from '@hlf-core/transport-chaincode';
 
 export interface IUserStubHolder<U = any> extends ITransportFabricStubHolder, ITransportCommand<U> {
     db?: IDBManager;

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import { IUserStubHolder } from '@project/module/core/guard';
 import { LedgerCompanyRole } from '@project/common/ledger/role';
 import * as _ from 'lodash';
@@ -27,9 +27,7 @@ export class CompanyService extends LoggerWrapper {
     // --------------------------------------------------------------------------
 
     public async add(holder: IUserStubHolder, params: ICompanyAddDto, isDefaultRootCompany?: boolean): Promise<LedgerCompany> {
-        let item = !isDefaultRootCompany
-            ? LedgerCompany.create(holder.stub.transactionDate, holder.stub.transactionHash)
-            : LedgerCompany.createRoot();
+        let item = !isDefaultRootCompany ? LedgerCompany.create(holder.stub.transactionDate, holder.stub.transactionHash) : LedgerCompany.createRoot();
         item.status = LedgerCompanyStatus.ACTIVE;
         await holder.db.company.save(item);
 

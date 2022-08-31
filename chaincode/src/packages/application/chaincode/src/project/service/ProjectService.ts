@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import { IUserStubHolder } from '@project/module/core/guard';
 import { LedgerProjectRole } from '@project/common/ledger/role';
 import * as _ from 'lodash';

@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { Logger } from '@ts-core/common/logger';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { UserGuard, IUserStubHolder, rolesCheck } from '@project/module/core/guard';
 import { CoinEmitCommand, ICoinEmitDto } from '@project/common/transport/command/coin';
 import { CoinEmittedEvent } from '@project/common/transport/event/coin';
 import { LedgerRole } from '@project/common/ledger/role';
 import { CoinService } from '../service/CoinService';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
 
 @Injectable()
 export class CoinEmitHandler extends TransportCommandFabricAsyncHandler<ICoinEmitDto, void, CoinEmitCommand> {
@@ -18,7 +16,7 @@ export class CoinEmitHandler extends TransportCommandFabricAsyncHandler<ICoinEmi
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private service: CoinService) {
+    constructor(logger: Logger, transport: Transport, private service: CoinService) {
         super(logger, transport, CoinEmitCommand.NAME);
     }
 

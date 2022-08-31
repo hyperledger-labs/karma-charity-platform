@@ -1,17 +1,15 @@
-import { Global, DynamicModule, Provider } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { DynamicModule, Provider } from '@nestjs/common';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { GenesisGetCommand } from '@project/common/transport/command';
-import { TransportCryptoManagerEd25519 } from '@ts-core/common/transport/crypto';
-import { TransportCryptoManagerGostR3410 } from '@ts-core/crypto-gost/transport';
-// import { TransportCryptoManagerRSA } from '@ts-core/crypto-rsa/transport';
+import { TransportCryptoManagerEd25519 } from '@ts-core/common';
+import { TransportCryptoManagerGostR3410 } from '@ts-core/crypto-gost';
 import { UserGetCommand } from '@project/common/transport/command/user';
 import { CompanyGetCommand } from '@project/common/transport/command/company';
 import { ProjectGetCommand } from '@project/common/transport/command/project';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { ITransportFabricChaincodeSettingsBatch, TransportFabricChaincodeReceiverBatch } from '@hlf-core/transport/chaincode/batch';
+import { TransportFabricChaincodeReceiver, TransportFabricChaincodeReceiverBatch, ITransportFabricChaincodeSettingsBatch } from '@hlf-core/transport-chaincode';
+// import { TransportCryptoManagerRSA } from '@ts-core/crypto-rsa/transport';  new TransportCryptoManagerRSA()
 
-@Global()
 export class TransportFabricChaincodeModule {
     // --------------------------------------------------------------------------
     //
@@ -29,20 +27,20 @@ export class TransportFabricChaincodeModule {
                     cryptoManagers: [
                         new TransportCryptoManagerGostR3410(),
                         new TransportCryptoManagerEd25519(),
-                        // new TransportCryptoManagerRSA()
                     ],
                     nonSignedCommands: [UserGetCommand.NAME, CompanyGetCommand.NAME, ProjectGetCommand.NAME, GenesisGetCommand.NAME],
                     batch: settings.batch
                 });
-                console.log('===: Transport created');
                 return item;
             }
         });
+        providers.push({ provide: Transport, useExisting: TransportFabricChaincodeReceiver })
+
         return {
             module: TransportFabricChaincodeModule,
-            imports: [],
+            exports: providers,
+            global: true,
             providers,
-            exports: providers
         };
     }
 }

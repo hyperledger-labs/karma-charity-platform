@@ -5,7 +5,7 @@ import { UserModule } from '../user/UserModule';
 import { CompanyModule } from '../company/CompanyModule';
 
 @Module({
-    imports: [UserModule, CompanyModule, GenesisModule],
+    imports: [UserModule, CompanyModule],
     controllers: [GenesisGetHandler],
     providers: [GenesisService],
     exports: [GenesisService]

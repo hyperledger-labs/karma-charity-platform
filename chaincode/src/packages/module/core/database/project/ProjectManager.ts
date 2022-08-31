@@ -1,6 +1,6 @@
-import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
+import { EntityManager } from '@hlf-core/transport-chaincode';
 import { LedgerProject, LedgerProjectPurpose } from '@project/common/ledger/project';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerErrorCode, LedgerError } from '@project/common/ledger/error';
 import { CompanyManager } from '../company';
@@ -8,9 +8,9 @@ import { WalletManager } from '../wallet/WalletManager';
 import { LedgerWallet } from '@project/common/ledger/wallet';
 import { UserManager } from '../user';
 import { LedgerUser } from '@project/common/ledger/user';
-import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common/dto';
+import { IPaginableBookmark, IPaginationBookmark } from '@ts-core/common';
 import { LedgerProjectRole } from '@project/common/ledger/role';
-import { UID, getUid } from '@ts-core/common/dto';
+import { UID, getUid } from '@ts-core/common';
 
 export class ProjectManager extends EntityManager<LedgerProject> {
     // --------------------------------------------------------------------------
@@ -228,7 +228,7 @@ export class ProjectManager extends EntityManager<LedgerProject> {
     // --------------------------------------------------------------------------
 
     public async purposesGet(project: UID): Promise<Array<LedgerProjectPurpose>> {
-        return TransformUtil.toClassMany(LedgerProjectPurpose, await this.stub.getState(this.getPurposesKey(project)));
+        return TransformUtil.toClassMany(LedgerProjectPurpose, await this.stub.getState<Array<LedgerProjectPurpose>>(this.getPurposesKey(project)));
     }
 
     public async purposesSet(project: UID, purposes: Array<LedgerProjectPurpose>): Promise<void> {

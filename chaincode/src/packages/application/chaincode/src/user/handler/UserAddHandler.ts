@@ -1,15 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil, Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerUser } from '@project/common/ledger/user';
 import { UserAddCommand, IUserAddDto, UserAddDto } from '@project/common/transport/command/user';
 import { UserGuard, IUserStubHolder, rolesCheck } from '@project/module/core/guard';
 import { UserService } from '../service/UserService';
 import { LedgerRole } from '@project/common/ledger/role';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class UserAddHandler extends TransportCommandFabricAsyncHandler<IUserAddDto, LedgerUser, UserAddCommand> {
@@ -19,7 +16,7 @@ export class UserAddHandler extends TransportCommandFabricAsyncHandler<IUserAddD
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private service: UserService) {
+    constructor(logger: Logger, transport: Transport, private service: UserService) {
         super(logger, transport, UserAddCommand.NAME);
     }
 
@@ -31,7 +28,6 @@ export class UserAddHandler extends TransportCommandFabricAsyncHandler<IUserAddD
 
     @UserGuard()
     protected async execute(params: IUserAddDto, @StubHolder() holder: IUserStubHolder): Promise<LedgerUser> {
-        console.log('===: User add called');
         await rolesCheck(holder, LedgerRole.USER_MANAGER);
         return this.service.add(holder, params);
     }

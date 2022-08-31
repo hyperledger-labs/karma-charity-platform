@@ -1,12 +1,12 @@
-import { EntityManager } from '@hlf-core/transport/chaincode/database/entity';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { EntityManager } from '@hlf-core/transport-chaincode';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { LedgerErrorCode, LedgerError } from '@project/common/ledger/error';
 import { LedgerWallet } from '@project/common/ledger/wallet';
 import { LedgerWalletAccount } from '@project/common/ledger/wallet';
 import { WalletAccountManager } from './WalletAccountManager';
 import { LedgerCoinId } from '@project/common/ledger/coin';
-import { getUid, UID } from '@ts-core/common/dto';
+import { getUid, UID } from '@ts-core/common';
 
 export class WalletManager extends EntityManager<LedgerWallet> {
     // --------------------------------------------------------------------------

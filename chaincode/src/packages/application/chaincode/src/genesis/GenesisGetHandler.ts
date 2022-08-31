@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { IUserStubHolder } from '@project/module/core/guard';
 import { IGenesis } from '@project/common/ledger';
 import { GenesisGetCommand } from '@project/common/transport/command/GenesisGetCommand';
 import { GenesisService } from './GenesisService';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class GenesisGetHandler extends TransportCommandFabricAsyncHandler<void, IGenesis, GenesisGetCommand> {
@@ -17,7 +15,7 @@ export class GenesisGetHandler extends TransportCommandFabricAsyncHandler<void, 
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver, private service: GenesisService) {
+    constructor(logger: Logger, transport: Transport, private service: GenesisService) {
         super(logger, transport, GenesisGetCommand.NAME);
     }
 

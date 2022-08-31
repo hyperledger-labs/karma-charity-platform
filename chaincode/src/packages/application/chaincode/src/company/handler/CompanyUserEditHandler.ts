@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, PromiseReflector, Transport } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CompanyUserEditCommand, ICompanyUserAddDto } from '@project/common/transport/command/company';
 import { UserGuard, IUserStubHolder, rolesSomeOf, rolesCheck, rolesCompanyCheck } from '@project/module/core/guard';
 import { LedgerCompanyRole, LedgerRole } from '@project/common/ledger/role';
-import { PromiseReflector } from '@ts-core/common/promise';
 import { CompanyUserEditedEvent } from '@project/common/transport/event/company';
-import { TransportCommandFabricAsyncHandler } from '@hlf-core/transport/chaincode/handler';
-import { TransportFabricChaincodeReceiver } from '@hlf-core/transport/chaincode';
-import { StubHolder } from '@hlf-core/transport/chaincode/stub';
+import { StubHolder, TransportCommandFabricAsyncHandler } from '@hlf-core/transport-chaincode';
 
 @Injectable()
 export class CompanyUserEditHandler extends TransportCommandFabricAsyncHandler<ICompanyUserAddDto, void, CompanyUserEditCommand> {
@@ -18,7 +15,7 @@ export class CompanyUserEditHandler extends TransportCommandFabricAsyncHandler<I
     //
     // --------------------------------------------------------------------------
 
-    constructor(logger: Logger, transport: TransportFabricChaincodeReceiver) {
+    constructor(logger: Logger, transport: Transport) {
         super(logger, transport, CompanyUserEditCommand.NAME);
     }
 
