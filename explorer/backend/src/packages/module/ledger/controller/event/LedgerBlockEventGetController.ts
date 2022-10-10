@@ -1,18 +1,13 @@
 import { Controller, Get, HttpStatus, Query, UseGuards, Req } from '@nestjs/common';
 import { ApiProperty, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController, Cache } from '@ts-core/backend-nestjs';
+import { Logger, ExtendedError, TransformUtil } from '@ts-core/common';
 import { IsString, IsDefined } from 'class-validator';
-import { LedgerBlock, LedgerBlockEvent } from '@hlf-explorer/common/ledger';
-import { ILedgerBlockEventGetResponse, ILedgerBlockEventGetRequest } from '@hlf-explorer/common/api/event';
+import { EVENT_URL, LedgerBlock, LedgerBlockEvent, ILedgerBlockEventGetResponse, ILedgerBlockEventGetRequest } from '@hlf-explorer/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
-import { ExtendedError } from '@ts-core/common/error';
-import { TransformUtil } from '@ts-core/common/util';
-import { Cache } from '@ts-core/backend-nestjs/cache';
 import { IsUUID } from 'class-validator';
 import { LedgerGuard, ILedgerHolder } from '../../service/guard/LedgerGuard';
-import { EVENT_URL } from '@hlf-explorer/common/api';
 
 // --------------------------------------------------------------------------
 //
@@ -70,7 +65,7 @@ export class LedgerBlockEventGetController extends DefaultController<LedgerBlock
     ): Promise<LedgerBlockEventGetResponse> {
         /*
         let item = await this.cache.wrap<LedgerBlockEvent>(this.getCacheKey(params), () => this.getItem(params), {
-            ttl: DateUtil.MILISECONDS_DAY / DateUtil.MILISECONDS_SECOND
+            ttl: DateUtil.MILLISECONDS_DAY / DateUtil.MILLISECONDS_SECOND
         });
         */
         let item = await this.getItem(params, holder.ledger.id);
@@ -92,7 +87,7 @@ export class LedgerBlockEventGetController extends DefaultController<LedgerBlock
 
     private async getItem(params: ILedgerBlockEventGetRequest, ledgerId: number): Promise<LedgerBlockEvent> {
         let conditions = { uid: params.uid, ledgerId } as Partial<LedgerBlockEvent>;
-        let item = await this.database.ledgerBlockEvent.findOne(conditions);
+        let item = await this.database.ledgerBlockEvent.findOneBy(conditions);
         return !_.isNil(item) ? TransformUtil.fromClass(item) : null;
     }
 }

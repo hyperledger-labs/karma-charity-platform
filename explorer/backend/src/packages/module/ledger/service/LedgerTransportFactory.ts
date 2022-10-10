@@ -1,9 +1,8 @@
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
-import { TransportFabricSender } from '@hlf-core/transport/client';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ILedgerConnectionSettings, LedgerSettingsFactory } from './LedgerSettingsFactory';
 import { Injectable } from '@nestjs/common';
-import { TransportFabricSenderBatch } from '@hlf-core/transport/client/batch';
+import { TransportFabric, TransportFabricBatch } from '@hlf-core/transport';
 
 @Injectable()
 export class LedgerTransportFactory extends LoggerWrapper {
@@ -13,7 +12,7 @@ export class LedgerTransportFactory extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    protected items: Map<number, LedgerFabricSender>;
+    protected items: Map<number, LedgerFabric>;
 
     // --------------------------------------------------------------------------
     //
@@ -32,7 +31,7 @@ export class LedgerTransportFactory extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    public async get(ledgerId: number): Promise<LedgerFabricSender> {
+    public async get(ledgerId: number): Promise<LedgerFabric> {
         let item = this.items.get(ledgerId);
         if (!_.isNil(item)) {
             if (!item.isConnected) {
@@ -40,11 +39,13 @@ export class LedgerTransportFactory extends LoggerWrapper {
             }
             return item;
         }
-        item = new LedgerFabricSender(this.logger, this.settings.getById(ledgerId));
+        let settings = this.settings.getById(ledgerId);
+        item = _.isBoolean(settings.batch) && !settings.batch ? new LedgerFabric(this.logger, settings) : new LedgerFabricBatch(this.logger, settings);
         this.items.set(ledgerId, item);
         await item.connect();
         return item;
     }
 }
 
-export class LedgerFabricSender extends TransportFabricSenderBatch<ILedgerConnectionSettings> {}
+class LedgerFabric extends TransportFabric<ILedgerConnectionSettings> { }
+class LedgerFabricBatch extends TransportFabricBatch<ILedgerConnectionSettings> { }

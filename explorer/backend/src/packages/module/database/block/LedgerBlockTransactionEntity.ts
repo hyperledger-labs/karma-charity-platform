@@ -1,4 +1,4 @@
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import { Exclude, Type } from 'class-transformer';
 import { IsEnum, IsUUID, IsDate, IsNumber, IsBoolean, IsOptional, IsString } from 'class-validator';
 import { Column, Index, JoinColumn, ManyToOne, Entity, PrimaryGeneratedColumn } from 'typeorm';
@@ -8,7 +8,7 @@ import {
     ILedgerBlockTransactionResponsePayload,
     ILedgerBlockTransactionRequestPayload,
     ILedgerBlockTransactionChaincode,
-} from '@hlf-explorer/common/ledger';
+} from '@hlf-explorer/common';
 
 @Entity('ledger_block_transaction')
 @Index(['hash', 'blockId', 'requestId', 'requestUserId', 'ledgerId'])

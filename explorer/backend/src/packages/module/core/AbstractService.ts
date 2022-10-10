@@ -1,6 +1,5 @@
-import { IModeSettings } from '@ts-core/backend/settings';
-import { IDestroyable } from '@ts-core/common';
-import { ILogger, LoggerWrapper } from '@ts-core/common/logger';
+import { IModeSettings } from '@ts-core/backend';
+import { ILogger, LoggerWrapper, IDestroyable } from '@ts-core/common';
 import * as _ from 'lodash';
 
 export abstract class AbstractService extends LoggerWrapper implements IDestroyable {
