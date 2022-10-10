@@ -1,5 +1,5 @@
-import { IDatabaseSettings, IWebSettings, EnvSettingsStorage } from '@ts-core/backend';
-import { ILogger, LoggerLevel } from '@ts-core/common';
+import { IDatabaseSettings, IWebSettings, EnvSettingsStorage } from '@ts-core/backend/settings';
+import { ILogger, LoggerLevel } from '@ts-core/common/logger';
 
 export class AppSettings extends EnvSettingsStorage implements IWebSettings, IDatabaseSettings {
     // --------------------------------------------------------------------------

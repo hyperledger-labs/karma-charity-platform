@@ -1,4 +1,4 @@
-import { TransportEvent } from '@ts-core/common';
+import { TransportEvent } from '@ts-core/common/transport';
 
 export class LedgerResetedEvent extends TransportEvent<ILedgerResetedDto> {
     // --------------------------------------------------------------------------

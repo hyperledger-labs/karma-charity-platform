@@ -1,8 +1,11 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Logger } from '@ts-core/common/logger';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { LedgerService } from '../LedgerService';
-import { ExtendedError, Logger, Paginable } from '@ts-core/common';
+import { Ledger } from '@hlf-explorer/common/ledger';
+import { ExtendedError } from '@ts-core/common/error';
+import { Paginable, IPaginable } from '@ts-core/common/dto';
 
 @Injectable()
 export class LedgerGuardPaginable implements CanActivate {
@@ -12,7 +15,7 @@ export class LedgerGuardPaginable implements CanActivate {
     //
     // --------------------------------------------------------------------------
 
-    constructor(private logger: Logger, private service: LedgerService) { }
+    constructor(private logger: Logger, private service: LedgerService) {}
 
     // --------------------------------------------------------------------------
     //

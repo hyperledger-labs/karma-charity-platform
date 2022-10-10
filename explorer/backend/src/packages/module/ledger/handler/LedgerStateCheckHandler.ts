@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ExtendedError, TraceUtil, Transport, TransportCommandHandler, Logger } from '@ts-core/common';
+import { Logger } from '@ts-core/common/logger';
+import { TraceUtil } from '@ts-core/common/trace';
+import { Transport, TransportCommandHandler } from '@ts-core/common/transport';
 import { LedgerStateCheckCommand, ILedgerStateCheckDto } from '../transport/command/LedgerStateCheckCommand';
 import { DatabaseService } from '@project/module/database/service';
+import { ExtendedError } from '@ts-core/common/error';
 import * as _ from 'lodash';
-import { Ledger } from '@hlf-explorer/common';
-import { TypeormUtil } from '@ts-core/backend';
+import { Ledger } from '@hlf-explorer/common/ledger';
+import { TypeormUtil } from '@ts-core/backend/database/typeorm';
 import { LedgerBlockParseCommand } from '../transport/command/LedgerBlockParseCommand';
 import { LedgerTransportFactory } from '../service/LedgerTransportFactory';
 
@@ -27,7 +30,7 @@ export class LedgerStateCheckHandler extends TransportCommandHandler<ILedgerStat
     // --------------------------------------------------------------------------
 
     protected async execute(params: ILedgerStateCheckDto): Promise<void> {
-        let ledger = await this.database.ledger.findOneBy({ id: params.ledgerId });
+        let ledger = await this.database.ledger.findOne({ id: params.ledgerId });
         let blockLast = await this.getLastBlockHeight(ledger);
 
         if (_.isNaN(blockLast) || blockLast === 0) {

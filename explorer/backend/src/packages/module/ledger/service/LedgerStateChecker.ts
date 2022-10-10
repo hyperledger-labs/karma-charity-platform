@@ -1,7 +1,8 @@
-
-import { LoggerWrapper, ILogger, TraceUtil, Transport } from '@ts-core/common';
-import { LedgerStateCheckCommand } from '@project/module/ledger/transport/command/LedgerStateCheckCommand';
-import { Ledger } from '@hlf-explorer/common';
+import { LoggerWrapper, Logger, ILogger } from '@ts-core/common/logger';
+import { Transport } from '@ts-core/common/transport';
+import { Ledger } from '@hlf-explorer/common/ledger';
+import { LedgerStateCheckCommand } from '../transport/command/LedgerStateCheckCommand';
+import { TraceUtil } from '@ts-core/common/trace';
 
 export class LedgerStateChecker extends LoggerWrapper {
     // --------------------------------------------------------------------------

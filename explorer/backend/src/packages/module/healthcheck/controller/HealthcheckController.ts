@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common';
+import { Logger, LoggerWrapper } from '@ts-core/common/logger';
 import { DatabaseService } from '@project/module/database/service';
 
 @Controller('health')

@@ -1,5 +1,5 @@
-import { TransportEvent } from '@ts-core/common';
-import { LedgerBlock } from '@hlf-explorer/common';
+import { TransportEvent } from '@ts-core/common/transport';
+import { LedgerBlock } from '@hlf-explorer/common/ledger';
 
 export class LedgerBlockParsedEvent extends TransportEvent<ILedgerBlockParsedDto> {
     // --------------------------------------------------------------------------

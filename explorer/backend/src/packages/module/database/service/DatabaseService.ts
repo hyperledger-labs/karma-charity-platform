@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { TypeormUtil } from '@ts-core/backend';
-import { Logger, ExtendedError, LoggerWrapper } from '@ts-core/common';
+import { TypeormUtil } from '@ts-core/backend/database/typeorm';
+import { Logger, LoggerWrapper } from '@ts-core/common/logger';
 import { Connection, Repository } from 'typeorm';
 import { LedgerEntity } from '../ledger';
 import { LedgerBlockEntity, LedgerBlockEventEntity, LedgerBlockTransactionEntity } from '../block';
-import { Ledger } from '@hlf-explorer/common';
+import { Ledger } from '@hlf-explorer/common/ledger';
 import * as _ from 'lodash';
+import { ExtendedError } from '@ts-core/common/error';
 
 @Injectable()
 export class DatabaseService extends LoggerWrapper {

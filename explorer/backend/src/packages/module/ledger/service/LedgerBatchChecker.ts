@@ -1,8 +1,10 @@
-import { TraceUtil, ILogger, Transport } from '@ts-core/common';
+import { TraceUtil } from '@ts-core/common/trace';
 import { LedgerStateChecker } from './LedgerStateChecker';
-import { Ledger } from '@hlf-explorer/common';
+import { Ledger } from '@hlf-explorer/common/ledger';
+import { Transport } from '@ts-core/common/transport';
 import { ILedgerBatchSettings } from './LedgerSettingsFactory';
 import { LedgerBatchCommand } from '../transport/command/LedgerBatchCommand';
+import { ILogger } from '@ts-core/common/logger';
 
 export class LedgerBatchChecker extends LedgerStateChecker {
     // --------------------------------------------------------------------------

@@ -5,6 +5,10 @@ WORKDIR /build
 COPY ./explorer/backend .
 # Install dependencies and building
 RUN npm i
+# ----------------------------------- Patching corrupted fabric-shim -----------#
+# Copy a patch for fabric-shim
+COPY ./patch/index.d.ts ./node_modules/fabric-shim/types/index.d.ts
+# ------------------------------------------------------------------------------#
 RUN cd ./src/packages/application/api && npm i && npm run build
 
 FROM node:14

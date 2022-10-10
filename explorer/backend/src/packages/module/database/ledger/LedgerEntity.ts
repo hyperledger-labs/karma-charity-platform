@@ -1,5 +1,5 @@
-import { Ledger } from '@hlf-explorer/common';
-import { TransformUtil, ObjectUtil } from '@ts-core/common';
+import { Ledger } from '@hlf-explorer/common/ledger';
+import { TransformUtil, ObjectUtil } from '@ts-core/common/util';
 import { IsInt, IsNumber, IsOptional, IsBoolean, IsString } from 'class-validator';
 import { Column, OneToMany, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 import { LedgerBlockEntity } from '../block/LeggerBlockEntity';

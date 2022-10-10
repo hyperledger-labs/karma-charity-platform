@@ -1,11 +1,15 @@
 import { Controller, Get, HttpStatus, Query, UseGuards, Req } from '@nestjs/common';
 import { ApiProperty, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs';
-import { Logger, TransformUtil, ExtendedError } from '@ts-core/common';
+import { DefaultController } from '@ts-core/backend-nestjs/controller';
+import { Logger } from '@ts-core/common/logger';
 import { IsDefined, IsString } from 'class-validator';
-import { BLOCK_URL, LedgerBlock, ILedgerBlockGetResponse, ILedgerBlockGetRequest } from '@hlf-explorer/common';
+import { LedgerBlock } from '@hlf-explorer/common/ledger';
+import { BLOCK_URL } from '@hlf-explorer/common/api';
+import { ILedgerBlockGetResponse, ILedgerBlockGetRequest } from '@hlf-explorer/common/api/block';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
+import { ExtendedError } from '@ts-core/common/error';
+import { TransformUtil } from '@ts-core/common/util';
 import { LedgerGuard, ILedgerHolder } from '../../service/guard/LedgerGuard';
 
 // --------------------------------------------------------------------------
@@ -64,7 +68,7 @@ export class LedgerBlockGetController extends DefaultController<LedgerBlockGetRe
         }
         /*
         let item = await this.cache.wrap<LedgerBlock>(this.getCacheKey(params), () => this.getItem(params), {
-            ttl: DateUtil.MILLISECONDS_DAY / DateUtil.MILLISECONDS_SECOND
+            ttl: DateUtil.MILISECONDS_DAY / DateUtil.MILISECONDS_SECOND
         });
         */
         let item = await this.getItem(params, holder.ledger.id);
@@ -82,7 +86,7 @@ export class LedgerBlockGetController extends DefaultController<LedgerBlockGetRe
         } else {
             conditions.hash = params.hashOrNumber.toString();
         }
-        let item = await this.database.ledgerBlock.findOneBy(conditions);
+        let item = await this.database.ledgerBlock.findOne(conditions);
         return !_.isNil(item) ? TransformUtil.fromClass(item) : null;
     }
 }

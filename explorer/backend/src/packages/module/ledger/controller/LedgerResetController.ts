@@ -1,13 +1,14 @@
 import { Controller, Post, UseGuards, Req, Body } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs';
-import { Logger, ExtendedError } from '@ts-core/common';
+import { DefaultController } from '@ts-core/backend-nestjs/controller';
+import { Logger } from '@ts-core/common/logger';
 import { IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { ApiProperty } from '@nestjs/swagger';
-import { ILedgerResetRequest, RESET_URL } from '@hlf-explorer/common';
+import { ILedgerResetRequest, RESET_URL } from '@hlf-explorer/common/api';
 import { LedgerGuard, ILedgerHolder } from '../service/guard/LedgerGuard';
 import { LedgerSettingsFactory } from '../service/LedgerSettingsFactory';
 import { LedgerService } from '../service/LedgerService';
+import { ExtendedError } from '@ts-core/common/error';
 
 // --------------------------------------------------------------------------
 //
