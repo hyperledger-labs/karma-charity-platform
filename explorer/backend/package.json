@@ -6,6 +6,9 @@
     "author": "Renat Gubaev",
     "license": "ISC",
     "scripts": {
+        "start": "npm run start --prefix src/packages/application/api",
+        "build": "npm run build --prefix src/packages/application/api",
+        "reset": "npm run reset --prefix src/packages/application/api",
         "api:docker:image:build": "docker build -t hlf-explorer-api -f ./docker/api/Dockerfile .",
         "api:docker:image:update": "docker pull hlf-explorer-api:latest",
         "api:docker:image:remove": "docker rmi -f hlf-explorer-api",
@@ -16,13 +19,13 @@
         "submodules:update": "git submodule update --init"
     },
     "dependencies": {
-        "@hlf-core/transport": "^2.0.4",
-        "@hlf-explorer/common": "^2.0.3",
+        "@hlf-core/transport": "^3.0.11",
+        "@hlf-explorer/common": "^3.0.1",
         "@nestjs/platform-express": "^8.3.1",
         "@nestjs/swagger": "^5.1.5",
         "@nestjs/typeorm": "^8.0.3",
         "@project/module": "file:./src/packages/module",
-        "@ts-core/backend-nestjs": "^8.0.6"
+        "@ts-core/backend-nestjs": "^8.1.8"
     },
     "devDependencies": {
         "prettier": "^2.5.1",

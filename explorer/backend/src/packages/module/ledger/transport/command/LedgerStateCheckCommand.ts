@@ -1,5 +1,4 @@
-import { TransportCommand } from '@ts-core/common/transport';
-import { ITraceable } from '@ts-core/common/trace';
+import { ITraceable, TransportCommand } from '@ts-core/common';
 
 export class LedgerStateCheckCommand extends TransportCommand<ILedgerStateCheckDto> {
     // --------------------------------------------------------------------------

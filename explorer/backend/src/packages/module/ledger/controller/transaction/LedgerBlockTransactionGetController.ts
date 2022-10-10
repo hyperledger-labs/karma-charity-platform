@@ -1,16 +1,12 @@
 import { Controller, Get, HttpStatus, Query, UseGuards, Req } from '@nestjs/common';
 import { ApiProperty, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
 import { IsDefined, IsString } from 'class-validator';
-import { LedgerBlock, LedgerBlockTransaction } from '@hlf-explorer/common/ledger';
-import { ILedgerBlockTransactionGetResponse, ILedgerBlockTransactionGetRequest } from '@hlf-explorer/common/api/transaction';
+import { TRANSACTION_URL, LedgerBlock, ILedgerBlockTransactionGetResponse, ILedgerBlockTransactionGetRequest, LedgerBlockTransaction } from '@hlf-explorer/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
-import { ExtendedError } from '@ts-core/common/error';
-import { TransformUtil } from '@ts-core/common/util';
+import { ExtendedError, TransformUtil, Logger } from '@ts-core/common';
 import { LedgerGuard, ILedgerHolder } from '../../service/guard/LedgerGuard';
-import { TRANSACTION_URL } from '@hlf-explorer/common/api';
 
 // --------------------------------------------------------------------------
 //
@@ -74,7 +70,7 @@ LedgerBlockTransactionGetResponse
         }
         /*
         let item = await this.cache.wrap<LedgerBlockTransaction>(this.getCacheKey(params), () => this.getItem(params), {
-            ttl: DateUtil.MILISECONDS_DAY / DateUtil.MILISECONDS_SECOND
+            ttl: DateUtil.MILLISECONDS_DAY / DateUtil.MILLISECONDS_SECOND
         });
         */
 
@@ -88,7 +84,7 @@ LedgerBlockTransactionGetResponse
 
     private async getItem(params: ILedgerBlockTransactionGetRequest, ledgerId: number): Promise<LedgerBlockTransaction> {
         let conditions = { hash: params.hash, ledgerId };
-        let item = await this.database.ledgerBlockTransaction.findOne(conditions);
+        let item = await this.database.ledgerBlockTransaction.findOneBy(conditions);
         return !_.isNil(item) ? TransformUtil.fromClass(item) : null;
     }
 }
