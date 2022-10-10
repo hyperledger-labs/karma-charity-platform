@@ -1,16 +1,13 @@
 import { Controller, Get, HttpStatus, Query } from '@nestjs/common';
 import { ApiProperty, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger, TransformUtil } from '@ts-core/common';
 import { IsDefined } from 'class-validator';
-import { LedgerInfo } from '@hlf-explorer/common/ledger';
-import { ILedgerInfoGetResponse, ILedgerInfoGetRequest } from '@hlf-explorer/common/api/info';
+import { INFO_URL, LedgerInfo, ILedgerInfoGetResponse, ILedgerInfoGetRequest } from '@hlf-explorer/common';
 import * as _ from 'lodash';
-import { ExtendedError } from '@ts-core/common/error';
-import { TransformUtil } from '@ts-core/common/util';
-import { Cache } from '@ts-core/backend-nestjs/cache';
+import { ExtendedError } from '@ts-core/common';
+import { Cache } from '@ts-core/backend-nestjs';
 import { LedgerApiMonitor } from '../../service/LedgerApiMonitor';
-import { INFO_URL } from '@hlf-explorer/common/api';
 
 // --------------------------------------------------------------------------
 //
@@ -64,7 +61,7 @@ export class LedgerInfoGetController extends DefaultController<LedgerInfoGetRequ
 
         /*
         let item = await this.cache.wrap<LedgerInfo>(this.getCacheKey(params), () => this.getItem(params), {
-            ttl: DateUtil.MILISECONDS_SECOND / DateUtil.MILISECONDS_SECOND
+            ttl: DateUtil.MILLISECONDS_SECOND / DateUtil.MILLISECONDS_SECOND
         });
         */
         let item = await this.getItem(params);

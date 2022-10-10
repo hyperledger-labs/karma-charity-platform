@@ -1,10 +1,9 @@
-import { ObjectUtil } from '@ts-core/common/util';
 import { Exclude, Type } from 'class-transformer';
 import { IsDate, IsUUID, IsNumber, IsOptional, IsBoolean, IsString } from 'class-validator';
 import { Column, Index, JoinColumn, ManyToOne, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { LedgerBlockEntity } from './LeggerBlockEntity';
-import { LedgerBlockEvent } from '@hlf-explorer/common/ledger';
-import { ITransportEvent } from '@ts-core/common/transport';
+import { LedgerBlockEvent } from '@hlf-explorer/common';
+import { ITransportEvent, ObjectUtil } from '@ts-core/common';
 
 @Entity('ledger_block_event')
 @Index(['uid', 'blockId', 'ledgerId', 'name'])

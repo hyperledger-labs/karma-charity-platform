@@ -6,14 +6,12 @@
     "author": "Renat Gubaev",
     "license": "ISC",
     "scripts": {
-        "start": "CORE_CHAINCODE_LOGGING_LEVEL=CRITICAL ts-node --transpile-only main.ts",
+        "start": "HFC_LOGGING1='{\"debug\":\"console\", \"info\":\"console\"}' CORE_CHAINCODE_LOGGING_LEVEL=DEBUG ts-node --transpile-only main.ts",
         "start:dev": "ts-node-dev --transpile-only main.ts",
         "build": "tsc",
-        "typeorm": "ts-node --transpile-only -r tsconfig-paths/register ../../../../node_modules/typeorm/cli.js --config ormconfig.ts",
-        "migration:run": "npm run typeorm migration:run",
-        "migration:generate": "npm run typeorm migration:generate -- --name Generate",
-        "migration:create": "npm run typeorm migration:create -- -n",
-        "schema:drop": "npm run typeorm schema:drop"
+        "migration:run": "npx typeorm-ts-node-esm migration:run -d ormconfig.migration.ts",
+        "schema:drop": "npx typeorm-ts-node-esm schema:drop -d ormconfig.migration.ts",
+        "reset": "npm run schema:drop && npm run migration:run"
     },
     "dependencies": {
         "cache-manager-memory-store": "^1.1.0",

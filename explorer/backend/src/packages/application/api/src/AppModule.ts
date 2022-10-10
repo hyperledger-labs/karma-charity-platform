@@ -1,15 +1,12 @@
 import { DynamicModule, Inject, OnApplicationBootstrap } from '@nestjs/common';
-import { LoggerModule } from '@ts-core/backend-nestjs/logger';
-import { CacheModule } from '@ts-core/backend-nestjs/cache';
-import { TransportModule, TransportType } from '@ts-core/backend-nestjs/transport';
+import { TransportModule, TransportType, LoggerModule, CacheModule } from '@ts-core/backend-nestjs';
 import MemoryStore from 'cache-manager-memory-store';
 import { AppSettings } from './AppSettings';
 import { DatabaseModule } from '@project/module/database';
 import { LedgerModule } from '@project/module/ledger';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Transport } from '@ts-core/common/transport';
-import { Logger } from '@ts-core/common/logger';
-import { IDatabaseSettings } from '@ts-core/backend/settings';
+import { Transport, Logger } from '@ts-core/common';
+import { IDatabaseSettings } from '@ts-core/backend';
 import { modulePath } from '@project/module';
 import { AbstractService } from '@project/module/core';
 import { HealthcheckModule } from '@project/module/healthcheck';
@@ -65,9 +62,6 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 entities: [`${modulePath()}/database/**/*Entity.{ts,js}`,],
                 migrations: [__dirname + '/migration/*.{ts,js}'],
                 migrationsRun: false,
-                cli: {
-                    migrationsDir: 'src/migration',
-                },
             },
             {
                 type: 'postgres',
@@ -83,12 +77,8 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                     `${modulePath()}/database/**/*Entity.{ts,js}`
                 ],
                 migrations: [__dirname + '/migration/*.{ts,js}'],
-                migrationsRun: true,
-                cli: {
-                    migrationsDir: 'src/migration'
-                }
+                migrationsRun: true
             },
-
             {
                 name: 'seed',
                 type: 'postgres',
@@ -105,10 +95,7 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 ],
                 migrations: [__dirname + '/seed/*.{ts,js}'],
                 migrationsRun: true,
-                migrationsTableName: 'migrations_seed',
-                cli: {
-                    migrationsDir: 'src/seed'
-                }
+                migrationsTableName: 'migrations_seed'
             }
         ];
     }

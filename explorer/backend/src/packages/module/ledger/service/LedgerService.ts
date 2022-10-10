@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
-import { DateUtil } from '@ts-core/common/util';
+import { Logger, ExtendedError, Transport, DateUtil, LoggerWrapper } from '@ts-core/common';
 import { DatabaseService } from '@project/module/database/service';
-import { Ledger } from '@hlf-explorer/common/ledger';
+import { Ledger } from '@hlf-explorer/common';
 import { LedgerStateChecker } from './LedgerStateChecker';
-import { Transport } from '@ts-core/common/transport';
 import { LedgerApiMonitor } from './LedgerApiMonitor';
 import * as _ from 'lodash';
 import { LedgerSettingsFactory, ILedgerConnectionSettings } from './LedgerSettingsFactory';
-import { ILedgerBatchSettings } from './LedgerSettingsFactory';
-import { ExtendedError } from '@ts-core/common/error';
 import { LedgerResetedEvent } from '../transport/event/LedgerResetedEvent';
 import { LedgerBatchChecker } from './LedgerBatchChecker';
 import { LedgerEntity } from '@project/module/database/ledger';
@@ -54,10 +50,10 @@ export class LedgerService extends LoggerWrapper {
         item.name = settings.uid;
         item.blockHeight = 0;
         item.blockHeightParsed = 0;
-        item.blockFrequency = 3 * DateUtil.MILISECONDS_SECOND;
+        item.blockFrequency = 3 * DateUtil.MILLISECONDS_SECOND;
 
         if (!_.isNil(settings.batch)) {
-            item.isBatch = !_.isNil(settings.batch);
+            item.isBatch = _.isBoolean(settings.batch) ? settings.batch : true;
         }
 
         await this.database.ledgerSave(item);
@@ -130,12 +126,12 @@ export class LedgerService extends LoggerWrapper {
     }
 
     public async ledgerGet(name: string): Promise<Ledger> {
-        let item = await this.database.ledger.findOne({ name });
+        let item = await this.database.ledger.findOneBy({ name });
         return !_.isNil(item) ? item.toObject() : null;
     }
 
     public async ledgerReset(name: string): Promise<Ledger> {
-        let item = await this.database.ledger.findOne({ name });
+        let item = await this.database.ledger.findOneBy({ name });
         if (_.isNil(item)) {
             throw new ExtendedError(`Unable to find "${name}" ledger`);
         }
