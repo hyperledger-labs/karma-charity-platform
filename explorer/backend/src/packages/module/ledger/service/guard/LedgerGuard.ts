@@ -1,10 +1,9 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Logger } from '@ts-core/common/logger';
+import { Logger, ExtendedError } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { LedgerService } from '../LedgerService';
-import { Ledger } from '@hlf-explorer/common/ledger';
-import { ExtendedError } from '@ts-core/common/error';
+import { Ledger } from '@hlf-explorer/common';
 
 @Injectable()
 export class LedgerGuard implements CanActivate {
