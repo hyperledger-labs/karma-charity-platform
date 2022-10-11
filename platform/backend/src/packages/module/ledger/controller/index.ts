@@ -1,1 +1,1 @@
-// export * from './NalogGetController';
+export * from './LedgerObjectDetailsGetController';

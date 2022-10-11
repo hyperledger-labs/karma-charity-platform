@@ -1,16 +1,17 @@
-import { Logger } from '@ts-core/common/logger';
+import { Logger } from '@ts-core/common';
 import { Injectable } from '@nestjs/common';
-import { Transport, TransportCommandHandler } from '@ts-core/common/transport';
+import { Transport, TransportCommandHandler } from '@ts-core/common';
+import { FindOptionsWhere } from 'typeorm';
 import * as _ from 'lodash';
 import { PaymentPayCommand, IPaymentPayDto } from '../PaymentPayCommand';
 import { PaymentEntity } from '@project/module/database/payment';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import { CoinEmitType, CoinObjectType } from '@project/common/transport/command/coin';
-import { ExtendedError, UnreachableStatementError } from '@ts-core/common/error';
+import { ExtendedError, UnreachableStatementError } from '@ts-core/common';
 import { DatabaseService } from '@project/module/database/service';
 import { PaymentTransactionEntity } from '@project/module/database/payment';
 import { IPaymentTarget, PaymentAccountId, PaymentTarget, PaymentTransactionType, PaymentUtil } from '@project/common/platform/payment';
-import { MathUtil, ObjectUtil } from '@ts-core/common/util';
+import { MathUtil, ObjectUtil } from '@ts-core/common';
 import { AccountType } from '@project/common/platform/account';
 import { AccountEntity } from '@project/module/database/account';
 import { UserGuard } from '@project/module/guard';
@@ -22,6 +23,7 @@ import { UserPreferencesProjectCancelStrategy } from '@project/common/platform/u
 import { LedgerService } from '@project/module/ledger/service';
 import { CryptoDecryptCommand } from '@project/module/crypto/transport';
 import { CryptoKeyType } from '@project/common/platform/crypto';
+import { UserEntity } from '@project/module/database/user';
 
 @Injectable()
 export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, PaymentPayCommand> {
@@ -72,26 +74,27 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
         payment.transactions = [feeAggregator, donated];
 
         if (!isProject) {
-            await this.paymentSave(payment, coinId, company.id);
+            await this.paymentSave(payment);
             return;
         }
 
         let currentBalance = await this.database.getCollectedAmount(coinId, null, project.id);
         let newBalance = MathUtil.add(currentBalance, donatedAmount);
-        let requiredBalance = this.balanceRequired(project, coinId);
+        let requiredBalance = await this.balanceRequired(project, coinId);
 
         let delta = MathUtil.subtract(newBalance, requiredBalance);
         if (MathUtil.lessThan(delta, '0')) {
-            await this.paymentSave(payment, coinId, null, project.id);
+            await this.paymentSave(payment);
             return;
         }
 
         donated.amount = MathUtil.subtract(donatedAmount, delta);
 
         await this.paymentExtraDonatedTransactionAdd(delta, coinId, payment, project);
-        await this.paymentSave(payment, coinId, null, project.id);
+        await this.paymentSave(payment);
 
         if (project.status === ProjectStatus.ACTIVE && await this.database.isAmountCollected(project.id)) {
+            this.log(`Changing project status to "${ProjectStatus.COLLECTED}": ${JSON.stringify(project, null, 4)}`);
             await this.database.projectStatus(project, ProjectStatus.COLLECTED);
         }
     }
@@ -125,7 +128,8 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
         }
     }
 
-    private async paymentSave(payment: PaymentEntity, coinId: LedgerCoinId, companyId?: number, projectId?: number): Promise<void> {
+    private async paymentSave(payment: PaymentEntity): Promise<void> {
+        this.log(`Saving payment`);
         payment = await this.database.payment.save(payment);
 
         let from = null;
@@ -135,29 +139,55 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
         }
 
         for (let transaction of payment.transactions) {
+            this.log(`Emit coin for transaction "${transaction.id}"`);
             await this.ledger.coinEmit(transaction, from);
-        }
-        if (!_.isNil(companyId)) {
-            await this.balanceUpdate(coinId, companyId);
-        }
-        if (!_.isNil(projectId)) {
-            await this.balanceUpdate(coinId, null, projectId);
+            await this.balanceUpdate(transaction);
         }
     }
 
-    private balanceRequired(project: ProjectEntity, coinId: LedgerCoinId): string {
-        let balance = project.toUserObject().balance;
-        let value = !_.isNil(balance.required) ? balance.required[coinId] : null;
-        return !_.isNil(value) ? value : '0';
+    private async balanceRequired(project: ProjectEntity, coinId: LedgerCoinId): Promise<string> {
+        let account = await this.database.account.findOneBy({ type: AccountType.REQUIRED, projectId: project.id, coinId });
+        return !_.isNil(account) ? account.amount : '0';
     }
 
-    private async balanceUpdate(coinId: LedgerCoinId, companyId: number = null, projectId: number = null): Promise<void> {
-        let item = await this.database.account.findOne({ type: AccountType.COLLECTED, coinId, companyId, projectId });
+    private async balanceUpdate(transaction: PaymentTransactionEntity): Promise<void> {
+        let coinId = transaction.coinId;
+        let companyId = transaction.companyId;
+        let projectId = transaction.projectId;
+        this.log(`Updating balance for coin="${coinId}", company="${companyId}", project="${projectId}"`);
+        if (_.isNil(companyId) && _.isNil(projectId)) {
+            return;
+        }
+
+        let item = await this.database.account.findOneBy({ type: AccountType.COLLECTED, coinId, companyId, projectId });
         if (_.isNil(item)) {
             item = new AccountEntity(AccountType.COLLECTED, coinId, companyId, projectId);
         }
+        this.log(`Found account ${JSON.stringify(item, null, 4)}`);
         item.amount = await this.database.getCollectedAmount(coinId, companyId, projectId);
-        await this.database.account.save(item);
+        this.log(`Updated account ${JSON.stringify(item, null, 4)}`);
+        item = await this.database.account.save(item);
+        this.log(`Account saved ${JSON.stringify(item, null, 4)}`);
+    }
+
+    private async userGet(id: number): Promise<UserEntity> {
+        let query = this.database.user.createQueryBuilder('user');
+        query.where(`user.id  = :id`, { id });
+        return query.getOne();
+    }
+
+    private async companyGet(id: number): Promise<CompanyEntity> {
+        let query = this.database.company.createQueryBuilder('company');
+        query.where(`company.id  = :id`, { id });
+        query.leftJoinAndSelect('company.paymentAggregator', 'companyPaymentAggregator')
+        return query.getOne();
+    }
+
+    private async projectGet(id: number): Promise<ProjectEntity> {
+        let query = this.database.project.createQueryBuilder('project');
+        query.where(`project.id  = :id`, { id });
+        query.leftJoinAndSelect('project.preferences', 'projectPreferences');
+        return query.getOne();
     }
 
     // --------------------------------------------------------------------------
@@ -167,7 +197,7 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
     // --------------------------------------------------------------------------
 
     protected async execute(params: IPaymentPayDto<any>): Promise<void> {
-        let item = await this.database.payment.findOne({ referenceId: params.details.referenceId });
+        let item = await this.database.payment.findOneBy({ referenceId: params.details.referenceId });
         if (!_.isNil(item)) {
             throw new ExtendedError(`Payment with \"referenceId\" already exist`);
         }
@@ -180,19 +210,20 @@ export class PaymentPayHandler extends TransportCommandHandler<IPaymentPayDto, P
         item.referenceId = params.details.referenceId;
 
         if (!_.isNil(params.details.userId)) {
-            item.user = await this.database.userGet(params.details.userId);
+            item.user = await this.userGet(params.details.userId);
         }
 
         let project: ProjectEntity = null;
         let company: CompanyEntity = null;
         switch (params.details.target.type) {
             case CoinObjectType.COMPANY:
-                company = await this.database.companyGet(params.details.target.id);
+                company = await this.companyGet(params.details.target.id);
                 break;
             case CoinObjectType.PROJECT:
-                project = await this.database.projectGet(params.details.target.id);
+                project = await this.projectGet(params.details.target.id);
+
                 UserGuard.checkProject({ isProjectRequired: true }, project);
-                company = await this.database.companyGet(project.companyId);
+                company = await this.companyGet(project.companyId);
                 break;
             default:
                 throw new UnreachableStatementError(params.details.target.type);

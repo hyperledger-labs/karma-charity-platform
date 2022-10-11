@@ -1,5 +1,5 @@
 {
-    "name": "@karma-explorer/backend-api",
+    "name": "@karma-platform/backend-api",
     "version": "1.0.0",
     "description": "",
     "main": "",
@@ -9,13 +9,10 @@
         "start": "ts-node --transpile-only main.ts",
         "start:dev": "ts-node-dev --transpile-only --ignore-watch node_modules main.ts",
         "build": "tsc",
-        "typeorm": "ts-node --transpile-only -r tsconfig-paths/register ../../../../node_modules/typeorm/cli.js --config ormconfig.ts",
-        "migration:run": "npm run typeorm migration:run",
-        "migration:generate": "npm run typeorm migration:generate -- --name Generate",
-        "migration:create": "npm run typeorm migration:create -- -n",
-        "seed:run": "npm run typeorm migration:run --  --connection seed",
-        "seed:create": "npm run typeorm migration:create -- --connection seed --name",
-        "schema:drop": "npm run typeorm schema:drop",
+
+        "migration:run": "npx typeorm-ts-node-esm migration:run -d ormconfig.migration.ts",
+        "schema:drop": "npx typeorm-ts-node-esm schema:drop -d ormconfig.migration.ts",
+        "seed:run": "npx typeorm-ts-node-esm migration:run -d ormconfig.seed.ts",
         "reset": "npm run schema:drop && npm run migration:run && npm run seed:run"
     },
     "dependencies": {

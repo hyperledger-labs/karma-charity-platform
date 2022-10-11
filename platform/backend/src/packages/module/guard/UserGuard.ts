@@ -2,10 +2,10 @@ import { ExecutionContext, Injectable, SetMetadata } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { DatabaseService } from '@project/module/database/service';
-import { PromiseHandler } from '@ts-core/common/promise';
-import { Logger } from '@ts-core/common/logger';
+import { PromiseHandler } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
-import { UserRoleName, UserStatus, UserType } from '@project/common/platform/user';
+import { UserResource, UserRoleName, UserStatus, UserType } from '@project/common/platform/user';
 import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
 import { CompanyLedgerNotFoundError, CompanyRoleInvalidError, CompanyRoleUndefinedError, CompanyStatusInvalidError, CompanyUndefinedError, ProjectLedgerNotFoundError, ProjectRoleUndefinedError, ProjectStatusInvalidError, UserStatusInvalidError, UserTypeInvalidError, UserUndefinedError } from '@project/module/core/middleware';
 import { CompanyStatus } from '@project/common/platform/company';
@@ -13,6 +13,7 @@ import { CompanyEntity } from '@project/module/database/company';
 import { ProjectStatus } from '@project/common/platform/project';
 import { ProjectEntity } from '@project/module/database/project';
 import { ProjectRoleInvalidError, ProjectUndefinedError } from '@project/module/core/middleware';
+import { UserResourceInvalidError } from '../core/middleware';
 
 @Injectable()
 export class UserGuard extends AuthGuard('jwt') {
@@ -45,6 +46,9 @@ export class UserGuard extends AuthGuard('jwt') {
         }
         if (!_.isEmpty(options.status) && !options.status.includes(user.status)) {
             throw new UserStatusInvalidError({ value: user.status, expected: options.status });
+        }
+        if (!_.isEmpty(options.resource) && !options.resource.includes(user.resource)) {
+            throw new UserResourceInvalidError({ value: user.resource, expected: options.resource });
         }
     }
     public static checkCompany(options: IGuardOptions, company: CompanyEntity): void {
@@ -146,7 +150,10 @@ export class UserGuard extends AuthGuard('jwt') {
             item.type = !_.isArray(options.type) ? [options.type] : options.type;
         }
         if (!_.isNil(options.status)) {
-            item.type = !_.isArray(options.type) ? [options.type] : options.type;
+            item.status = !_.isArray(options.status) ? [options.status] : options.status;
+        }
+        if (!_.isNil(options.resource)) {
+            item.resource = !_.isArray(options.resource) ? [options.resource] : options.resource;
         }
         if (!_.isNil(options.company)) {
             item.isCompanyRequired = options.company.required;
@@ -178,7 +185,7 @@ export class UserGuard extends AuthGuard('jwt') {
     public async canActivate(context: ExecutionContext): Promise<boolean> {
         let options = this.getOptions(this.reflector.get<IUserGuardOptions>(UserGuard.OPTIONS, context.getHandler()));
         try {
-           await PromiseHandler.toPromise(super.canActivate(context));
+            await PromiseHandler.toPromise(super.canActivate(context));
         }
         catch (error) {
             if (!options.isRequired) {
@@ -201,6 +208,7 @@ export class UserGuard extends AuthGuard('jwt') {
 export interface IGuardOptions {
     type?: Array<UserType>;
     status?: Array<UserStatus>,
+    resource?: Array<UserResource>,
     isRequired?: boolean;
     isLedgerRequired?: boolean;
     // role?: Array<UserRoleName>;
@@ -219,6 +227,7 @@ export interface IGuardOptions {
 export interface IUserGuardOptions {
     type?: UserType | Array<UserType>;
     status?: UserStatus | Array<UserStatus>,
+    resource?: UserResource | Array<UserResource>,
     required?: boolean;
     ledgerRequired?: boolean;
 

@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import { Type } from 'class-transformer';
 import { IsDefined, Length, MaxLength, IsNotEmpty, IsBase64, IsNumber, IsDate, IsEmail, ValidateNested, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
@@ -9,18 +9,18 @@ import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { IUserHolder, UserEntity, UserRoleEntity } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { ObjectUtil, ValidateUtil } from '@ts-core/common/util';
+import { ObjectUtil, ValidateUtil } from '@ts-core/common';
 import { UserType } from '@project/common/platform/user';
 import { COMPANY_URL } from '@project/common/platform/api';
 import { ICompanyAddDto, ICompanyAddDtoResponse } from '@project/common/platform/api/company';
-import { Company, CompanyPreferences, CompanyStatus, CompanyType, COMPANY_ADD_TYPE, COMPANY_PREFERENCES_LOCATION_MAX_LENGTH, COMPANY_PREFERENCES_PHONE_MAX_LENGTH, COMPANY_PREFERENCES_STRING_MAX_LENGTH, COMPANY_PREFERENCES_TITLE_MAX_LENGTH, COMPANY_PREFERENCES_TITLE_MIN_LENGTH, COMPANY_PREFERENCES_WEBSITE_MAX_LENGTH } from '@project/common/platform/company';
+import { Company, CompanyPreferences, CompanyStatus, CompanyType, COMPANY_ADD_TYPE } from '@project/common/platform/company';
 import { CompanyEntity, CompanyPreferencesEntity } from '@project/module/database/company';
 import { NalogService } from '@project/module/nalog/service';
 import { LedgerCompanyRole } from '@project/common/ledger/role';
 import { CompanyNotUndefinedError } from '@project/module/core/middleware';
 import { PaymentAggregator } from '@project/common/platform/payment/aggregator';
 import { CompanyPaymentAggregatorEntity } from '@project/module/database/company/CompanyPaymentAggregatorEntity';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { CryptoEncryptCommand } from '@project/module/crypto/transport';
 import { CryptoKeyType } from '@project/common/platform/crypto';
 import { TransformGroup } from '@project/module/database';
@@ -28,8 +28,8 @@ import { FileEntity } from '@project/module/database/file';
 import { FileService } from '@project/module/file/service';
 import { FileLinkType } from '@project/common/platform/file';
 import { CompanyFileType } from '@project/common/platform/company';
-import { TraceUtil } from '@ts-core/common/trace';
-import { Ed25519 } from '@ts-core/common/crypto';
+import { TraceUtil } from '@ts-core/common';
+import { Ed25519 } from '@ts-core/common';
 
 // --------------------------------------------------------------------------
 //
@@ -83,9 +83,12 @@ export class CompanyAddController extends DefaultController<ICompanyAddDto, ICom
     @UserGuardOptions({ type: COMPANY_ADD_TYPE })
     public async executeExtended(@Body() params: CompanyAddDto, @Req() request: IUserHolder): Promise<ICompanyAddDtoResponse> {
         let user = request.user;
+        /*
+        TODO:
         if (!_.isNil(user.companyId)) {
             throw new CompanyNotUndefinedError();
         }
+        */
 
         let [nalog] = await this.nalog.search(params.preferences.inn);
         ObjectUtil.copyProperties(nalog, params.preferences);

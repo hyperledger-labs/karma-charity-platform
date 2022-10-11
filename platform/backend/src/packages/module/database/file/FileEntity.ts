@@ -1,4 +1,4 @@
-import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common';
 import { ClassTransformOptions } from 'class-transformer';
 import { IsString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import { CreateDateColumn, UpdateDateColumn, BeforeUpdate, BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';

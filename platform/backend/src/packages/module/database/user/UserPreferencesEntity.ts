@@ -10,13 +10,14 @@ import {
     USER_PREFERENCES_LOCATION_MAX_LENGTH,
     UserPreferencesProjectCancelStrategy
 } from '@project/common/platform/user';
-import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
-import { Exclude, Type } from 'class-transformer';
+import { TypeormDecimalTransformer } from '@ts-core/backend';
+import { ObjectUtil, TransformUtil } from '@ts-core/common';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { IsEmail, IsDate, IsEnum, Length, IsBoolean, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, UpdateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './UserEntity';
 import * as _ from 'lodash';
+import { TransformGroup } from '../TransformGroup';
 
 @Entity({ name: 'user_preferences' })
 export class UserPreferencesEntity implements UserPreferences {
@@ -82,6 +83,21 @@ export class UserPreferencesEntity implements UserPreferences {
     @IsOptional()
     public projectCancelStrategy?: UserPreferencesProjectCancelStrategy;
 
+    @Column({ name: 'is_need_platform_news', nullable: true })
+    @IsBoolean()
+    @IsOptional()
+    public isNeedPlatformNews?: boolean;
+
+    @Column({ name: 'is_need_platform_notifications', nullable: true })
+    @IsBoolean()
+    @IsOptional()
+    public isNeedPlatformNotifications?: boolean;
+
+    @Column({ name: 'is_need_favorites_notifications', nullable: true })
+    @IsBoolean()
+    @IsOptional()
+    public isNeedFavoritesNotifications?: boolean;
+
     @Column({ nullable: true })
     @IsString()
     @IsOptional()
@@ -97,6 +113,10 @@ export class UserPreferencesEntity implements UserPreferences {
     @IsNumber()
     @IsOptional()
     public longitude?: number;
+
+    @Expose({ groups: [TransformGroup.PRIVATE] })
+    @UpdateDateColumn({ name: 'updated_date' })
+    public updatedDate?: Date;
 
     @Exclude()
     @OneToOne(

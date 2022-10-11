@@ -1,7 +1,7 @@
 import { Body, Req, Controller, Post, UseInterceptors, UseGuards, UploadedFile } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import { IsString, IsEnum, IsNumberString } from 'class-validator';
 import * as _ from 'lodash';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
@@ -12,7 +12,7 @@ import { IUserHolder } from '@project/module/database/user';
 import { IFile, IFileRequest } from '../service';
 import { FileEntity } from '@project/module/database/file';
 import { File, FileLinkType } from '@project/common/platform/file';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import { IFileUploadDto, IFileUploadDtoResponse } from '@project/common/platform/api/file';
 
 // --------------------------------------------------------------------------

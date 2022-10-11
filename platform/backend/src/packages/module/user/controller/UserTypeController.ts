@@ -1,8 +1,8 @@
 import { Body, Controller, Param, Put, Req, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { ExtendedError } from '@ts-core/common/error';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { ExtendedError } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
 import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';

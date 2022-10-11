@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import { Type } from 'class-transformer';
-import { IsDefined, IsNumber, IsNotEmpty, IsBase64, ValidateNested, IsEnum, MaxLength, Length, IsArray, IsOptional, IsString } from 'class-validator';
+import { IsDefined, IsBase64, ValidateNested, IsArray, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
@@ -11,17 +11,17 @@ import { IUserHolder, UserRoleEntity } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
 import { PROJECT_URL } from '@project/common/platform/api';
 import { IProjectAddDto, IProjectAddDtoResponse } from '@project/common/platform/api/project';
-import { Project, ProjectFileType, ProjectPreferences, ProjectPurpose, ProjectStatus, ProjectTag, PROJECT_PREFERENCES_DESCRIPTION_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MIN_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH, PROJECT_PREFERENCES_LOCATION_MAX_LENGTH, PROJECT_PREFERENCES_PICTURE_MAX_LENGTH, PROJECT_PREFERENCES_TAGS_MAX_LENGTH, PROJECT_PREFERENCES_TITLE_MAX_LENGTH, PROJECT_PREFERENCES_TITLE_MIN_LENGTH } from '@project/common/platform/project';
+import { Project, ProjectFileType, ProjectPreferences, ProjectPurpose, ProjectStatus } from '@project/common/platform/project';
 import { ProjectEntity, ProjectPreferencesEntity } from '@project/module/database/project';
 import { LedgerProjectRole } from '@project/common/ledger/role';
 import { ProjectPurposeEntity } from '@project/module/database/project';
 import { TransformGroup } from '@project/module/database';
 import { ProjectUtil as CoreProjectUtil } from '../util';
 import { PROJECT_ADD_ROLE, PROJECT_ADD_TYPE } from '@project/common/platform/project';
-import { TraceUtil } from '@ts-core/common/trace';
+import { TraceUtil } from '@ts-core/common';
 import { FileService } from '@project/module/file/service';
 import { FileEntity } from '@project/module/database/file';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import { FileLinkType } from '@project/common/platform/file';
 
 // --------------------------------------------------------------------------

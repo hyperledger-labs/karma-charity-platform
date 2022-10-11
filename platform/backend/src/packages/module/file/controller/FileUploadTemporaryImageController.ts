@@ -1,7 +1,7 @@
 import { Req, Controller, Res, Post, UseInterceptors, UseGuards, UploadedFile } from '@nestjs/common';
 import { FileInterceptor, } from '@nestjs/platform-express';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
 import { UserType } from '@project/common/platform/user';
@@ -9,7 +9,7 @@ import { FILE_TEMPORARY_IMAGE_URL } from '@project/common/platform/api';
 import { DatabaseService } from '@project/module/database/service';
 import { IUserHolder } from '@project/module/database/user';
 import { FileService, IFileRequest } from '../service';
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 
 // --------------------------------------------------------------------------
 //

@@ -1,10 +1,10 @@
 
 
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ErrorCode } from '@project/common/platform/api';
 import { CoreExtendedError } from './CoreExtendedError';
-import { UserRoleName, UserStatus, UserType } from '@project/common/platform/user';
+import { UserResource, UserRoleName, UserStatus, UserType } from '@project/common/platform/user';
 import { CompanyStatus } from '@project/common/platform/company';
 import { ProjectStatus } from '@project/common/platform/project';
 
@@ -36,6 +36,16 @@ export class UserNotFoundError extends CoreExtendedError {
         super(ErrorCode.USER_NOT_FOUND);
     }
 }
+export class UserInvalidPasswordError extends CoreExtendedError {
+    constructor() {
+        super(ErrorCode.USER_INVALID_PASSWORD);
+    }
+}
+export class UserAlreadyExistsError extends CoreExtendedError {
+    constructor() {
+        super(ErrorCode.USER_ALREADY_EXISTS);
+    }
+}
 export class UserLedgerNotFoundError extends CoreExtendedError {
     constructor() {
         super(ErrorCode.USER_LEDGER_NOT_FOUND);
@@ -44,6 +54,11 @@ export class UserLedgerNotFoundError extends CoreExtendedError {
 export class UserStatusInvalidError extends CoreExtendedError<IInvalidValue<UserStatus>> {
     constructor(details: IInvalidValue<UserStatus>) {
         super(ErrorCode.USER_STATUS_INVALID, details, ExtendedError.HTTP_CODE_UNAUTHORIZED);
+    }
+}
+export class UserResourceInvalidError extends CoreExtendedError<IInvalidValue<UserResource>> {
+    constructor(details: IInvalidValue<UserResource>) {
+        super(ErrorCode.USER_RESOURCE_INVALID, details);
     }
 }
 export class UserTypeInvalidError extends CoreExtendedError<IInvalidValue<UserType>> {
@@ -170,6 +185,18 @@ export class ProjectRoleInvalidError extends CoreExtendedError<IInvalidValue<Use
 export class PaymentNotFoundError extends CoreExtendedError {
     constructor() {
         super(ErrorCode.PAYMENT_NOT_FOUND);
+    }
+}
+
+// --------------------------------------------------------------------------
+//
+//  Favorite
+//
+// --------------------------------------------------------------------------
+
+export class FavoriteNotFoundError extends CoreExtendedError {
+    constructor() {
+        super(ErrorCode.FAVORITE_NOT_FOUND);
     }
 }
 

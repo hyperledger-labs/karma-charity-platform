@@ -1,5 +1,5 @@
-import { TransportCommand } from '@ts-core/common/transport';
-import { UID } from '@ts-core/common/dto';
+import { TransportCommand } from '@ts-core/common';
+import { UID } from '@ts-core/common';
 
 export class ObjectUpdateCommand extends TransportCommand<UID> {
     // --------------------------------------------------------------------------

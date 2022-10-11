@@ -6,17 +6,17 @@ import {
     PROJECT_PREFERENCES_TAGS_MAX_LENGTH,
     PROJECT_PREFERENCES_STRING_MAX_LENGTH,
     PROJECT_PREFERENCES_PICTURE_MAX_LENGTH,
-    PROJECT_PREFERENCES_LOCATION_MAX_LENGTH,
     PROJECT_PREFERENCES_DESCRIPTION_MIN_LENGTH,
     PROJECT_PREFERENCES_DESCRIPTION_MAX_LENGTH,
     PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH,
     PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH,
     ProjectTag,
+    PROJECT_PREFERENCES_CITY_MAX_LENGTH,
 } from '@project/common/platform/project';
-import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { TypeormDecimalTransformer } from '@ts-core/backend';
+import { ObjectUtil, TransformUtil } from '@ts-core/common';
 import { Exclude, Type } from 'class-transformer';
-import { Length, IsEnum, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Length, IsEnum, IsDate, IsBoolean, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProjectEntity } from './ProjectEntity';
 import * as _ from 'lodash';
@@ -62,11 +62,10 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
     @MaxLength(PROJECT_PREFERENCES_PICTURE_MAX_LENGTH)
     public picture?: string;
 
-    @Column({ nullable: true })
+    @Column()
     @IsString()
-    @IsOptional()
-    @MaxLength(PROJECT_PREFERENCES_LOCATION_MAX_LENGTH)
-    public location?: string;
+    @MaxLength(PROJECT_PREFERENCES_CITY_MAX_LENGTH)
+    public city: string;
 
     @Column({ nullable: true, type: 'numeric', transformer: TypeormDecimalTransformer.instance })
     @IsNumber()
@@ -78,6 +77,21 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
     @IsOptional()
     public longitude?: number;
 
+    @Column({ name: 'is_urgent', nullable: true })
+    @IsBoolean()
+    @IsOptional()
+    public isUrgent?: boolean;
+
+    @Column({ name: 'activated_date', nullable: true })
+    @IsDate()
+    @IsOptional()
+    public activatedDate?: Date;
+
+    @Column({ name: 'finished_date', nullable: true })
+    @IsDate()
+    @IsOptional()
+    public finishedDate?: Date;
+
     @Exclude()
     @OneToOne(
         () => ProjectEntity,
@@ -86,19 +100,4 @@ export class ProjectPreferencesEntity implements ProjectPreferences {
     @JoinColumn({ name: 'project_id' })
     @Type(() => ProjectEntity)
     public project: ProjectEntity;
-
-    // --------------------------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    // --------------------------------------------------------------------------
-
-    public toGeo(): IGeo {
-        if (_.isNil(this.location) || _.isNil(this.latitude) || _.isNil(this.longitude)) {
-            return null;
-        }
-        return {
-            location: this.location, latitude: this.latitude, longitude: this.longitude
-        };
-    }
 }

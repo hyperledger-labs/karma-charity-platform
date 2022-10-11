@@ -1,9 +1,9 @@
 import { Controller, Get, Req, Query } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { TypeormUtil } from '@ts-core/backend/database/typeorm';
-import { FilterableConditions, FilterableSort, IPagination, Paginable } from '@ts-core/common/dto';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { TypeormUtil } from '@ts-core/backend';
+import { FilterableConditions, FilterableSort, IPagination, Paginable } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
 import { IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';

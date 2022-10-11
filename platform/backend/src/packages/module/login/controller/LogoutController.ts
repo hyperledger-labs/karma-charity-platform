@@ -1,8 +1,8 @@
 import { Controller, Post, UseGuards } from '@nestjs/common';
 import { LOGOUT_URL } from '@project/common/platform/api';
 import { Swagger } from '@project/module/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import { UserGuard } from '@project/module/guard';
 
 // --------------------------------------------------------------------------

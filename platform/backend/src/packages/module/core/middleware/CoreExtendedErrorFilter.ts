@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, HttpStatus, InternalServerErrorException } from '@nestjs/common';
-import { ExtendedErrorFilter, IExceptionFilter } from '@ts-core/backend-nestjs/middleware';
-import { ExtendedError } from '@ts-core/common/error';
-import { TransformUtil } from '@ts-core/common/util';
+import { ExtendedErrorFilter, IExceptionFilter } from '@ts-core/backend-nestjs';
+import { ExtendedError } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CoreExtendedError } from './CoreExtendedError';
 

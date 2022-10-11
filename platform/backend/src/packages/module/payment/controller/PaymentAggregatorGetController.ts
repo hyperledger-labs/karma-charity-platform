@@ -1,7 +1,7 @@
 import { Controller, Query, Req, Get, UseGuards } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { IPaymentAggregatorGetDto, IPaymentAggregatorGetDtoResponse } from '@project/common/platform/api/payment';
@@ -16,9 +16,9 @@ import { Type } from 'class-transformer';
 import { PaymentTarget, PaymentUtil } from '@project/common/platform/payment';
 import { CompanyEntity } from '@project/module/database/company';
 import { ProjectEntity } from '@project/module/database/project';
-import { UnreachableStatementError } from '@ts-core/common/error';
+import { UnreachableStatementError } from '@ts-core/common';
 import { IUserHolder } from '@project/module/database/user';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { CryptoDecryptCommand } from '@project/module/crypto/transport';
 import { CryptoKeyType } from '@project/common/platform/crypto';
 

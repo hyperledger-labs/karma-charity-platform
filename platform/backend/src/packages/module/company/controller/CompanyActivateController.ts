@@ -1,6 +1,6 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';

@@ -2,23 +2,24 @@ import { LedgerUser } from '@project/common/ledger/user';
 import { LoginResource } from '@project/common/platform/api/login';
 import { CompanyUser } from '@project/common/platform/company';
 import { ProjectUser } from '@project/common/platform/project';
-import { User, UserStatus, UserType } from '@project/common/platform/user';
+import { User, UserResource, UserStatus, UserType } from '@project/common/platform/user';
 import { UserRoleEntity } from '@project/module/database/user';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
-import { INotifable } from '@ts-core/notification';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import { Exclude, Expose, ClassTransformOptions, Type } from 'class-transformer';
 import { ValidateNested, Matches, IsDefined, IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { Column, CreateDateColumn, BeforeUpdate, BeforeInsert, JoinColumn, OneToMany, Entity, Index, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CompanyEntity } from '../company';
+import { FavoriteEntity } from '../favorite';
 import { PaymentEntity } from '../payment';
 import { ProjectEntity } from '../project/ProjectEntity';
 import { TransformGroup } from '../TransformGroup';
 import { UserCryptoKeyEntity } from './UserCryptoKeyEntity';
+import { UserHashEntity } from './UserHashEntity';
 import { UserPreferencesEntity } from './UserPreferencesEntity';
 
 @Entity({ name: 'user' })
-export class UserEntity implements User, INotifable {
+export class UserEntity implements User {
     // --------------------------------------------------------------------------
     //
     //  Properties
@@ -43,8 +44,8 @@ export class UserEntity implements User, INotifable {
 
     @Expose({ groups: [TransformGroup.PRIVATE] })
     @Column({ type: 'varchar' })
-    @IsEnum(LoginResource)
-    public resource: LoginResource;
+    @IsEnum(UserResource)
+    public resource: UserResource;
 
     @Column({ type: 'varchar' })
     @IsEnum(UserType)
@@ -60,6 +61,12 @@ export class UserEntity implements User, INotifable {
     @IsOptional()
     @Matches(LedgerUser.UID_REGXP)
     public ledgerUid?: string;
+
+    @Exclude()
+    @Column({ nullable: true })
+    @IsOptional()
+    @IsString()
+    public password?: string;
 
     @Expose({ groups: [TransformGroup.PRIVATE] })
     @CreateDateColumn({ name: 'created_date' })
@@ -117,6 +124,16 @@ export class UserEntity implements User, INotifable {
     @Exclude()
     @Type(() => UserRoleEntity)
     public userRoles?: Array<UserRoleEntity>;
+
+    @Exclude()
+    @OneToMany(() => UserHashEntity, item => item.user, { cascade: true })
+    @Type(() => UserHashEntity)
+    public hashes: Array<UserHashEntity>;
+
+    @Exclude()
+    @OneToMany(() => FavoriteEntity, item => item.user)
+    @Type(() => FavoriteEntity)
+    public favorites?: Array<FavoriteEntity>;
 
     // --------------------------------------------------------------------------
     //

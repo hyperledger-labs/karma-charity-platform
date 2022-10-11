@@ -1,11 +1,11 @@
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import * as extname from 'ext-name';
 import { Request, Express } from 'express';
 import { Inject, Injectable } from '@nestjs/common';
 import { diskStorage, memoryStorage, StorageEngine } from 'multer';
-import { RandomUtil } from '@ts-core/common/util';
-import { ExtendedError, UnreachableStatementError } from '@ts-core/common/error';
+import { RandomUtil } from '@ts-core/common';
+import { ExtendedError, UnreachableStatementError } from '@ts-core/common';
 import { MULTER_MODULE_OPTIONS } from '@nestjs/platform-express/multer/files.constants';
 import { MulterModuleOptions } from '@nestjs/platform-express';
 import { DatabaseService } from '@project/module/database/service';
@@ -45,7 +45,7 @@ export class FileService extends LoggerWrapper {
                 throw new ExtendedError('Invalid name: "originalname" is empty');
             }
 
-            let item = await database.file.findOne({ linkId, linkType, type });
+            let item = await database.file.findOneBy({ linkId, linkType, type });
             if (!_.isNil(item)) {
                 throw new ExtendedError('File already exists: remove before upload');
             }

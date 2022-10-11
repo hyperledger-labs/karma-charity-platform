@@ -1,8 +1,8 @@
 import { Controller, Param, Post, Req, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend/controller';
-import { ExtendedError } from '@ts-core/common/error';
-import { Logger } from '@ts-core/common/logger';
-import { ValidateUtil } from '@ts-core/common/util';
+import { DefaultController } from '@ts-core/backend';
+import { ExtendedError } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
+import { ValidateUtil } from '@ts-core/common';
 import { ParseIntPipe } from '@nestjs/common';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';

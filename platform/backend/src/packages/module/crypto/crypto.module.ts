@@ -1,7 +1,7 @@
 import { DatabaseModule } from '@project/module/database';
-import { Logger, ILogger } from '@ts-core/common/logger';
-import { LoggerModule } from '@ts-core/backend-nestjs/logger';
-import { TransportModule } from '@ts-core/backend-nestjs/transport';
+import { Logger, ILogger } from '@ts-core/common';
+import { LoggerModule } from '@ts-core/backend-nestjs';
+import { TransportModule } from '@ts-core/backend-nestjs';
 import { CryptoDecryptHandler } from './transport/handler/CryptoDecryptHandler';
 import { CryptoEncryptHandler } from './transport/handler/CryptoEncryptHandler';
 import { CryptoLedgerSignHandler } from './transport/handler/CryptoLedgerSignHandler';

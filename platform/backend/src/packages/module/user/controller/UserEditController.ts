@@ -1,14 +1,14 @@
 import { Body, Controller, Param, Put, Req, UseGuards, ParseIntPipe } from '@nestjs/common';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { UserGuard } from '@project/module/guard';
 import { IUserHolder } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { ObjectUtil, ValidateUtil } from '@ts-core/common/util';
+import { ObjectUtil, ValidateUtil } from '@ts-core/common';
 import { IUserEditDto, IUserEditDtoResponse } from '@project/common/platform/api/user';
 import { User, UserPreferences, UserStatus, UserType } from '@project/common/platform/user';
 import { RequestInvalidError } from '@project/module/core/middleware';

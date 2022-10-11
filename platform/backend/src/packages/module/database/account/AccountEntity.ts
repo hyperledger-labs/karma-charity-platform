@@ -1,4 +1,4 @@
-import { ValidateUtil } from '@ts-core/common/util';
+import { ValidateUtil } from '@ts-core/common';
 import { Exclude, Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsString, IsOptional, ValidateNested } from 'class-validator';
 import { CreateDateColumn, JoinColumn, BeforeInsert, BeforeUpdate, ManyToOne, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';

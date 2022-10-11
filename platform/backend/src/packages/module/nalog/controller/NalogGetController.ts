@@ -1,6 +1,6 @@
 import { Controller, Param, Get, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Swagger } from '@project/module/swagger';
 import { NALOG_SERACH_URL } from '@project/common/platform/api';

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { UserEntity, UserRoleEntity } from '@project/module/database/user';
@@ -14,18 +14,19 @@ import { PaymentAggregatorType } from '@project/common/platform/payment/aggregat
 import { CompanyAddCommand, CompanyUserIsInCommand, CompanyUserAddCommand, CompanyUserRemoveCommand, CompanyUserRoleListCommand, CompanyUserEditCommand } from '@project/common/transport/command/company';
 import { CompanyPaymentAggregatorEntity } from '@project/module/database/company/CompanyPaymentAggregatorEntity';
 import { LedgerCompanyRole, LedgerProjectRole } from '@project/common/ledger/role';
-import { RandomUtil, ValidateUtil } from '@ts-core/common/util';
-import { ExtendedError } from '@ts-core/common/error';
+import { RandomUtil, ValidateUtil } from '@ts-core/common';
+import { ExtendedError } from '@ts-core/common';
 import { UserGuard } from '@project/module/guard';
 import { ProjectEntity } from '@project/module/database/project';
 import { ProjectAddCommand, ProjectUserAddCommand, ProjectUserEditCommand, ProjectUserIsInCommand, ProjectUserRemoveCommand } from '@project/common/transport/command/project';
 import { PROJECT_ACTIVATE_ROLE, PROJECT_ACTIVATE_STATUS } from '@project/common/platform/project';
 import { PaymentEntity, PaymentTransactionEntity } from '@project/module/database/payment';
 import { CoinEmitCommand, CoinObjectType, ICoinEmitDto } from '@project/common/transport/command/coin';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { CryptoKeyType } from '@project/common/platform/crypto';
-import { Ed25519 } from '@ts-core/common/crypto';
+import { Ed25519 } from '@ts-core/common';
 import { CryptoEncryptCommand } from '@project/module/crypto/transport';
+import { LedgerCompany } from '@project/common/ledger/company';
 
 @Injectable()
 export class LedgerService extends LoggerWrapper {
@@ -35,8 +36,8 @@ export class LedgerService extends LoggerWrapper {
     //
     // --------------------------------------------------------------------------
 
-    public static USER_ROOT_LOGIN = LoginService.createLogin('111452810894131754642', LoginResource.GOOGLE);
     public static USER_ROOT_LEDGER_UID = LedgerUser.createRoot().uid;
+    public static COMPANY_ROOT_LEDGER_UID = LedgerCompany.createRoot().uid;
 
     // --------------------------------------------------------------------------
     //
@@ -159,9 +160,18 @@ export class LedgerService extends LoggerWrapper {
 
         let preferences = item.preferences = new CompanyPreferencesEntity();
         preferences.name = type;
-        preferences.title = preferences.description = preferences.nameShort = preferences.ceo = preferences.inn = preferences.kpp = preferences.ogrn = preferences.address = `${type}_${RandomUtil.randomString()}`;
+        preferences.title = preferences.description = preferences.nameShort = preferences.ceo = preferences.inn = preferences.kpp = preferences.ogrn = preferences.address = type;
         preferences.founded = new Date();
-        preferences.picture = 'https://picsum.photos/200';
+
+        let picture = null;
+        switch (type) {
+            case PaymentAggregatorType.CLOUD_PAYMENTS:
+                picture = "https://upload.wikimedia.org/wikipedia/commons/3/39/Cloudpayments-logo.png"
+                break;
+            default:
+                picture = 'https://picsum.photos/200';
+        }
+        preferences.picture = picture;
 
         item.paymentAggregator = new CompanyPaymentAggregatorEntity({ uid: type, type });
         item.paymentAggregator.key = await this.transport.sendListen(new CryptoEncryptCommand({ type: CryptoKeyType.DATABASE, value: Ed25519.keys().privateKey }));
@@ -237,7 +247,7 @@ export class LedgerService extends LoggerWrapper {
     }
 
     public async userRootGet(): Promise<UserEntity> {
-        return this.database.user.findOne({ login: LedgerService.USER_ROOT_LOGIN });
+        return this.database.user.findOneBy({ ledgerUid: LedgerService.USER_ROOT_LEDGER_UID } as any);
     }
 
     public async userRootLegerGet(): Promise<LedgerUser> {

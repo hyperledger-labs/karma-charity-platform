@@ -1,9 +1,10 @@
-import { IDatabaseSettings, IWebSettings, EnvSettingsStorage } from '@ts-core/backend/settings';
-import { ILogger, LoggerLevel } from '@ts-core/common/logger';
+import { IDatabaseSettings, IWebSettings, EnvSettingsStorage } from '@ts-core/backend';
+import { ILogger, LoggerLevel } from '@ts-core/common';
 import { ICryptoSettings } from '@project/module/crypto/service';
 import { IGoogleSiteStrategySettings } from '@project/module/login/strategy';
+import { IVkSiteStrategySettings } from '@project/module/login/strategy';
 
-export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, IGoogleSiteStrategySettings ,IWebSettings, IDatabaseSettings {
+export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, IGoogleSiteStrategySettings, IVkSiteStrategySettings, IWebSettings, IDatabaseSettings {
     // --------------------------------------------------------------------------
     //
     //  Public Properties
@@ -115,6 +116,16 @@ export class AppSettings extends EnvSettingsStorage implements ICryptoSettings, 
 
     public get googleSiteRedirectUri(): string {
         return this.getValue('GOOGLE_SITE_REDIRECT_URI');
+    }
+
+    // --------------------------------------------------------------------------
+    //
+    //  Vk Properties
+    //
+    // --------------------------------------------------------------------------
+
+    public get vkSiteSecret(): string {
+        return this.getValue('VK_SITE_SECRET');
     }
 
     // --------------------------------------------------------------------------

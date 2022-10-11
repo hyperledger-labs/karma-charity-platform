@@ -9,3 +9,4 @@ export * from './CompanyToVerifyController';
 export * from './CompanyUserListController';
 export * from './CompanyUserRoleGetController';
 export * from './CompanyUserRoleSetController';
+export * from './CompanyPublicListController';

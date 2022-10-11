@@ -1,5 +1,5 @@
 
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ErrorCode } from '@project/common/platform/api';
 

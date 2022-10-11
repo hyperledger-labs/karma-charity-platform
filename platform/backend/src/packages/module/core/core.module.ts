@@ -1,11 +1,10 @@
-import { ILogger, Logger } from '@ts-core/common/logger';
-import { Transport } from '@ts-core/common/transport';
+import { ILogger, Logger } from '@ts-core/common';
+import { Transport } from '@ts-core/common';
 import { DynamicModule } from '@nestjs/common';
-import { LedgerApiClient } from '@hlf-explorer/common/api';
-import { LoggerModule } from '@ts-core/backend-nestjs/logger';
+import { LedgerApiClient } from '@hlf-explorer/common';
+import { LoggerModule } from '@ts-core/backend-nestjs';
 import { LedgerApiClient as CommonLedgerApiClient } from './service';
-import { TransportModule } from '@ts-core/backend-nestjs/transport';
-
+import { TransportModule } from '@ts-core/backend-nestjs';
 
 export class CoreModule {
     // --------------------------------------------------------------------------

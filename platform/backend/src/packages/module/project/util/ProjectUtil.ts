@@ -3,7 +3,7 @@ import { AccountType } from "@project/common/platform/account";
 import { IProjectBalance } from "@project/common/platform/project";
 import { AccountEntity } from "@project/module/database/account";
 import { ProjectEntity } from "@project/module/database/project";
-import { MathUtil } from "@ts-core/common/util";
+import { MathUtil } from "@ts-core/common";
 import * as _ from 'lodash';
 
 export class ProjectUtil {

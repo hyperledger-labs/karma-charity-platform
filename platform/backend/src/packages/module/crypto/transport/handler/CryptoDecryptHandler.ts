@@ -1,6 +1,6 @@
-import { Logger } from '@ts-core/common/logger';
+import { Logger } from '@ts-core/common';
 import { Injectable } from '@nestjs/common';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CryptoDecryptCommand, ICryptoDecryptDto } from '../CryptoDecryptCommand';
 import { CryptoService } from '../../service';
