@@ -60,7 +60,7 @@ export let PROJECT_USER_ROLE_GET_ROLE = [LedgerProjectRole.PROJECT_MANAGER, Ledg
 export let PROJECT_USER_ROLE_SET_ROLE = [LedgerProjectRole.PROJECT_MANAGER, LedgerProjectRole.USER_MANAGER];
 
 export let PROJECT_REPORT_SUBMIT_TYPE = [UserType.COMPANY_MANAGER, UserType.COMPANY_WORKER];
-export let PROJECT_REPORT_SUBMIT_ROLE = [LedgerProjectRole.PROJECT_MANAGER];
+export let PROJECT_REPORT_SUBMIT_ROLE = [LedgerProjectRole.PROJECT_MANAGER, LedgerProjectRole.COIN_MANAGER];
 export let PROJECT_REPORT_SUBMIT_STATUS = [ProjectStatus.COLLECTED];
 
 

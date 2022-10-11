@@ -9,7 +9,7 @@
         "format": "prettier --list-different \"{src}/**/*.{ts,js,json}\"",
         "format:fix": "prettier --write \"{src}/**/*.{ts,js,json}\" --loglevel warn"
     },
-    "dependencies": {
+    "peerDependencies": {
         "@ts-core/common": "^3.0.7"
     }
 }

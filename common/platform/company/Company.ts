@@ -8,6 +8,7 @@ export class Company {
     id: number;
     status: CompanyStatus;
     balance: Accounts;
+    projectsCount: number;
 
     ledgerUid?: string;
 

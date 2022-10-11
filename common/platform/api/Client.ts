@@ -3,7 +3,7 @@ import { ILogger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ITraceable, TraceUtil } from '@ts-core/common';
 import { TransformUtil } from '@ts-core/common';
-import { IInitDto, IInitDtoResponse, ILoginDto, ILoginDtoResponse } from './login';
+import { IInitDto, IInitDtoResponse, ILoginDto, ILoginDtoResponse, IPasswordChangeDto, IPasswordResetDto, IPasswordResetDtoResponse, IRegisterDto } from './login';
 import { User, UserCompany, UserProject } from '../user';
 import { IUserListDto, IUserListDtoResponse, IUserFindDtoResponse, IUserGetDtoResponse, IUserEditDto, IUserEditDtoResponse, IUserTypeDto, IUserTypeDtoResponse } from '../api/user';
 import { IGeo } from '../geo';
@@ -12,13 +12,16 @@ import { IFileBase64UploadDto, IFileListDto, IFileListDtoResponse, IFileRemoveDt
 import { IPaymentAggregatorGetDto, IPaymentAggregatorGetDtoResponse, IPaymentGetDtoResponse, IPaymentListDto, IPaymentListDtoResponse, IPaymentPublicListDto, IPaymentPublicListDtoResponse, IPaymentTransactionListDto, IPaymentTransactionListDtoResponse } from './payment';
 import { INalogSearchDtoResponse, INalogObject } from './nalog';
 import { ICompanyAddDto, ICompanyActivateDtoResponse, ICompanyAddDtoResponse, ICompanyListDto, ICompanyListDtoResponse, ICompanyRejectDtoResponse, ICompanyToVerifyDtoResponse, ICompanyVerifyDtoResponse, ICompanyGetDtoResponse, ICompanyUserListDtoResponse, ICompanyUserListDto, ICompanyUserRoleGetDtoResponse, ICompanyUserRoleSetDtoResponse, ICompanyUserRoleSetDto, ICompanyEditDtoResponse, ICompanyEditDto, ICompanyPublicListDtoResponse, ICompanyPublicListDto } from './company';
-import { IProjectAddDto, IProjectActivateDtoResponse, IProjectAddDtoResponse, IProjectListDto, IProjectListDtoResponse, IProjectRejectDtoResponse, IProjectToVerifyDtoResponse, IProjectVerifyDtoResponse, IProjectGetDtoResponse, IProjectUserListDtoResponse, IProjectUserListDto, IProjectUserRoleGetDtoResponse, IProjectUserRoleSetDtoResponse, IProjectUserRoleSetDto, IProjectReportSubmitDtoResponse, IProjectEditDtoResponse, IProjectEditDto, IProjectPublicListDto, IProjectPublicListDtoResponse } from './project';
+import { IProjectAddDto, IProjectActivateDtoResponse, IProjectAddDtoResponse, IProjectListDto, IProjectListDtoResponse, IProjectRejectDtoResponse, IProjectToVerifyDtoResponse, IProjectVerifyDtoResponse, IProjectGetDtoResponse, IProjectUserListDtoResponse, IProjectUserListDto, IProjectUserRoleGetDtoResponse, IProjectUserRoleSetDtoResponse, IProjectUserRoleSetDto, IProjectReportSubmitDtoResponse, IProjectEditDtoResponse, IProjectEditDto, IProjectPublicListDto, IProjectPublicListDtoResponse, IProjectTagListDto, IProjectTagListDtoResponse, IProjectCityListDto, IProjectCityListDtoResponse } from './project';
 import { Company, CompanyUser } from '../company';
 import { Project, ProjectUser } from '../project';
 import { LedgerCompanyRole, LedgerProjectRole } from '../../ledger/role';
 import { Payment, PaymentTransaction } from '../payment';
 import { PaymentTarget } from '../payment';
 import { ILedgerObjectDetails } from './ILedgerObjectDetails';
+import { IFavoriteAddDto, IFavoriteListDto, IFavoriteListDtoResponse, IFavoriteRemoveDto } from './favorite';
+import { Favorite } from '../favorite';
+import { IStatisticsTagDto, IStatisticsTagDtoResponse } from './statistics';
 
 export class Client extends TransportHttp<ITransportHttpSettings> {
     // --------------------------------------------------------------------------
@@ -41,6 +44,22 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return this.call<ILoginDtoResponse, ILoginDto>(LOGIN_URL, { data: TraceUtil.addIfNeed(data), method: 'post' });
     }
 
+    public async register(data: IRegisterDto): Promise<ILoginDtoResponse> {
+        return this.call<ILoginDtoResponse, IRegisterDto>(REGISTER_URL, { data: TraceUtil.addIfNeed(data), method: 'post' });
+    }
+
+    public async passwordReset(data: IPasswordResetDto): Promise<IPasswordResetDtoResponse> {
+        return this.call<IPasswordResetDtoResponse, IPasswordResetDto>(PASSWORD_FORGOT_URL, { data: TraceUtil.addIfNeed(data), method: 'post' });
+    }
+
+    public async passwordChange(data: IPasswordChangeDto): Promise<void> {
+        await this.call<void, IPasswordChangeDto>(PASSWORD_CHANGE_URL, { data: TraceUtil.addIfNeed(data), method: 'post' });
+    }
+
+    public async logout(traceId?: string): Promise<void> {
+        return this.call<void, ITraceable>(LOGOUT_URL, { data: TraceUtil.addIfNeed({ traceId }), method: 'post', isHandleError: false });
+    }
+
     public async init(data?: IInitDto): Promise<IInitDtoResponse> {
         let item = await this.call<IInitDtoResponse, IInitDto>(INIT_URL, { data: TraceUtil.addIfNeed(data) });
         item.user = TransformUtil.toClass(User, item.user);
@@ -48,8 +67,8 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return item;
     }
 
-    public async logout(traceId?: string): Promise<void> {
-        return this.call<void, ITraceable>(LOGOUT_URL, { data: TraceUtil.addIfNeed({ traceId }), method: 'post' });
+    public async deactivate(): Promise<void> {
+        await this.call<void>(DEACTIVATE_URL, { method: 'post' });
     }
 
     // --------------------------------------------------------------------------
@@ -58,6 +77,14 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
     //
     // --------------------------------------------------------------------------
 
+    public async statistics(): Promise<void> {
+        return this.call<void, void>(STATISTICS_URL);
+    }
+
+    public async statisticsTag(data: IStatisticsTagDto): Promise<IStatisticsTagDtoResponse> {
+        return this.call<IStatisticsTagDtoResponse, IStatisticsTagDto>(STATISTICS_TAG_URL, { data: TraceUtil.addIfNeed(data) });
+    }
+
     public async geo(): Promise<IGeo> {
         return this.call<IGeo, void>(GEO_URL, { isHandleError: false });
     }
@@ -65,6 +92,10 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
     public async nalogSearch(value: string | number): Promise<INalogSearchDtoResponse> {
         let item = await this.call<INalogSearchDtoResponse>(`${NALOG_SERACH_URL}/${value}`);
         return TransformUtil.toClassMany(INalogObject, item);
+    }
+
+    public async autocompleteCity(value: string): Promise<Array<string>> {
+        return this.call<Array<string>>(`${AUTOCOMPLETE_CITY_URL}/${value}`);
     }
 
     // --------------------------------------------------------------------------
@@ -204,7 +235,7 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
 
     public async companyListPublic(data?: ICompanyPublicListDto): Promise<ICompanyPublicListDtoResponse> {
         let item = await this.call<ICompanyPublicListDtoResponse, ICompanyPublicListDto>(COMPANY_PUBLIC_URL, { data: TraceUtil.addIfNeed(data) });
-        item.items = TransformUtil.toClassMany(Company, item.items);
+        item.items = TransformUtil.toClassMany(UserCompany, item.items);
         return item;
     }
 
@@ -284,8 +315,16 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
 
     public async projectListPublic(data?: IProjectPublicListDto): Promise<IProjectPublicListDtoResponse> {
         let item = await this.call<IProjectPublicListDtoResponse, IProjectPublicListDto>(PROJECT_PUBLIC_URL, { data: TraceUtil.addIfNeed(data) });
-        item.items = TransformUtil.toClassMany(Project, item.items);
+        item.items = TransformUtil.toClassMany(UserProject, item.items);
         return item;
+    }
+
+    public async projectTagList(data: IProjectTagListDto): Promise<IProjectTagListDtoResponse> {
+        return this.call<IProjectTagListDtoResponse, IProjectTagListDto>(PROJECT_TAG_URL, { data: TraceUtil.addIfNeed(data) });
+    }
+
+    public async projectCityList(data: IProjectCityListDto): Promise<IProjectCityListDtoResponse> {
+        return this.call<IProjectCityListDtoResponse, IProjectCityListDto>(PROJECT_CITY_URL, { data: TraceUtil.addIfNeed(data) });
     }
 
     // --------------------------------------------------------------------------
@@ -321,6 +360,27 @@ export class Client extends TransportHttp<ITransportHttpSettings> {
         return this.call<ILedgerObjectDetails>(LEDGER_OBJECT_DETAILS_URL, { data: { uid: getUid(uid) } });
     }
 
+    // --------------------------------------------------------------------------
+    //
+    //  Favorite Methods
+    //
+    // --------------------------------------------------------------------------
+
+    public async favoriteAdd(data: IFavoriteAddDto): Promise<void> {
+        await this.call<void, IFavoriteAddDto>(FAVORITE_URL, { method: 'post', data });
+    }
+
+    public async favoriteRemove(data: IFavoriteRemoveDto): Promise<void> {
+        await this.call<void, IFavoriteRemoveDto>(FAVORITE_URL, { method: 'delete', data });
+    }
+
+    public async favoriteList(data?: IFavoriteListDto): Promise<IFavoriteListDtoResponse> {
+        let item = await this.call<IFavoriteListDtoResponse, IFavoriteListDto>(`${FAVORITE_URL}`, { data: TraceUtil.addIfNeed(data) });
+        item.items = TransformUtil.toClassMany(Favorite, item.items);
+        return item;
+    }
+
+
     //--------------------------------------------------------------------------
     //
     // 	Public Properties
@@ -349,12 +409,22 @@ export const COMPANY_TO_VERIFY_URL = COMPANY_URL + '/toVerify';
 export const FILE_URL = PREFIX + 'file';
 export const FILE_BASE64_URL = PREFIX + 'fileBase64';
 export const FILE_TEMPORARY_IMAGE_URL = PREFIX + 'fileImageTemporary';
+
+export const FAVORITE_URL = PREFIX + 'favorite';
+
 export const PROJECT_URL = PREFIX + 'project';
+export const PROJECT_TAG_URL = PREFIX + 'projectTag';
+export const PROJECT_CITY_URL = PREFIX + 'projectCity';
 export const PROJECT_PUBLIC_URL = PREFIX + 'projectPublic';
 
 export const INIT_URL = PREFIX + 'init';
 export const LOGIN_URL = PREFIX + 'login';
 export const LOGOUT_URL = PREFIX + 'logout';
+export const REGISTER_URL = PREFIX + 'register';
+export const DEACTIVATE_URL = PREFIX + 'deactivate';
+export const PASSWORD_RESET_URL = PREFIX + 'passwordReset';
+export const PASSWORD_FORGOT_URL = PREFIX + 'passwordForgot';
+export const PASSWORD_CHANGE_URL = PREFIX + 'passwordChange';
 
 export const PAYMENT_URL = PREFIX + 'payment';
 export const PAYMENT_PUBLIC_URL = PREFIX + 'paymentPublic';
@@ -365,7 +435,9 @@ export const PAYMENT_AGGREGATOR_URL = PREFIX + `payment-aggregator`;
 export const PAYMENT_AGGREGATOR_CLOUD_PAYMENTS_PAY_CALLBACK = `${PAYMENT_AGGREGATOR_URL}/cloudpayments/callback/pay`
 
 export const NALOG_SERACH_URL = PREFIX + 'nalog';
+export const AUTOCOMPLETE_CITY_URL = PREFIX + 'autocomplete/city';
 export const STATISTICS_URL = PREFIX + 'statistics';
+export const STATISTICS_TAG_URL = PREFIX + 'statisticsTag';
 export const LEDGER_OBJECT_DETAILS_URL = PREFIX + 'ledgerObjectDetails';
 
 export const USER_PICTURE_UPLOAD_URL = PREFIX + 'user/picture/upload';
