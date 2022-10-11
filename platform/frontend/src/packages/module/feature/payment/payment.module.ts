@@ -3,7 +3,7 @@ import { NgModule, NgModuleRef } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { TransportLazyModule } from '@ts-core/angular';
 import { PaymentWidgetOpenHandler, PaymentOpenHandler } from './service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { PaymentWidgetOpenCommand, PaymentOpenCommand } from './transport';
 import { PaymentContainerComponent, PaymentWidgetContainer, PaymentTransactionsComponent, PaymentDetailsComponent, PaymentListComponent } from './component';
 import { FormsModule } from '@angular/forms';

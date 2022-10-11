@@ -1,5 +1,5 @@
 import { Company } from '@project/common/platform/company';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class CompanyVerifyCommand extends TransportCommandAsync<ICompanyVerifyDto, ICompanyVerifyDtoResponse> {
     // --------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 import { Base64Source } from '@feature/file/lib/base64';
 
 export class ImageCropCommand extends TransportCommandAsync<IImageCropDto, IImageCropDtoResponse> {

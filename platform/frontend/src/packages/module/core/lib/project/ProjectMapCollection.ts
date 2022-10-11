@@ -1,11 +1,11 @@
 import { Project } from '@common/platform/project';
 import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings } from '@ts-core/angular';
-import { IPagination } from '@ts-core/common/dto';
+import { IPagination } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
 import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { UserProject } from '@project/common/platform/user';
 import { ProjectStatus } from '@project/common/platform/project';
 
@@ -97,7 +97,6 @@ export class ProjectTableSettings implements ICdkTableSettings<UserProject> {
         this.columns.push({
             name: 'status',
             headerId: 'project.status.status',
-            isDisableSort: true,
             className: item => {
                 switch (item.status) {
                     case ProjectStatus.VERIFICATION_PROCESS:
@@ -128,7 +127,6 @@ export class ProjectTableSettings implements ICdkTableSettings<UserProject> {
         this.columns.push({
             name: 'createdDate',
             headerId: 'user.createdDate',
-            isDisableSort: true,
             format: item => pipe.momentDate.transform(item.createdDate)
         });
     }

@@ -5,9 +5,9 @@
             <mat-placeholder [vi-translate]="'user.preferences.name'"></mat-placeholder>
             <span
                 class="fab"
-                [ngClass]="{ 'fa-google': user?.resource === 'GOOGLE', 'fa-vk': user?.resource === 'VK', 'fa-facebook': user?.resource === 'FACEBOOK' }"
+                [ngClass]="{ 'fa-google': user?.resource === 'GOOGLE', 'fa-vk': user?.resource === 'VK'}"
                 matSuffix
-                [matTooltip]="'login.resource.' + user?.resource | viTranslate"
+                [matTooltip]="'user.resource.' + user?.resource | viTranslate"
             ></span>
         </mat-form-field>
     </div>
@@ -51,6 +51,24 @@
             />
             <mat-placeholder [vi-translate]="'user.preferences.projectCancelStrategy.projectCancelStrategy'"></mat-placeholder>
         </mat-form-field>
+    </div>
+
+    <div class="col-12 mb-3">
+        <mat-checkbox [(ngModel)]="user?.preferences.isNeedPlatformNews" disabled>
+            <span [vi-translate]="'user.preferences.isNeedPlatformNews'"></span>
+        </mat-checkbox>
+    </div>
+
+    <div class="col-12 mb-3">
+        <mat-checkbox [(ngModel)]="user?.preferences.isNeedPlatformNotifications" disabled>
+            <span [vi-translate]="'user.preferences.isNeedPlatformNotifications'"></span>
+        </mat-checkbox>
+    </div>
+
+    <div class="col-12 mb-3">
+        <mat-checkbox [(ngModel)]="user?.preferences.isNeedFavoritesNotifications" disabled>
+            <span [vi-translate]="'user.preferences.isNeedFavoritesNotifications'"></span>
+        </mat-checkbox>
     </div>
     <div class="col-12">
         <mat-form-field class="d-block">

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
 import { Payment, PaymentTransaction } from '@project/common/platform/payment';
-import { IPagination } from '@ts-core/common/dto';
+import { IPagination } from '@ts-core/common';
 import { Client } from '@project/common/platform/api';
 
 @Injectable()

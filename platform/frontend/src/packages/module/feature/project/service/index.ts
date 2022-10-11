@@ -11,3 +11,4 @@ export * from './ProjectToVerifyHandler';
 export * from './ProjectActivateHandler';
 export * from './ProjectPurposeAddHandler';
 export * from './ProjectUserRoleEditHandler';
+export * from './ProjectReportSubmitHandler';

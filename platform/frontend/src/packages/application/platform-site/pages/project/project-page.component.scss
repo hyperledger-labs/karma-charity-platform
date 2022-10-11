@@ -1,0 +1,12 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins/breakpoints';
+
+.picture {
+    max-height: 600px;
+}
+
+.picture-company {
+    width: 55px;
+    height: 55px;
+}

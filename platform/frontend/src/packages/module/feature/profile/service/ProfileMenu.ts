@@ -1,10 +1,10 @@
-import { WindowService } from '@ts-core/angular';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LoginBaseService, WindowService } from '@ts-core/angular';
+import { LanguageService } from '@ts-core/frontend';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { ListItems, IListItem, ListItem } from '@ts-core/angular';
 import { LoginService, UserService } from '@core/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { LoginOpenCommand } from '@feature/login/transport';
 import { merge } from 'rxjs';
 import { takeUntil } from 'rxjs';
@@ -33,7 +33,7 @@ export class ProfileMenu extends ListItems<IListItem<void>> {
         transport: Transport,
         windows: WindowService,
         user: UserService,
-        login: LoginService,
+        login: LoginBaseService,
     ) {
         super(language, true);
 

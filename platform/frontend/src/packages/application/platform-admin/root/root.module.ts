@@ -1,12 +1,12 @@
 import { ApplicationRef, Injector, NgModule } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { APPLICATION_INJECTOR } from '@ts-core/angular';
-import { CoreModule } from '@core/core.module';
+import { CoreModule } from '../core.module';
 import { RootComponent } from './root.component';
 import { RootRoutingModule } from './root.routing.module';
 import { MatButtonModule } from '@angular/material/button';
-import { LanguageService } from '@ts-core/frontend/language';
-import { LanguageFileLoader } from '@ts-core/language/loader';
+import { LanguageService } from '@ts-core/frontend';
+import { LanguageFileLoader } from '@ts-core/language';
 import { CommonModule } from '@angular/common';
 import { PaymentModule } from '@feature/payment';
 

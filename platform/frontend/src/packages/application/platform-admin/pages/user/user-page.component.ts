@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import { MenuTriggerForDirective, ViewUtil } from '@ts-core/angular';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { UserService } from '@core/service';
 import * as _ from 'lodash';
 import { User } from '@project/common/platform/user';

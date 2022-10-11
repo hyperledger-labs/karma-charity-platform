@@ -1,5 +1,5 @@
 
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 
 export class PaymentOpenCommand extends TransportCommand<number> {
     // --------------------------------------------------------------------------

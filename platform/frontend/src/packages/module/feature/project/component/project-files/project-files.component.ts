@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { ProjectUser } from '@project/common/platform/project/ProjectUser';
 import { PipeService, UserService } from '@core/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Project, ProjectFileAllowExtensions, ProjectFileType } from '@project/common/platform/project';
 import { FileMapCollection, FileTableSettings } from '@core/lib/file';
 import { File, FileLinkType } from '@project/common/platform/file';

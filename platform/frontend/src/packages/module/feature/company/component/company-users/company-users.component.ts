@@ -7,7 +7,7 @@ import { CompanyUser } from '@project/common/platform/company/CompanyUser';
 import { PipeService, UserService } from '@core/service';
 import { CompanyUserMenu } from '../../service';
 import { UserOpenCommand } from '@feature/user/transport';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Company, CompanyUtil } from '@project/common/platform/company';
 import { UserCompany } from '@project/common/platform/user';
 import { PermissionUtil } from '@project/common/util';

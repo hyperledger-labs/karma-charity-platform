@@ -3,7 +3,7 @@ import { NgModule, NgModuleRef } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { MatButtonModule } from '@angular/material/button';
 import { TransportLazyModule } from '@ts-core/angular';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { GoExternalLoginHandler, GoExternalLogoutHandler } from './service';
 import { GoExternalLoginCommand, GoExternalLogoutCommand } from './transport';
 

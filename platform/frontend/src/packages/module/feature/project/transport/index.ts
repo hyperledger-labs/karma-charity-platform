@@ -6,5 +6,6 @@ export * from './ProjectRejectCommand';
 export * from './ProjectActivateCommand';
 export * from './ProjectUserAddCommand';
 export * from './ProjectToVerifyCommand';
+export * from './ProjectReportSubmitCommand';
 export * from './ProjectPurposeAddCommand';
 export * from './ProjectUserRoleEditCommand';

@@ -9,6 +9,7 @@ import { CompanyBaseComponent } from '../CompanyBaseComponent';
 import { UserCompany } from '@project/common/platform/user';
 import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import Editor from '@feature/ckeditor/script/ckeditor.js';
+import { Client } from '@project/common/platform/api';
 
 @Component({
     selector: 'company-edit',
@@ -35,6 +36,8 @@ export class CompanyEditComponent extends CompanyBaseComponent implements ISeria
     public descriptionEditor: any;
     public paymentAggregatorTypes: SelectListItems<SelectListItem<PaymentAggregatorType>>;
 
+    public cities: Array<string>;
+
     //--------------------------------------------------------------------------
     //
     // 	Constructor
@@ -44,6 +47,7 @@ export class CompanyEditComponent extends CompanyBaseComponent implements ISeria
     constructor(
         container: ViewContainerRef,
         pipe: PipeService,
+        private api: Client,
         private user: UserService,
         private windows: WindowService,
         public ckeditor: CkeditorService,
@@ -81,6 +85,16 @@ export class CompanyEditComponent extends CompanyBaseComponent implements ISeria
 
     //--------------------------------------------------------------------------
     //
+    //  Event Handlers
+    //
+    //--------------------------------------------------------------------------
+
+    public async cityChanged(value: string): Promise<void> {
+        this.cities = !_.isEmpty(value) ? await this.api.autocompleteCity(value) : [];
+    }
+
+    //--------------------------------------------------------------------------
+    //
     //  Public Methods
     //
     //--------------------------------------------------------------------------
@@ -88,15 +102,6 @@ export class CompanyEditComponent extends CompanyBaseComponent implements ISeria
     public async submit(): Promise<void> {
         await this.windows.question('company.action.save.confirmation').yesNotPromise;
         this.emit(CompanyEditComponent.EVENT_SUBMITTED);
-    }
-
-    public async geoSelect(): Promise<void> {
-        /*
-        let item = await this.transport.sendListen(new GeoSelectCommand(this.company.preferences.toGeo()), { timeout: DateUtil.MILISECONDS_DAY });
-        this.location = item.location;
-        this.latitude = item.latitude;
-        this.longitude = item.longitude;
-        */
     }
 
     public serialize(): ICompanyEditDto {

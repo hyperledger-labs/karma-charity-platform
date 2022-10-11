@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { IWindowContent, NotificationService, ViewUtil, WindowService } from '@ts-core/angular';
+import { IWindowContent, LoginBaseService, NotificationService, ViewUtil, WindowService } from '@ts-core/angular';
 import { ISerializable, LoadableEvent } from '@ts-core/common';
-import { ObservableData } from '@ts-core/common/observer';
+import { ObservableData } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Uploader, IFileAddingError, IFileError, UploaderEvent, UploaderEventData } from '../../lib';
 import { takeUntil } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class FileUploadContainerComponent extends IWindowContent implements ISer
         private windows: WindowService,
         private settings: SettingsService,
         private notifications: NotificationService,
-        private login: LoginService
+        private login: LoginBaseService
     ) {
         super(element);
         ViewUtil.addClasses(element.element, 'd-flex flex-column');

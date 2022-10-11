@@ -5,7 +5,7 @@ import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { ProjectPurposeMapCollection, ProjectPurposeTableSettings } from '@core/lib/project';
 import { ProjectUser } from '@project/common/platform/project';
 import { PipeService, UserService } from '@core/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Project, ProjectPurpose } from '@project/common/platform/project';
 import { ProjectPurposeAddCommand } from '../../transport';
 import { UserProject } from '@project/common/platform/user';

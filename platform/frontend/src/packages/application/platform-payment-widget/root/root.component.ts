@@ -1,20 +1,22 @@
 import { AfterViewInit, Component, ElementRef, Renderer2 } from '@angular/core';
-import { NativeWindowService } from '@ts-core/frontend/service';
+import { NativeWindowService } from '@ts-core/frontend';
 import * as _ from 'lodash';
+
 import { Client } from '@common/platform/api';
-import { ExtendedError } from '@ts-core/common/error';
-import { Transport } from '@ts-core/common/transport';
-import { DefaultLogger } from '@ts-core/frontend/logger';
+import { ExtendedError } from '@ts-core/common';
+import { Transport } from '@ts-core/common';
+import { DefaultLogger } from '@ts-core/frontend';
 import { PaymentWidgetDetails, PaymentAggregatorData, PaymentUtil } from '@project/common/platform/payment';
 import { SettingsService } from '@core/service/SettingsService';
-import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { ObjectUtil, TransformUtil, ValidateUtil } from '@ts-core/common';
 import { PaymentWidgetOpenCommand } from '@feature/payment/transport/PaymentWidgetOpenCommand';
 import { IPaymentAggregatorGetDtoResponse } from '@project/common/platform/api/payment';
 import { CoinObjectType } from '@project/common/transport/command/coin';
-import { Logger, LoggerLevel, LoggerWrapper } from '@ts-core/common/logger';
-import { TransportLocal } from '@ts-core/common/transport/local';
+import { Logger, LoggerLevel, LoggerWrapper } from '@ts-core/common';
+import { TransportLocal } from '@ts-core/common';
 import { PaymentService } from '@feature/payment/service/PaymentService';
 import { PaymentWidgetOpenHandler } from '@feature/payment/service/PaymentWidgetOpenHandler';
+import { DOCUMENT } from '@angular/common';
 
 //--------------------------------------------------------------------------
 //
@@ -23,27 +25,27 @@ import { PaymentWidgetOpenHandler } from '@feature/payment/service/PaymentWidget
 //--------------------------------------------------------------------------
 
 function transportFactory(logger: Logger): Transport {
-    let item = new TransportLocal(logger);
-    return item;
+    return new TransportLocal(logger);
+}
+function nativeWindowFactory(document: Document): NativeWindowService {
+    return new NativeWindowService(document);
 }
 function loggerFactory(): Logger {
-    let item = new DefaultLogger(LoggerLevel.NONE);
-    return item;
+    return new DefaultLogger(LoggerLevel.NONE);
 }
 function clientFactory(logger: Logger): Client {
-    let item = new Client(logger);
-    return item;
+    return new Client(logger);
 }
 
 @Component({
     selector: 'root',
-    template: '',
+    template: 'Hello1',
     providers: [
         SettingsService,
-        NativeWindowService,
         { provide: Logger, useFactory: loggerFactory },
         { provide: Client, useFactory: clientFactory, deps: [Logger], },
         { provide: Transport, useFactory: transportFactory, deps: [Logger], },
+        { provide: NativeWindowService, useFactory: nativeWindowFactory, deps: [DOCUMENT] },
     ]
 })
 export class RootComponent extends LoggerWrapper implements AfterViewInit {
@@ -67,17 +69,14 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
     //--------------------------------------------------------------------------
 
     constructor(
-        private element: ElementRef,
         private api: Client,
         protected settings: SettingsService,
         protected transport: Transport,
         protected nativeWindow: NativeWindowService,
         logger: Logger,
-        renderer: Renderer2,
     ) {
         super(logger);
-
-        let handler = new PaymentWidgetOpenHandler(transport, logger, new PaymentService(logger, nativeWindow));
+        new PaymentWidgetOpenHandler(transport, logger, new PaymentService(logger, nativeWindow));
     }
 
     //--------------------------------------------------------------------------
@@ -91,7 +90,7 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
         this.api.url = this.settings.apiUrl;
 
         let search = new URLSearchParams(this.nativeWindow.window.location.search);
-
+        /*
         search.set('id', '2');
         search.set('type', 'COMPANY');
         search.set('details', JSON.stringify({
@@ -118,6 +117,7 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
                 }
             }
         }));
+        */
 
         if (!search.has('id') || !search.has('type')) {
             this.error(`\"id\" or \"type\" is undefined`);
@@ -136,7 +136,9 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
             return;
         }
 
-        let details = null;
+
+
+        let details: PaymentWidgetDetails = null;
         if (search.has('details')) {
             if (!ObjectUtil.isJSON(search.get('details'))) {
                 this.error(`\"details\" must be JSON'`);
@@ -151,7 +153,9 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
                 return;
             }
         }
+
         let aggregator = await this.api.paymentAggregatorGet({ id, type });
+        ObjectUtil.copyProperties(details, aggregator, ['amount', 'coinId']);
         this.open(aggregator, details);
     }
 
@@ -198,10 +202,13 @@ export class RootComponent extends LoggerWrapper implements AfterViewInit {
         }
         */
         options.karmaReferenceId = item.referenceId;
+
+        this.log(`Completed: ${options}`);
         window.parent.postMessage({ function: 'completedHandler', message: options }, "*");
     }
 
     public failedHandler(item: ExtendedError): void {
-        window.parent.postMessage({ function: 'failedHandler', message: item.toObject()}, "*");
+        this.error(`Failed: ${item.toObject()}`);
+        window.parent.postMessage({ function: 'failedHandler', message: item.toObject() }, "*");
     }
 }

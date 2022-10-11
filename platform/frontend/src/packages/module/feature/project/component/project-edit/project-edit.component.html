@@ -57,6 +57,28 @@
 
     <div class="col-12">
         <mat-form-field class="d-block">
+            <input
+                #cityInput="ngModel"
+                matInput
+                name="city"
+                [(ngModel)]="project.preferences.city"
+                type="text"
+                required
+                [maxlength]="cityMaxLength"
+                (ngModelChange)="cityChanged($event)"
+                [matAutocomplete]="cityAutocomplete"
+            />
+            <mat-autocomplete autoActiveFirstOption #cityAutocomplete="matAutocomplete">
+                <mat-option *ngFor="let item of cities" [value]="item" [innerHTML]="item"></mat-option>
+            </mat-autocomplete>
+            <mat-hint align="end" [innerHTML]="cityInput.value?.length | maxLength: cityMaxLength"></mat-hint>
+            <mat-placeholder [vi-translate]="'project.preferences.city'"></mat-placeholder>
+            <mat-error *ngIf="!(cityInput.valid || !cityInput.touched)" [innerHTML]="cityInput.errors | viNgModelError"></mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12">
+        <mat-form-field class="d-block">
             <mat-placeholder [innerHTML]="'project.tag.tags' | viTranslate"></mat-placeholder>
             <mat-select #tagsInput="ngModel" name="tags" [(ngModel)]="project.preferences.tags" multiple>
                 <mat-select-trigger>
@@ -104,5 +126,4 @@
         </mat-form-field>
     </div>
     -->
-
 </form>

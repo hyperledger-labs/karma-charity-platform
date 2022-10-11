@@ -9,15 +9,18 @@
         "save": "Сохранить",
         "remove": "Удалить",
         "selected": "Выбрано",
-        "fileDrop": "Перетащите файл",
         "description": "Описание",
-        "createdDate": "Создание",
-        "header": "Platform Admin",
+        "header": "Карма",
         "footer": "{version} от {versionDate}"
+    },
+    "geo": {
+        "city": "Город"
     },
     "serviceWorker": {
         "update": {
-            "newVersionConfirmation": "Доступна новая версия, вы хотите обновить страницу?",
+            "reloadNotification": "Для просмотра более новой версии, пожалуйста обновите страницу",
+            "newVersionNotification": "Новая версия загружена, страница будет обновлена",
+            "newVersionDetectedNotification": "Обнаружена новая версия, идет обновление...",
             "errorNotification": "Произошла ошибка при обновлении страницы: <br/>{error}<br/><br/>Необходимо перезагрузить страницу"
         }
     }

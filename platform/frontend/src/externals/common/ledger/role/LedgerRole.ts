@@ -1,0 +1,5 @@
+export enum LedgerRole {
+    COIN_MANAGER = 'COIN_MANAGER',
+    USER_MANAGER = 'USER_MANAGER',
+    COMPANY_MANAGER = 'COMPANY_MANAGER'
+}

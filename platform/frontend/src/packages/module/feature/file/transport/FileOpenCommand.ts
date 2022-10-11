@@ -1,5 +1,5 @@
 import { File } from '@project/common/platform/file';
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 
 export class FileOpenCommand extends TransportCommand<IFileOpenDto> {
     // --------------------------------------------------------------------------

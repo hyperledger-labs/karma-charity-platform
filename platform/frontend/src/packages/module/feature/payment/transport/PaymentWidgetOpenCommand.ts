@@ -1,5 +1,5 @@
 
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 import { PaymentTarget } from '@common/platform/payment';
 import { PaymentAggregator } from '@project/common/platform/payment/aggregator';
 

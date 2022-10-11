@@ -4,7 +4,7 @@ import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { } from '@common/platform/company';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import {
     CompanyPreferences
 } from '@project/common/platform/company';

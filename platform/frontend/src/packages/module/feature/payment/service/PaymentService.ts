@@ -1,10 +1,10 @@
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import { PaymentAggregatorManager } from '../lib';
 import { CloudPaymentsAggregator } from '../lib/aggregator';
-import { NativeWindowService } from '@ts-core/frontend/service';
+import { NativeWindowService } from '@ts-core/frontend';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService extends LoggerWrapper {

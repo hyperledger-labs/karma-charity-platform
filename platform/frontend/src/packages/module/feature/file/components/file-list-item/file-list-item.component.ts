@@ -4,9 +4,9 @@ import { ViewUtil } from '@ts-core/angular';
 import { DestroyableContainer, LoadableEvent } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
-import { ObservableData } from '@ts-core/common/observer';
+import { ObservableData } from '@ts-core/common';
 import { IUploaderFileComplete, IUploaderFileError, IUploaderFileProgress, IUploaderFileCancel, UploaderFileEventData } from '../../lib';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { IFileItem } from '../file-upload-container/file-upload-container.component';
 
 @Component({

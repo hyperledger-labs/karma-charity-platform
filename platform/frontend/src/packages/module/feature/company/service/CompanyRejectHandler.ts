@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@project/common/platform/api';
 import { NotificationService, WindowService } from '@ts-core/angular';
-import { Logger } from '@ts-core/common/logger';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CompanyService } from '@core/service';
 import { CompanyRejectCommand, ICompanyRejectDto, ICompanyRejectDtoResponse } from '../transport';

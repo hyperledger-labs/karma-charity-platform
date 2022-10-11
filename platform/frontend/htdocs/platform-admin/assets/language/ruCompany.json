@@ -53,7 +53,7 @@
             "phone": "Телефон",
             "picture": "Логотип",
             "website": "Сайт",
-            "location": "⇛geo.location",
+            "city": "⇛geo.city",
 
             "ceo": "Генеральный директор",
             "inn": "ИНН",

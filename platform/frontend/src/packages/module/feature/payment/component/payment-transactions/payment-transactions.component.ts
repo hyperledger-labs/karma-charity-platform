@@ -4,11 +4,11 @@ import * as _ from 'lodash';
 import { PaymentBaseComponent } from '../PaymentBaseComponent';
 import { PaymentTransactionMapCollection, PaymentTransactionTableSettings } from '@core/lib/payment';
 import { PipeService, UserService } from '@core/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Payment, PaymentTransaction } from '@project/common/platform/payment';
 import { PaymentOpenCommand } from '../../transport';
-import { FilterableConditions } from '@ts-core/common/dto';
-import { ObjectUtil } from '@ts-core/common/util';
+import { FilterableConditions } from '@ts-core/common';
+import { ObjectUtil } from '@ts-core/common';
 import { CompanyOpenCommand } from '@feature/company/transport';
 import { ProjectOpenCommand } from '@feature/project/transport';
 

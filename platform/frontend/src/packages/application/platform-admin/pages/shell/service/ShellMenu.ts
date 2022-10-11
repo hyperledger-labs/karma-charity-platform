@@ -1,5 +1,5 @@
 import { ISelectListItem, SelectListItem, SelectListItems } from '@ts-core/angular';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { UserService, CompanyService, RouterService } from '@core/service';

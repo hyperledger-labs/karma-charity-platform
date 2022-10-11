@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ISelectListItem, MenuTriggerForDirective, SelectListItem, SelectListItems, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { Payment } from '@project/common/platform/payment';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { PaymentMenu } from '../../service';
 import { PaymentBaseComponent } from '../PaymentBaseComponent';
 

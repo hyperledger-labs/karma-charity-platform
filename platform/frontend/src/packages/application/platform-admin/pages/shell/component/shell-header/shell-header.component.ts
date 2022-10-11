@@ -2,7 +2,7 @@ import { Component, EventEmitter, ElementRef, Output, Input } from '@angular/cor
 import { Destroyable } from '@ts-core/common';
 import { RouterService } from '@core/service';
 import { ViewUtil } from '@ts-core/angular';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Client } from '@common/platform/api';
 
 @Component({

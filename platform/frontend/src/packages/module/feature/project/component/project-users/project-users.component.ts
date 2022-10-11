@@ -7,7 +7,7 @@ import { ProjectUser } from '@project/common/platform/project/ProjectUser';
 import { PipeService, UserService } from '@core/service';
 import { ProjectUserMenu } from '../../service';
 import { UserOpenCommand } from '@feature/user/transport';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Project } from '@project/common/platform/project';
 import { ProjectUserAddCommand } from '../../transport';
 import { PermissionUtil } from '@project/common/util';

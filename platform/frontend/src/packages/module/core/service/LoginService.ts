@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@common/platform/api';
-import { LoginBaseService, CookieService, LoginNotGuard, LoginGuard, WindowService, LoginBaseServiceEvent } from '@ts-core/angular';
+import { LoginBaseService, CookieService, LoginBaseServiceEvent } from '@ts-core/angular';
 import { ILoginDto, ILoginDtoResponse, IInitDtoResponse, LoginResource } from '@common/platform/api/login';
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 import * as _ from 'lodash';
-import { RouterService } from './RouterService';
 import { GoExternalLoginCommand, GoExternalLogoutCommand } from '@feature/go-external/transport';
-import { Transport, TransportNoConnectionError, TransportTimeoutError } from '@ts-core/common/transport';
+import { Transport, TransportNoConnectionError, TransportTimeoutError } from '@ts-core/common';
+import { VkExternalLoginCommand, VkExternalLogoutCommand } from '@feature/vk-external/transport';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoResponse, IInitDtoResponse> {
@@ -17,7 +17,6 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
     //--------------------------------------------------------------------------
 
     public isAutoLogin: boolean = true;
-
     protected _resource: LoginResource;
 
     //--------------------------------------------------------------------------
@@ -26,25 +25,18 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
     //
     //--------------------------------------------------------------------------
 
-    constructor(router: RouterService, windows: WindowService, private transport: Transport, private cookies: CookieService, private api: Client) {
+    constructor(private transport: Transport, private cookies: CookieService, private api: Client) {
         super();
 
+        // Login
         this.events.subscribe(data => {
             switch (data.type) {
-                case LoginBaseServiceEvent.LOGIN_COMPLETE:
-                    router.navigate(LoginNotGuard.redirectUrl);
-                    break;
-                case LoginBaseServiceEvent.LOGOUT_FINISHED:
-                    router.navigate(LoginGuard.redirectUrl);
-                    break;
                 case LoginBaseServiceEvent.LOGOUT_STARTED:
-                    windows.removeAll();
                     this.logoutSocial()
                     break;
             }
         });
     }
-
 
     //--------------------------------------------------------------------------
     //
@@ -84,7 +76,10 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
 
     protected async logoutSocial(): Promise<void> {
         switch (this.resource) {
-            case LoginResource.GOOGLE:
+            case LoginResource.VK_SITE:
+                this.transport.send(new VkExternalLogoutCommand());
+                break;
+            case LoginResource.GOOGLE_SITE:
                 this.transport.send(new GoExternalLogoutCommand());
                 break;
         }
@@ -110,8 +105,11 @@ export class LoginService extends LoginBaseService<LoginServiceEvent, ILoginDtoR
     public async loginSocial(resource: LoginResource): Promise<void> {
         let item: ILoginDto = null;
         switch (resource) {
-            case LoginResource.GOOGLE:
+            case LoginResource.GOOGLE_SITE:
                 item = await this.transport.sendListen(new GoExternalLoginCommand());
+                break;
+            case LoginResource.VK_SITE:
+                item = await this.transport.sendListen(new VkExternalLoginCommand());
                 break;
             default:
                 throw new ExtendedError(`Unable to login: "${resource}" resource doesn't support`)

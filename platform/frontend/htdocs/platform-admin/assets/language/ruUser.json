@@ -17,6 +17,11 @@
                 "confirmation": "Вы уверены что хотите отредактировать пользователя?",
                 "notification": "Пользователь изменен"
             },
+            "deactivate": {
+                "deactivate": "Деактивировать",
+                "confirmation": "Вы уверены что хотите деактивировать пользователя?",
+                "notification": "Пользователь деактивирован"
+            },
             "roleEdit": {
                 "roleEdit": "Редактировать роли",
                 "confirmation": "Вы уверены что хотите редактировать роли пользователя?",
@@ -31,6 +36,9 @@
             "locale": "Язык",
             "birthday": "Дата рождения",
             "description": "О себе",
+            "isNeedPlatformNews": "Получать новости от платформы",
+            "isNeedPlatformNotifications": "Получать важные уведомления от платформы",
+            "isNeedFavoritesNotifications": "Получать новости от проектов в избранном",
             "projectCancelStrategy": {
                 "projectCancelStrategy": "При закрытии проекта, как распорядиться средствами?",
                 "REFUND_TO_COMPANY": "Перевести в компанию",
@@ -46,6 +54,11 @@
             "status": "Статус",
             "ACTIVE": "Активен",
             "NON_ACTIVE": "Не активен"
+        },
+        "resource": {
+            "GOOGLE": "Google",
+            "FACEBOOK": "Facebook",
+            "VK": "VK"
         },
         "type": {
             "type": "Тип",

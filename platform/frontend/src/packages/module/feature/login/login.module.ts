@@ -6,7 +6,7 @@ import { SharedModule } from '@shared/shared.module';
 import { TransportLazyModule } from '@ts-core/angular';
 import { LoginContainerComponent } from './component/login-container/login-container.component';
 import { LoginOpenCommand } from './transport';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 
 //--------------------------------------------------------------------------
 //

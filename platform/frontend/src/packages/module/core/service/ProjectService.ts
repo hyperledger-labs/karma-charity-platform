@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Destroyable } from '@ts-core/common';
 import { Project } from '@project/common/platform/project';

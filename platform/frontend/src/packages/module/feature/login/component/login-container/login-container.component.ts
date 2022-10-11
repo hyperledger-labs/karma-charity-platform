@@ -48,11 +48,11 @@ export class LoginContainerComponent extends IWindowContent implements ISerializ
     //--------------------------------------------------------------------------
 
     public async vk(): Promise<void> {
-        return this.loginSocial(LoginResource.VK);
+        return this.loginSocial(LoginResource.VK_SITE);
     }
 
     public async google(): Promise<void> {
-        return this.loginSocial(LoginResource.GOOGLE);
+        return this.loginSocial(LoginResource.GOOGLE_SITE);
     }
 
     public serialize(): boolean {

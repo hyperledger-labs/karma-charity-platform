@@ -2,10 +2,10 @@
 import { Loadable, LoadableEvent, LoadableStatus } from "@ts-core/common";
 import { Client } from "@project/common/platform/api";
 import * as _ from 'lodash';
-import { DateUtil } from "@ts-core/common/util";
-import { ObservableData } from "@ts-core/common/observer";
+import { DateUtil } from "@ts-core/common";
+import { ObservableData } from "@ts-core/common";
 import { Payment } from "@project/common/platform/payment";
-import { ExtendedError } from "@ts-core/common/error";
+import { ExtendedError } from "@ts-core/common";
 
 export class PaymentReferenceLoader extends Loadable {
     // --------------------------------------------------------------------------
@@ -66,7 +66,6 @@ export class PaymentReferenceLoader extends Loadable {
             this._payment = await this.api.paymentGetByReference(this.referenceId);
             this.checkPayment(this.payment);
 
-            console.log(this.payment);
             this.timer = null;
             this.status = LoadableStatus.LOADED;
             this.observer.next(new ObservableData(LoadableEvent.COMPLETE));

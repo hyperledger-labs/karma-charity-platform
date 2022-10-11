@@ -19,12 +19,12 @@ const routes: Routes = [
             {
                 path: RouterService.PROJECT_ADD_URL,
                 canActivate: [ProjectAddGuard],
-                loadChildren: async () => (await import('@page/project-add/project-add-page.module')).ProjectAddPageModule
+                loadChildren: async () => (await import('../project-add/project-add-page.module')).ProjectAddPageModule
             },
             {
                 path: RouterService.COMPANY_ADD_URL,
-                canActivate: [CompanyAddGuard],
-                loadChildren: async () => (await import('@page/company-add/company-add-page.module')).CompanyAddPageModule
+                //canActivate: [CompanyAddGuard],
+                loadChildren: async () => (await import('../company-add/company-add-page.module')).CompanyAddPageModule
             },
             {
                 path: RouterService.USER_URL,
@@ -33,7 +33,7 @@ const routes: Routes = [
             {
                 path: RouterService.USERS_URL,
                 canActivate: [UsersGuard],
-                loadChildren: async () => (await import('@page/users/users-page.module')).UsersPageModule
+                loadChildren: async () => (await import('../users/users-page.module')).UsersPageModule
             },
             {
                 path: RouterService.COMPANY_URL,
@@ -43,17 +43,17 @@ const routes: Routes = [
             {
                 path: RouterService.COMPANIES_URL,
                 canActivate: [CompaniesGuard],
-                loadChildren: async () => (await import('@page/companies/companies-page.module')).CompaniesPageModule
+                loadChildren: async () => (await import('../companies/companies-page.module')).CompaniesPageModule
             },
             {
                 path: RouterService.PROJECTS_URL,
                 canActivate: [ProjectsGuard],
-                loadChildren: async () => (await import('@page/projects/projects-page.module')).ProjectsPageModule
+                loadChildren: async () => (await import('../projects/projects-page.module')).ProjectsPageModule
             },
             {
                 path: RouterService.PAYMENTS_URL,
                 canActivate: [PaymentsGuard],
-                loadChildren: async () => (await import('@page/payments/payments-page.module')).PaymentsPageModule
+                loadChildren: async () => (await import('../payments/payments-page.module')).PaymentsPageModule
             },
             { path: '**', redirectTo: '/' }
         ]

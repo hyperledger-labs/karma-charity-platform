@@ -1,11 +1,11 @@
 
-import { LoggerWrapper } from "@ts-core/common/logger";
-import { PipeService, UserService } from "@core/service";
+import { LoggerWrapper } from "@ts-core/common";
+import { UserService } from "@core/service";
 import { IPaymentWidgetOpenDto, IPaymentWidgetOpenDtoResponse } from "../transport";
 import { APPLICATION_INJECTOR } from "@ts-core/angular";
-import { ScriptLoader } from "@ts-core/frontend/lib";
+import { ScriptLoader } from "@ts-core/frontend";
 import * as _ from 'lodash';
-import { LanguageService } from "@ts-core/frontend/language";
+import { LanguageService } from "@ts-core/frontend";
 import { PaymentTarget } from "@project/common/platform/payment";
 import { CoinObjectType } from "@project/common/transport/command/coin";
 

@@ -1,4 +1,4 @@
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class LoginOpenCommand extends TransportCommandAsync<void, ILoginOpenDtoResponse> {
     // --------------------------------------------------------------------------

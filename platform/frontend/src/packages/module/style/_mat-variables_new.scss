@@ -1,0 +1,73 @@
+// @import '~@angular/material/theming';
+@use '@angular/material' as mat;
+
+/*--------------------------------------------------------------------------
+//
+//  Bootstrap
+//
+//-------------------------------------------------------------------------*/
+
+$border-radius: 4px;
+
+/*--------------------------------------------------------------------------
+//
+//  Typography
+//
+//-------------------------------------------------------------------------*/
+
+$typography: mat.define-typography-config(
+    $headline:
+        mat.define-typography-level(
+            $font-family: 'Fira Sans',
+            $font-weight: 700,
+            $font-size: 40px
+        ),
+    $title:
+        mat.define-typography-level(
+            $font-family: 'Fira Sans',
+            $font-weight: 700,
+            $font-size: 24px
+        ),
+    $subheading-2:
+        mat.define-typography-level(
+            $font-family: 'Fira Sans',
+            $font-weight: 700,
+            $font-size: 16px,
+            $line-height: 1.4
+            /* $font-size: 20px */
+        ),
+    $body-1:
+        mat.define-typography-level(
+            $font-family: 'Inter',
+            $font-weight: 500,
+            $font-size: 16px,
+            $line-height: 1.4
+            /* $font-size: 20px */
+        ),
+    $button:
+        mat.define-typography-level(
+            $font-family: 'Inter',
+            $font-weight: 500,
+            /* $font-size: 20px */
+            $font-size: 16px
+        )
+);
+
+/*
+$typography: mat-typography-config(
+    $font-family: 'Fira Sans, sans-serif',
+    $display-4: mat-typography-level(72px, 1.4, 300),
+    $display-3: mat-typography-level(56px, 1.4, 300),
+    $display-2: mat-typography-level(45px, 1.4, 300),
+    $display-1: mat-typography-level(32px, 1.4, 700),
+    $headline: mat-typography-level(40px, 1.4, 700),
+    $title: mat-typography-level(24px, 1.4, 700),
+    $subheading-2: mat-typography-level(20px, 1.4, 700),
+    $subheading-1: mat-typography-level(16px, 1.4, 300),
+    $body-2: mat-typography-level(20px, 1.4, 600),
+    $body-1: mat-typography-level(20px, 1.4, 500),
+    $caption: mat-typography-level(16px, 1.4, 500),
+    $button: mat-typography-level(20px, 1.4, 600),
+    $input: mat-typography-level(20px, 1.4, 600)
+);
+*/

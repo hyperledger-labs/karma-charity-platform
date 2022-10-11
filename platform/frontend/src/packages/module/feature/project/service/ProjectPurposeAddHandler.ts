@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@project/common/platform/api';
 import { NotificationService, WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
-import { Logger } from '@ts-core/common/logger';
-import { PromiseHandler } from '@ts-core/common/promise';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { PromiseHandler } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { takeUntil } from 'rxjs';
 import { ProjectPurposeAddComponent } from '../component/project-purpose-add/project-purpose-add.component';

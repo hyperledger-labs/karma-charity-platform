@@ -1,11 +1,11 @@
 import { SettingsService } from "@core/service";
 import * as _ from 'lodash';
 import { Injectable } from "@angular/core";
-import { PromiseHandler } from "@ts-core/common/promise";
-import { ExtendedError } from "@ts-core/common/error";
-import { Transport, TransportCommandAsyncHandler } from "@ts-core/common/transport";
+import { PromiseHandler } from "@ts-core/common";
+import { ExtendedError } from "@ts-core/common";
+import { Transport, TransportCommandAsyncHandler } from "@ts-core/common";
 import { GoExternalLoginCommand } from "../transport";
-import { Logger } from "@ts-core/common/logger";
+import { Logger } from "@ts-core/common";
 import { GoOpenApi } from "./GoOpenApi";
 import { ILoginDto, LoginData, LoginResource } from "@project/common/platform/api/login";
 
@@ -39,7 +39,7 @@ export class GoExternalLoginHandler extends TransportCommandAsyncHandler<void, I
             ux_mode: 'popup',
             callback: (response) => {
                 promise.resolve({
-                    resource: LoginResource.GOOGLE,
+                    resource: LoginResource.GOOGLE_SITE,
                     data: { token: response.code }
                 })
             },

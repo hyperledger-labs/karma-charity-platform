@@ -1,5 +1,5 @@
 import { File } from '@project/common/platform/file';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class FileRemoveCommand extends TransportCommandAsync<IFileRemoveDto, IFileRemoveDtoResponse> {
     // --------------------------------------------------------------------------

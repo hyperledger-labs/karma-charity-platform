@@ -1,0 +1,15 @@
+{
+    "name": "@karma/common",
+    "version": "2.0.0",
+    "description": "Common classes for Karma",
+    "author": "Renat Gubaev",
+    "license": "ISC",
+    "scripts": {
+        "build": "tsc",
+        "format": "prettier --list-different \"{src}/**/*.{ts,js,json}\"",
+        "format:fix": "prettier --write \"{src}/**/*.{ts,js,json}\" --loglevel warn"
+    },
+    "dependencies": {
+        "@ts-core/common": "^3.0.3"
+    }
+}

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import * as _ from 'lodash';
 import { FinancePipe, PrettifyPipe } from '@ts-core/angular';
-import { MathUtil } from '@ts-core/common/util';
+import { MathUtil } from '@ts-core/common';
 import { LedgerCoinId } from '@project/common/ledger/coin';
 
 @Pipe({

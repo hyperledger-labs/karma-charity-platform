@@ -67,7 +67,7 @@
                             "node_modules/moment/locale/ru.js",
                             "node_modules/hammerjs/hammer.js"
                         ],
-                        "allowedCommonJsDependencies": ["@ts-core/common", "@ts-core/frontend"],
+                        "allowedCommonJsDependencies": ["validator", "moment", "tweetnacl", "random-seed", "css-element-queries"],
                         "serviceWorker": true,
                         "ngswConfigPath": "src/packages/application/platform-admin/ngsw-config.json"
                     },
@@ -160,7 +160,7 @@
                         ],
                         "styles": [],
                         "scripts": [],
-                        "allowedCommonJsDependencies": ["validator"]
+                        "allowedCommonJsDependencies": ["validator", "moment", "tweetnacl", "random-seed", "css-element-queries"]
                     },
                     "configurations": {
                         "development": {
@@ -204,6 +204,115 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "platform-payment-widget:build:production"
+                        }
+                    }
+                }
+            }
+        },
+        "platform-site": {
+            "root": "src/packages/application/platform-site",
+            "sourceRoot": "src/packages/application/platform-site",
+            "projectType": "application",
+            "prefix": "app",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "sass"
+                },
+                "@schematics/angular:application": {
+                    "strict": true
+                }
+            },
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "build/platform-site",
+                        "index": "src/packages/application/platform-site/index.html",
+                        "main": "src/packages/application/platform-site/main.ts",
+                        "polyfills": "polyfills.ts",
+                        "aot": true,
+                        "tsConfig": "src/packages/application/platform-site/tsconfig.json",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@ts-core/angular/asset/language",
+                                "output": "/assets/language"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/common",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "htdocs/platform-site",
+                                "output": "/"
+                            }
+                        ],
+                        "styles": [
+                            "node_modules/csshake/dist/csshake-horizontal.css",
+
+                            "htdocs/common/assets/font/awesome/css/all.css",
+                            "htdocs/common/assets/font/google/inter/all.css",
+                            "htdocs/common/assets/font/google/fiara/all.css",
+
+                            "src/packages/module/feature/ckeditor/style/ckeditor.css",
+                            "src/packages/application/platform-site/style/preloader.css",
+                            "src/packages/application/platform-site/style/mat.scss"
+                        ],
+                        "scripts": [
+                            "node_modules/css-element-queries/src/ResizeSensor.js",
+                            "node_modules/interactjs/dist/interact.min.js",
+                            "node_modules/numeral/numeral.js",
+                            "node_modules/numeral/locales/ru.js",
+                            "node_modules/moment/moment.js",
+                            "node_modules/moment/locale/ru.js",
+                            "node_modules/hammerjs/hammer.js"
+                        ],
+                        "allowedCommonJsDependencies": ["validator", "moment", "tweetnacl", "random-seed", "css-element-queries"]
+                    },
+                    "configurations": {
+                        "development": {
+                            "aot": false,
+                            "optimization": false,
+                            "buildOptimizer": false,
+                            "vendorChunk": false,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "namedChunks": false
+                        },
+                        "production": {
+                            "optimization": true,
+                            "outputHashing": "none",
+                            "sourceMap": false,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": false,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "5mb",
+                                    "maximumError": "10mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "2kb",
+                                    "maximumError": "4kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "platform-site:build:development"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "platform-site:build:production"
                         }
                     }
                 }

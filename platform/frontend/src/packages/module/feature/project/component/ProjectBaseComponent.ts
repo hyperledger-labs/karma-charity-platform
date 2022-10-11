@@ -1,4 +1,4 @@
-import { PROJECT_PREFERENCES_TITLE_MIN_LENGTH, PROJECT_PREFERENCES_TITLE_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH, PROJECT_PREFERENCES_TAGS_MAX_LENGTH, PROJECT_PREFERENCES_PICTURE_MAX_LENGTH, PROJECT_PREFERENCES_LOCATION_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MIN_LENGTH, Project } from "@project/common/platform/project";
+import { PROJECT_PREFERENCES_TITLE_MIN_LENGTH, PROJECT_PREFERENCES_TITLE_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MIN_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_SHORT_MAX_LENGTH, PROJECT_PREFERENCES_TAGS_MAX_LENGTH, PROJECT_PREFERENCES_PICTURE_MAX_LENGTH, PROJECT_PREFERENCES_CITY_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MAX_LENGTH, PROJECT_PREFERENCES_DESCRIPTION_MIN_LENGTH, Project } from "@project/common/platform/project";
 import { UserProject } from "@project/common/platform/user";
 import { IWindowContent } from "@ts-core/angular";
 import * as _ from 'lodash';
@@ -19,7 +19,7 @@ export abstract class ProjectBaseComponent extends IWindowContent {
     //
     //--------------------------------------------------------------------------
 
-    protected commitProjectProperties():void {}
+    protected commitProjectProperties(): void { }
 
     //--------------------------------------------------------------------------
     //
@@ -34,6 +34,7 @@ export abstract class ProjectBaseComponent extends IWindowContent {
         super.destroy();
         this.project = null;
     }
+
     //--------------------------------------------------------------------------
     //
     //  Public Properties
@@ -58,6 +59,10 @@ export abstract class ProjectBaseComponent extends IWindowContent {
     }
     public get titleMaxLength(): number {
         return PROJECT_PREFERENCES_TITLE_MAX_LENGTH;
+    }
+
+    public get cityMaxLength(): number {
+        return PROJECT_PREFERENCES_CITY_MAX_LENGTH;
     }
 
     public get descriptionMinLength(): number {

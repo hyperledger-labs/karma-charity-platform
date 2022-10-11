@@ -1,15 +1,15 @@
 import { Component, Input, ViewContainerRef } from '@angular/core';
 import { IWindowContent, SelectListItem, SelectListItems, ViewUtil, WindowService } from '@ts-core/angular';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { UserService, PipeService } from '@core/service';
 import * as _ from 'lodash';
-import { User, UserPreferences, UserPreferencesProjectCancelStrategy } from '@common/platform/user';
+import { User, UserPreferences, UserPreferencesProjectCancelStrategy, UserResource } from '@common/platform/user';
 import { ISerializable } from '@ts-core/common';
 import { IUserEditDto } from '@common/platform/api/user';
 import { UserType, UserStatus, USER_PREFERENCES_NAME_MIN_LENGTH, USER_PREFERENCES_DESCRIPTION_MAX_LENGTH, USER_PREFERENCES_NAME_MAX_LENGTH } from '@common/platform/user';
 import moment, { Moment } from 'moment';
 import { LoginResource } from '@common/platform/api/login';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { UserBaseComponent } from '../UserBaseComponent';
 
 @Component({
@@ -50,9 +50,12 @@ export class UserEditComponent extends UserBaseComponent implements ISerializabl
     public latitude: number;
     public longitude: number;
     public ledgerUid: string;
-    public resource: LoginResource;
+    public resource: UserResource;
     public birthday: Moment;
     public description: string;
+    public isNeedPlatformNews: boolean;
+    public isNeedPlatformNotifications: boolean;
+    public isNeedFavoritesNotifications: boolean;
     public projectCancelStrategy: UserPreferencesProjectCancelStrategy;
 
     //--------------------------------------------------------------------------
@@ -176,6 +179,21 @@ export class UserEditComponent extends UserBaseComponent implements ISerializabl
         if (value !== this.projectCancelStrategy) {
             this.projectCancelStrategy = value;
         }
+
+        value = this.user.preferences.isNeedPlatformNews;
+        if (value !== this.isNeedPlatformNews) {
+            this.isNeedPlatformNews = value;
+        }
+
+        value = this.user.preferences.isNeedPlatformNotifications;
+        if (value !== this.isNeedPlatformNotifications) {
+            this.isNeedPlatformNotifications = value;
+        }
+
+        value = this.user.preferences.isNeedFavoritesNotifications;
+        if (value !== this.isNeedFavoritesNotifications) {
+            this.isNeedFavoritesNotifications = value;
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -187,15 +205,6 @@ export class UserEditComponent extends UserBaseComponent implements ISerializabl
     public async submit(): Promise<void> {
         await this.windows.question('user.action.save.confirmation').yesNotPromise;
         this.emit(UserEditComponent.EVENT_SUBMITTED);
-    }
-
-    public async geoSelect(): Promise<void> {
-        /*
-        let item = await this.transport.sendListen(new GeoSelectCommand(this.user.preferences.toGeo()), { timeout: DateUtil.MILISECONDS_DAY });
-        this.location = item.location;
-        this.latitude = item.latitude;
-        this.longitude = item.longitude;
-        */
     }
 
     public serialize(): IUserEditDto {
@@ -210,6 +219,11 @@ export class UserEditComponent extends UserBaseComponent implements ISerializabl
         preferences.longitude = this.longitude;
         preferences.description = this.description;
         preferences.projectCancelStrategy = this.projectCancelStrategy;
+
+        preferences.isNeedPlatformNews = this.isNeedPlatformNews;
+        preferences.isNeedPlatformNotifications = this.isNeedPlatformNotifications;
+        preferences.isNeedFavoritesNotifications = this.isNeedFavoritesNotifications;
+        
         if (!_.isNil(this.birthday)) {
             preferences.birthday = this.birthday.toDate();
         }

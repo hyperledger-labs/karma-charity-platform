@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
     imports: [CommonModule, BrowserModule]
 })
 export class RootModule {
-
     //--------------------------------------------------------------------------
     //
     // 	Public Methods

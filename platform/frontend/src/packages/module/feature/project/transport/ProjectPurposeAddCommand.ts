@@ -1,5 +1,5 @@
 import { ProjectPurpose } from '@project/common/platform/project';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class ProjectPurposeAddCommand extends TransportCommandAsync<void, IProjectPurposeAddDtoResponse> {
     // --------------------------------------------------------------------------

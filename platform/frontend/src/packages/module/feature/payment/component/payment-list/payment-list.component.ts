@@ -5,7 +5,7 @@ import { PipeService } from '@core/service';
 import * as _ from 'lodash';
 import { PaymentMapCollection, PaymentTableSettingsType, PaymentTableSettings } from '@core/lib/payment';
 import { PaymentMenu } from '@feature/payment/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { PaymentOpenCommand } from '@feature/payment/transport';
 import { Payment } from '@project/common/platform/payment';
 
