@@ -1,0 +1,5 @@
+# IDE
+/.idea
+/.awcache
+/.vscode
+*.code-workspace
