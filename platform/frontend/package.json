@@ -64,7 +64,7 @@
     },
     "devDependencies": {
         "@angular-devkit/architect": "^0.1301.4",
-        "@angular-devkit/build-angular": "^13.3.2",
+        "@angular-devkit/build-angular": "^13.3.9",
         "@angular/compiler-cli": "^13.3.2",
         "node-version-incrementer": "^1.0.10",
         "pre-commit": "^1.2.2",
