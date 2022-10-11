@@ -1,6 +1,6 @@
 import { LedgerCompany } from '@project/common/ledger/company';
 import { Company, CompanyType, CompanyStatus } from '@project/common/platform/company';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import { Exclude, Expose, Type, ClassTransformOptions } from 'class-transformer';
 import { ValidateNested, Matches, IsDefined, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import * as _ from 'lodash';
@@ -13,7 +13,8 @@ import { ProjectEntity } from '../project';
 import { PaymentTransactionEntity } from '../payment';
 import { AccountEntity } from '../account';
 import { Accounts, AccountType } from '@project/common/platform/account';
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
+import { FavoriteEntity } from '../favorite';
 
 @Entity({ name: 'company' })
 export class CompanyEntity implements Company {
@@ -41,6 +42,10 @@ export class CompanyEntity implements Company {
     @IsOptional()
     @Matches(LedgerCompany.UID_REGXP)
     public ledgerUid?: string;
+
+    @IsOptional()
+    @IsNumber()
+    public projectsCount: number;
 
     @CreateDateColumn({ name: 'created_date' })
     public createdDate: Date;
@@ -84,6 +89,12 @@ export class CompanyEntity implements Company {
     public accounts?: Array<AccountEntity>;
 
     @Exclude()
+    @OneToMany(() => FavoriteEntity, item => item.company)
+    @ValidateNested()
+    @Type(() => FavoriteEntity)
+    public favorites?: Array<FavoriteEntity>;
+
+    @Exclude()
     @OneToMany(() => PaymentTransactionEntity, item => item.company)
     @Type(() => PaymentTransactionEntity)
     public transactions?: Array<PaymentTransactionEntity>;
@@ -91,6 +102,10 @@ export class CompanyEntity implements Company {
     @Exclude()
     @Type(() => UserRoleEntity)
     public userRoles?: Array<UserRoleEntity>;
+
+    @Exclude()
+    @Type(() => FavoriteEntity)
+    public favorite?: FavoriteEntity;
 
     // --------------------------------------------------------------------------
     //
@@ -103,7 +118,7 @@ export class CompanyEntity implements Company {
     }
 
     public toUserObject(options?: ClassTransformOptions): UserCompany {
-        let item = { ...this.toObject(options), roles: [] };
+        let item = { ...this.toObject(options), isFavorite: !_.isNil(this.favorite), roles: [] };
         if (!_.isEmpty(this.userRoles)) {
             item.roles = this.userRoles.map(item => item.name);
         }

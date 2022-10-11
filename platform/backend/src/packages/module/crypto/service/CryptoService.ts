@@ -1,13 +1,13 @@
-import { ITransportCommand } from '@ts-core/common/transport';
-import { ISignature } from '@ts-core/common/crypto';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
-import { ITransportCryptoManager, TransportCryptoManagerEd25519 } from '@ts-core/common/transport/crypto';
+import { ITransportCommand } from '@ts-core/common';
+import { ISignature } from '@ts-core/common';
+import { Logger, LoggerWrapper } from '@ts-core/common';
+import { ITransportCryptoManager, TransportCryptoManagerEd25519 } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CryptoKeyType } from '@project/common/platform/crypto';
-import { ExtendedError } from "@ts-core/common/error";
-import { IKeyAsymmetric, Ed25519 } from "@ts-core/common/crypto";
+import { ExtendedError } from "@ts-core/common";
+import { IKeyAsymmetric, Ed25519 } from "@ts-core/common";
 import { GostR3410 } from "@ts-core/crypto-gost";
-import { TransportCryptoManagerGostR3410 } from "@ts-core/crypto-gost/transport";
+import { TransportCryptoManagerGostR3410 } from "@ts-core/crypto-gost";
 
 export class CryptoService extends LoggerWrapper {
     // --------------------------------------------------------------------------

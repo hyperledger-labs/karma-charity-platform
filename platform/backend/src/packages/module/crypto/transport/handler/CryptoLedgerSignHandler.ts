@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ExtendedError } from '@ts-core/common/error';
-import { Logger } from '@ts-core/common/logger';
-import { TransportCommand } from '@ts-core/common/transport/';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { ExtendedError } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
+import { TransportCommand } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { CryptoLedgerSignCommand, ICryptoLedgerSignDto } from '../CryptoLedgerSignCommand';
-import { ISignature } from '@ts-core/common/crypto';
+import { ISignature } from '@ts-core/common';
 import { DatabaseService } from '@project/module/database/service';
 import { CryptoService } from '../../service';
 import { CryptoDecryptCommand } from '../CryptoDecryptCommand';
@@ -31,7 +31,7 @@ export class CryptoLedgerSignHandler extends TransportCommandAsyncHandler<ICrypt
     // --------------------------------------------------------------------------
 
     protected async execute(params: ICryptoLedgerSignDto): Promise<ISignature> {
-        let user = await this.database.user.findOne({ ledgerUid: params.uid });
+        let user = await this.database.user.findOneBy({ ledgerUid: params.uid } as any);
         if (_.isNil(user)) {
             throw new ExtendedError(`Unable to ledger sign: can't find user by "${params.uid}" uid`);
         }

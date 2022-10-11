@@ -1,5 +1,5 @@
-import { TransportCommandAsync, ITransportCommand } from '@ts-core/common/transport';
-import { ISignature } from '@ts-core/common/crypto';
+import { TransportCommandAsync, ITransportCommand } from '@ts-core/common';
+import { ISignature } from '@ts-core/common';
 
 export class CryptoLedgerSignCommand extends TransportCommandAsync<ICryptoLedgerSignDto, ISignature> {
     // --------------------------------------------------------------------------

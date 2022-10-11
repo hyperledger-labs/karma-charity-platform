@@ -2,7 +2,7 @@ import {
     UserRoleName,
     UserRole
 } from '@project/common/platform/user';
-import { ValidateUtil } from '@ts-core/common/util';
+import { ValidateUtil } from '@ts-core/common';
 import { Exclude } from 'class-transformer';
 import { IsString, IsNumber, IsOptional } from 'class-validator';
 import { CreateDateColumn, BeforeUpdate, BeforeInsert, UpdateDateColumn, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';

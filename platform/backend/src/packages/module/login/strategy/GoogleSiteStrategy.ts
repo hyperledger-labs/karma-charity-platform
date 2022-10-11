@@ -1,4 +1,4 @@
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { ObjectUtil, TransformUtil } from '@ts-core/common';
 import { UserEntity, UserPreferencesEntity } from '@project/module/database/user';
 import * as _ from 'lodash';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import { OAuth2Client } from 'google-auth-library';
 import { DestroyableContainer } from '@ts-core/common';
 import { ILoginDto, LoginResource, LoginUser } from '@project/common/platform/api/login';
 import { ILoginAuthToken } from '@project/common/platform/api/login';
-import { UserStatus, UserType } from '@project/common/platform/user';
+import { UserResource, UserStatus, UserType } from '@project/common/platform/user';
 import { LoginTokenExpiredError, LoginTokenInvalidError } from '@project/module/core/middleware';
 
 export class GoogleSiteStrategy extends DestroyableContainer implements ILoginStrategy {
@@ -73,7 +73,7 @@ export class GoogleSiteStrategy extends DestroyableContainer implements ILoginSt
     public async getProfile(data: ILoginDto<ILoginAuthToken>): Promise<ILoginStrategyProfile> {
         let profile = await this.loadProfile(data);
         return {
-            login: LoginService.createLogin(profile.id, LoginResource.GOOGLE),
+            login: LoginService.createLogin(profile.id, UserResource.GOOGLE),
             profile
         }
     }
@@ -84,7 +84,7 @@ export class GoogleSiteStrategy extends DestroyableContainer implements ILoginSt
         item.type = UserType.UNDEFINED;
         item.login = data.login;
         item.status = UserStatus.ACTIVE;
-        item.resource = LoginResource.GOOGLE;
+        item.resource = UserResource.GOOGLE;
         item.cryptoKey = await this.user.cryptoKeyCreate();
 
         let profile = data.profile;

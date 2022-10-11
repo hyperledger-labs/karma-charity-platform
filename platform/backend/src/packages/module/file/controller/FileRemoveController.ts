@@ -1,6 +1,6 @@
 import { Delete, Req, Param, Controller, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ParseIntPipe } from '@nestjs/common';
 import { UserGuard, UserGuardOptions } from '@project/module/guard';
@@ -8,7 +8,7 @@ import { UserType } from '@project/common/platform/user';
 import { ProjectStatus } from '@project/common/platform/project';
 import { FILE_URL } from '@project/common/platform/api';
 import { DatabaseService } from '@project/module/database/service';
-import { ExtendedError, UnreachableStatementError } from '@ts-core/common/error';
+import { ExtendedError, UnreachableStatementError } from '@ts-core/common';
 import { IUserHolder } from '@project/module/database/user';
 import { FileService } from '../service';
 import { FileLinkType } from '@project/common/platform/file';
@@ -45,7 +45,7 @@ export class FileRemoveController extends DefaultController<number, IFileRemoveD
     @UseGuards(UserGuard)
     @UserGuardOptions({ type: [UserType.COMPANY_WORKER, UserType.COMPANY_MANAGER] })
     public async executeExtended(@Param('id', ParseIntPipe) fileId: number, @Req() request: IUserHolder): Promise<IFileRemoveDtoResponse> {
-        let item = await this.database.file.findOne(fileId);
+        let item = await this.database.file.findOneBy({ id: fileId });
         if (_.isNil(item)) {
             throw new FileNotFoundError();
         }

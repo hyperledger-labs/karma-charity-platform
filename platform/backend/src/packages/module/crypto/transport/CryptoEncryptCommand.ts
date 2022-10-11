@@ -1,4 +1,4 @@
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 import { CryptoKeyType } from '@project/common/platform/crypto';
 
 export class CryptoEncryptCommand extends TransportCommandAsync<ICryptoEncryptDto, string> {

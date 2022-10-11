@@ -1,14 +1,13 @@
-import { ClassType } from '@ts-core/common/util';
-import { ILogger } from '@ts-core/common/logger';
-import { TransportCryptoManagerEd25519 } from '@ts-core/common/transport/crypto';
-import { Transport, ITransportCommand, TransportCommand, ITransportCommandOptions, TransportCommandAsync } from '@ts-core/common/transport';
+import { ClassType } from '@ts-core/common';
+import { ILogger } from '@ts-core/common';
+import { Transport, ITransportCommand, ITransportCommandOptions, TransportCommandAsync } from '@ts-core/common';
 import * as _ from 'lodash';
-import { ILedgerRequestRequest, LedgerApiClient as CommonLedgerApiClient } from '@hlf-explorer/common/api';
+import { ILedgerRequestRequest, LedgerApiClient as CommonLedgerApiClient } from '@hlf-explorer/common';
 import { IKarmaLedgerEventDto } from '@project/common/transport/event';
-import { ExtendedError } from '@ts-core/common/error';
-import { DateUtil } from '@ts-core/common/util';
+import { ExtendedError } from '@ts-core/common';
+import { DateUtil } from '@ts-core/common';
 // import { TransportCryptoManagerRSA } from '@ts-core/crypto-rsa/transport';
-import { PromiseHandler } from "@ts-core/common/promise";
+import { PromiseHandler } from "@ts-core/common";
 import { CryptoLedgerSignCommand } from '@project/module/crypto/transport';
 import { User } from '@project/common/platform/user';
 
@@ -32,7 +31,7 @@ export class LedgerApiClient extends CommonLedgerApiClient {
     constructor(logger: ILogger, transport: Transport, url?: string, defaultLedgerName?: string) {
         super(logger, url, defaultLedgerName)
         this.transport = transport;
-        this.settings.defaultTimeout = DateUtil.MILLISECONDS_MINUTE;
+        this.settings.defaultTimeout = 3 * DateUtil.MILLISECONDS_MINUTE;
     }
 
     // --------------------------------------------------------------------------

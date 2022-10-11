@@ -1,5 +1,5 @@
-import { TransportCommand } from '@ts-core/common/transport';
-import { ITraceable } from '@ts-core/common/trace';
+import { TransportCommand } from '@ts-core/common';
+import { ITraceable } from '@ts-core/common';
 
 export class BlockParseCommand extends TransportCommand<IBlockParseDto> {
     // --------------------------------------------------------------------------

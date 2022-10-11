@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { INalogObject } from '@project/common/platform/api/nalog';
 import { NalogClient } from './NalogClient';

@@ -1,9 +1,9 @@
 import { Controller, Get, Req, Query } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { TypeormUtil } from '@ts-core/backend/database/typeorm';
-import { FilterableConditions, FilterableSort, IPagination, Paginable } from '@ts-core/common/dto';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { TypeormUtil } from '@ts-core/backend';
+import { FilterableConditions, FilterableSort, IPagination, Paginable } from '@ts-core/common';
+import { Logger } from '@ts-core/common';
 import { IsOptional, IsString } from 'class-validator';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
@@ -12,6 +12,7 @@ import { PaymentTransaction } from '@project/common/platform/payment';
 import { PaymentTransactionEntity } from '@project/module/database/payment';
 import { PAYMENT_TRANSACTION_URL } from '@project/common/platform/api';
 import { IUserHolder } from '@project/module/database/user';
+import { IPaymentTransactionListDto, IPaymentTransactionTarget } from '@project/common/platform/api/payment';
 
 
 // --------------------------------------------------------------------------
@@ -20,9 +21,12 @@ import { IUserHolder } from '@project/module/database/user';
 //
 // --------------------------------------------------------------------------
 
-export class PaymentTransactionListDto implements Paginable<PaymentTransaction> {
+export class PaymentTransactionListDto implements IPaymentTransactionListDto {
     @ApiPropertyOptional()
     conditions?: FilterableConditions<PaymentTransaction>;
+
+    @ApiPropertyOptional()
+    conditionsExtras?: FilterableConditions<IPaymentTransactionTarget>;
 
     @ApiPropertyOptional()
     sort?: FilterableSort<PaymentTransaction>;
@@ -86,8 +90,14 @@ export class PaymentTransactionListController extends DefaultController<PaymentT
         if (_.isNil(params.conditions)) {
             params.conditions = {};
         }
-        let query = this.database.paymentTransaction.createQueryBuilder('paymentTransaction')
+        let query = this.database.paymentTransaction.createQueryBuilder('paymentTransaction');
         this.database.addPaymentTransactionRelations(query);
+
+        let title = _.get(params, 'conditionsExtras.title');
+        if (!_.isNil(title)) {
+            query.where("companyPreferences.title like :title OR projectPreferences.title like :title", { title: `%${title}%` });
+        }
+
         return TypeormUtil.toPagination(query, params, this.transform);
     }
 

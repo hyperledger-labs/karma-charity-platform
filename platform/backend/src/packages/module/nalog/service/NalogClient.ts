@@ -1,7 +1,7 @@
-import { TransportHttp, ITransportHttpSettings } from '@ts-core/common/transport/http';
-import { ILogger } from '@ts-core/common/logger';
+import { TransportHttp, ITransportHttpSettings } from '@ts-core/common';
+import { ILogger } from '@ts-core/common';
 import * as _ from 'lodash';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { INalogObject } from '@project/common/platform/api/nalog';
 
 export class NalogClient extends TransportHttp<ITransportHttpSettings> {

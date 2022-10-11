@@ -1,4 +1,4 @@
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { ObjectUtil, TransformUtil } from '@ts-core/common';
 import { Exclude, Expose, Type, ClassTransformOptions } from 'class-transformer';
 import { IsString, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import * as _ from 'lodash';

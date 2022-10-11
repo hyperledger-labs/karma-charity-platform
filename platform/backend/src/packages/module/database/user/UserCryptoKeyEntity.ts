@@ -1,7 +1,7 @@
 import {
     UserPreferences
 } from '@project/common/platform/user';
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { ObjectUtil, TransformUtil } from '@ts-core/common';
 import { Exclude, Type } from 'class-transformer';
 import { IsEnum, IsNumber, IsOptional, Matches, IsString } from 'class-validator';
 import { Column, Entity, Index, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';

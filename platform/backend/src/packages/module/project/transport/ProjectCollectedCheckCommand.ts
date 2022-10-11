@@ -1,4 +1,4 @@
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 
 export class ProjectCollectedCheckCommand extends TransportCommand<IProjectCollectedCheckDto> {
     // --------------------------------------------------------------------------

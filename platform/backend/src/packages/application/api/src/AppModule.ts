@@ -1,13 +1,13 @@
 import { DynamicModule, Inject, OnApplicationBootstrap } from '@nestjs/common';
-import { LoggerModule } from '@ts-core/backend-nestjs/logger';
-import { CacheModule } from '@ts-core/backend-nestjs/cache';
-import { TransportModule, TransportType } from '@ts-core/backend-nestjs/transport';
+import { LoggerModule } from '@ts-core/backend-nestjs';
+import { CacheModule } from '@ts-core/backend-nestjs';
+import { TransportModule, TransportType } from '@ts-core/backend-nestjs';
 import MemoryStore from 'cache-manager-memory-store';
 import { AppSettings } from './AppSettings';
 import { DatabaseModule } from '@project/module/database';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Logger } from '@ts-core/common/logger';
-import { IDatabaseSettings } from '@ts-core/backend/settings';
+import { Logger } from '@ts-core/common';
+import { IDatabaseSettings } from '@ts-core/backend';
 import { modulePath } from '@project/module';
 import { AbstractService } from '@project/module/core/service';
 import { UserModule } from '@project/module/user';
@@ -17,14 +17,13 @@ import { CoreModule } from '@project/module/core';
 import { LoginModule } from '@project/module/login';
 import { NalogModule } from '@project/module/nalog';
 import { CompanyModule } from '@project/module/company';
+import { FavoriteModule } from '@project/module/favorite';
 import { ProjectModule } from '@project/module/project';
 import { LedgerModule } from '@project/module/ledger';
 import { CloudPaymentsModule } from '@project/module/cloud-payments';
 import { FileModule } from '@project/module/file';
-import { MulterModule } from '@nestjs/platform-express';
-import { DatabaseService } from '@project/module/database/service';
-import { FileService } from '@project/module/file/service';
-import { ExtendedError } from '@ts-core/common/error';
+import { AutocompleteModule } from '@project/module/autocomplete';
+import { StatisticsModule } from '@project/module/statistics';
 
 export class AppModule extends AbstractService implements OnApplicationBootstrap {
     // --------------------------------------------------------------------------
@@ -58,8 +57,11 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 LedgerModule,
                 CompanyModule,
                 ProjectModule,
+                FavoriteModule,
+                StatisticsModule,
 
-                CloudPaymentsModule
+                AutocompleteModule,
+                CloudPaymentsModule,
             ],
             controllers: [
             ],
@@ -93,28 +95,7 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 logging: false,
                 entities: [`${modulePath()}/database/**/*Entity.{ts,js}`,],
                 migrations: [__dirname + '/migration/*.{ts,js}'],
-                migrationsRun: false,
-                cli: {
-                    migrationsDir: 'src/migration',
-                },
-            },
-            {
-                type: 'postgres',
-                host: settings.databaseHost,
-                port: settings.databasePort,
-                username: settings.databaseUserName,
-                password: settings.databaseUserPassword,
-                database: settings.databaseName,
-
-                logging: false,
-                entities: [
-                    `${modulePath()}/database/**/*Entity.{ts,js}`
-                ],
-                migrations: [__dirname + '/migration/*.{ts,js}'],
-                migrationsRun: true,
-                cli: {
-                    migrationsDir: 'src/migration'
-                }
+                migrationsRun: true
             },
             {
                 name: 'seed',
@@ -131,10 +112,7 @@ export class AppModule extends AbstractService implements OnApplicationBootstrap
                 ],
                 migrations: [__dirname + '/seed/*.{ts,js}'],
                 migrationsRun: true,
-                migrationsTableName: 'migrations_seed',
-                cli: {
-                    migrationsDir: 'src/seed'
-                }
+                migrationsTableName: 'migrations_seed'
             }
         ];
     }

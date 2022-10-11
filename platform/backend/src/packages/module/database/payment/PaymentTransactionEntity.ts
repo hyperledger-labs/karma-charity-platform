@@ -1,9 +1,9 @@
-import { ObjectUtil, TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { Type, Exclude, ClassTransformOptions } from 'class-transformer';
 import { IsString, IsBoolean, ValidateNested, IsDate, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import { CreateDateColumn, JoinColumn, ManyToOne, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as _ from 'lodash';
-import { Payment, PaymentAccountId, PaymentTransactionType } from '@project/common/platform/payment';
+import { PaymentAccountId, PaymentTransactionType } from '@project/common/platform/payment';
 import { LedgerCoinId } from '@project/common/ledger/coin';
 import { PaymentTransaction } from '@project/common/platform/payment';
 import { PaymentEntity } from './PaymentEntity';
@@ -71,7 +71,6 @@ export class PaymentTransactionEntity implements PaymentTransaction {
     @IsNumber()
     public companyId?: number;
 
-    @Exclude()
     @ManyToOne(() => PaymentEntity, payment => payment.transactions)
     @JoinColumn({ name: 'payment_id' })
     @Type(() => PaymentEntity)

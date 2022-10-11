@@ -1,4 +1,4 @@
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 import { IPaymentAggregatorData } from '@project/common/platform/payment';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import { PaymentStatus } from '@project/common/platform/payment';

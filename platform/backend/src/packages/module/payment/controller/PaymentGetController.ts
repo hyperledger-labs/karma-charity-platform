@@ -1,6 +1,6 @@
 import { Controller, Param, Req, Get, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import { ParseIntPipe } from '@nestjs/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';

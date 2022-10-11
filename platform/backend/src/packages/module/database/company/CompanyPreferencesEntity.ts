@@ -6,12 +6,12 @@ import {
     COMPANY_PREFERENCES_PHONE_MAX_LENGTH,
     COMPANY_PREFERENCES_STRING_MAX_LENGTH,
     COMPANY_PREFERENCES_PICTURE_MAX_LENGTH,
-    COMPANY_PREFERENCES_LOCATION_MAX_LENGTH,
     COMPANY_PREFERENCES_WEBSITE_MAX_LENGTH,
     COMPANY_PREFERENCES_DESCRIPTION_MIN_LENGTH,
     COMPANY_PREFERENCES_DESCRIPTION_MAX_LENGTH,
+    COMPANY_PREFERENCES_CITY_MAX_LENGTH,
 } from '@project/common/platform/company';
-import { TypeormDecimalTransformer } from '@ts-core/backend/database/typeorm';
+import { TypeormDecimalTransformer } from '@ts-core/backend';
 import { Exclude, Type } from 'class-transformer';
 import { IsEmail, IsDate, Length, MaxLength, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
@@ -86,6 +86,11 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @Length(COMPANY_PREFERENCES_DESCRIPTION_MIN_LENGTH, COMPANY_PREFERENCES_DESCRIPTION_MAX_LENGTH)
     public description: string;
 
+    @Column()
+    @IsString()
+    @MaxLength(COMPANY_PREFERENCES_CITY_MAX_LENGTH)
+    public city: string;
+
     @Column({ nullable: true })
     @IsString()
     @IsOptional()
@@ -103,12 +108,6 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @IsOptional()
     @MaxLength(COMPANY_PREFERENCES_WEBSITE_MAX_LENGTH)
     public website?: string;
-
-    @Column({ nullable: true })
-    @IsString()
-    @IsOptional()
-    @MaxLength(COMPANY_PREFERENCES_LOCATION_MAX_LENGTH)
-    public location?: string;
 
     @Column({ nullable: true, type: 'numeric', transformer: TypeormDecimalTransformer.instance })
     @IsNumber()
@@ -131,19 +130,4 @@ export class CompanyPreferencesEntity implements CompanyPreferences {
     @JoinColumn({ name: 'company_id' })
     @Type(() => CompanyEntity)
     public company: CompanyEntity;
-
-    // --------------------------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    // --------------------------------------------------------------------------
-
-    public toGeo(): IGeo {
-        if (_.isNil(this.location) || _.isNil(this.latitude) || _.isNil(this.longitude)) {
-            return null;
-        }
-        return {
-            location: this.location, latitude: this.latitude, longitude: this.longitude
-        };
-    }
 }

@@ -1,9 +1,9 @@
 import { ILoginDto, ILoginDtoResponse } from '@project/common/platform/api/login';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultController } from '@ts-core/backend/controller';
-import { Logger } from '@ts-core/common/logger';
-import { TraceUtil } from '@ts-core/common/trace';
+import { DefaultController } from '@ts-core/backend';
+import { Logger } from '@ts-core/common';
+import { TraceUtil } from '@ts-core/common';
 import { IsEnum, IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { LOGIN_URL } from '@project/common/platform/api';
 import { LoginResource } from '@project/common/platform/api/login';
@@ -68,7 +68,7 @@ export class LoginController extends DefaultController<ILoginDto, ILoginDtoRespo
 
     @Swagger({ name: 'Login user', response: LoginDtoResponse, isDisableBearer: true })
     @Post()
-    public async execute(@Body() params: ILoginDto): Promise<ILoginDtoResponse> {
+    public async execute(@Body() params: LoginDto): Promise<ILoginDtoResponse> {
         this.warn(`Trying to login ${JSON.stringify(params, null, 4)}`);
         return this.service.login(TraceUtil.addIfNeed(params));
     }

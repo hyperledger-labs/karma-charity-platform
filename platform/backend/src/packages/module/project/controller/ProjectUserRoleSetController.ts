@@ -1,6 +1,6 @@
 import { Controller, Post, ParseArrayPipe, ParseIntPipe, Body, Type, Param, Req, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
 import { Swagger } from '@project/module/swagger';

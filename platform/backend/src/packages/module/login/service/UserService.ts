@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { UserCryptoKeyEntity, UserEntity } from '@project/module/database/user';
 import { DatabaseService } from '@project/module/database/service';
-import { Transport } from '@ts-core/common/transport';
-import { TweetNaCl, Ed25519 } from '@ts-core/common/crypto';
+import { Transport } from '@ts-core/common';
+import { TweetNaCl, Ed25519 } from '@ts-core/common';
 import { CryptoEncryptCommand } from '@project/module/crypto/transport';
 import { CryptoKeyStatus, CryptoKeyType } from '@project/common/platform/crypto';
 import { LoginUser } from './LoginService';

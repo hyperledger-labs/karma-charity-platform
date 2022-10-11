@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Logger, LoggerWrapper } from '@ts-core/common/logger';
+import { Logger, LoggerWrapper } from '@ts-core/common';
 import * as _ from 'lodash';
 import { DatabaseService } from '@project/module/database/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { IPaymentAggregatorData } from '@project/common/platform/payment';
 
 @Injectable()

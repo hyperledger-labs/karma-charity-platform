@@ -1,10 +1,10 @@
 import { Controller, Param, Req, Get, UseGuards, HttpStatus } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import { ParseIntPipe } from '@nestjs/common';
 import * as _ from 'lodash';
-import { ExtendedError } from '@ts-core/common/error';
-import { TransformUtil } from '@ts-core/common/util';
+import { ExtendedError } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { DatabaseService } from '@project/module/database/service';
 import { RequestInvalidError, UserNotFoundError } from '@project/module/core/middleware';;
 import { User, UserType } from '@project/common/platform/user';

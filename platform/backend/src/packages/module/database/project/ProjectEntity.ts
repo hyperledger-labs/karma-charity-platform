@@ -1,6 +1,6 @@
 import { LedgerProject } from '@project/common/ledger/project';
 import { Project, ProjectStatus } from '@project/common/platform/project';
-import { TransformUtil, ValidateUtil } from '@ts-core/common/util';
+import { TransformUtil, ValidateUtil } from '@ts-core/common';
 import { Exclude, Expose, ClassTransformOptions, Type } from 'class-transformer';
 import { ValidateNested, Matches, IsDefined, IsEnum, IsNumber, IsOptional } from 'class-validator';
 import * as _ from 'lodash';
@@ -14,8 +14,9 @@ import { AccountEntity } from '../account';
 import { Account, AccountType } from '@project/common/platform/account';
 import { IProjectBalance } from '@project/common/platform/project';
 import { ProjectPurposeEntity } from './ProjectPurposeEntity';
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 import { ProjectUtil } from '@project/module/project/util';
+import { FavoriteEntity } from '../favorite';
 
 @Entity({ name: 'project' })
 export class ProjectEntity extends BaseEntity implements Project {
@@ -76,7 +77,6 @@ export class ProjectEntity extends BaseEntity implements Project {
     @Type(() => UserEntity)
     public user: UserEntity;
 
-    @Exclude()
     @ManyToOne(() => CompanyEntity, company => company.projects)
     @ValidateNested()
     @JoinColumn({ name: "company_id" })
@@ -94,8 +94,20 @@ export class ProjectEntity extends BaseEntity implements Project {
     public transactions?: Array<PaymentTransactionEntity>;
 
     @Exclude()
+    @OneToMany(() => FavoriteEntity, item => item.project)
+    @ValidateNested()
+    @Type(() => FavoriteEntity)
+    public favorites?: Array<FavoriteEntity>;
+
+    @Exclude()
     @Type(() => UserRoleEntity)
     public userRoles?: Array<UserRoleEntity>;
+
+    @Exclude()
+    @Type(() => FavoriteEntity)
+    public favorite?: FavoriteEntity;
+
+    public paymentsAmount?: number;
 
     // --------------------------------------------------------------------------
     //
@@ -108,7 +120,7 @@ export class ProjectEntity extends BaseEntity implements Project {
     }
 
     public toUserObject(options?: ClassTransformOptions): UserProject {
-        let item = { ...this.toObject(options), roles: [] };
+        let item = { ...this.toObject(options), isFavorite: !_.isNil(this.favorite), roles: [], };
         if (!_.isEmpty(this.userRoles)) {
             item.roles = this.userRoles.map(item => item.name);
         }

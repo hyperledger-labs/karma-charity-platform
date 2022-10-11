@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as _ from 'lodash';
 import { UserCryptoKeyEntity, UserEntity, UserPreferencesEntity } from '@project/module/database/user';
-import { UserType, UserStatus, UserPreferencesProjectCancelStrategy } from '@project/common/platform/user';
+import { UserType, UserStatus, UserPreferencesProjectCancelStrategy, UserResource } from '@project/common/platform/user';
 import { LoginService } from '@project/module/login/service';
 import { LoginResource } from '@project/common/platform/api/login';
-import { ValidateUtil } from '@ts-core/common/util';
-import { Ed25519 } from '@ts-core/common/crypto';
+import { ValidateUtil } from '@ts-core/common';
+import { Ed25519 } from '@ts-core/common';
 import { CryptoKeyStatus } from '@project/common/platform/crypto';
 import { ROOT_USER_CRYPTO_ALGORITHM, ROOT_USER_DESCRIPTION, ROOT_USER_CRYPTO_KEY_PRIVATE, ROOT_USER_CRYPTO_KEY_PUBLIC } from '@project/common/ledger';
 import { LedgerUser } from '@project/common/ledger/user';
@@ -22,20 +22,21 @@ export class AddDefaultUser1627121260000 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         let repository = queryRunner.connection.getRepository(UserEntity);
-        let login = LedgerService.USER_ROOT_LOGIN;
+        let ledgerUid = LedgerService.USER_ROOT_LEDGER_UID;
 
-        let item = await repository.findOne({ login });
+        let item = await repository.findOneBy({ ledgerUid } as any);
         if (!_.isNil(item)) {
             return;
         }
 
         item = new UserEntity();
-        item.uid = UserService.uidCreate(login);
+        item.login = LoginService.createLogin('111452810894131754642', UserResource.GOOGLE);
+
+        item.uid = UserService.uidCreate(item.login);
         item.type = UserType.ADMINISTRATOR;
-        item.login = login;
         item.status = UserStatus.ACTIVE;
-        item.resource = LoginResource.GOOGLE;
-        item.ledgerUid = LedgerUser.createRoot().uid;
+        item.resource = UserResource.GOOGLE;
+        item.ledgerUid = ledgerUid;
 
         let preferences = (item.preferences = new UserPreferencesEntity());
         preferences.name = 'Renat Gubaev';

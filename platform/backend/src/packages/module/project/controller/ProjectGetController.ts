@@ -1,8 +1,9 @@
 import { Controller, Param, Req, Get, UseGuards } from '@nestjs/common';
-import { DefaultController } from '@ts-core/backend-nestjs/controller';
-import { Logger } from '@ts-core/common/logger';
+import { DefaultController } from '@ts-core/backend-nestjs';
+import { Logger } from '@ts-core/common';
 import { ParseIntPipe } from '@nestjs/common';
 import * as _ from 'lodash';
+import { PaymentAccountId, PaymentTransactionType } from '@project/common/platform/payment';
 import { DatabaseService } from '@project/module/database/service';
 import { CompanyNotFoundError } from '@project/module/core/middleware';;
 import { Swagger } from '@project/module/swagger';
@@ -12,6 +13,7 @@ import { UserCompany, UserProject } from '@project/common/platform/user';
 import { IUserHolder } from '@project/module/database/user';
 import { IProjectGetDtoResponse } from '@project/common/platform/api/project';
 import { TransformGroup } from '@project/module/database';
+import { CoinEmitType } from '@project/common/transport/command/coin';
 
 // --------------------------------------------------------------------------
 //
@@ -37,17 +39,21 @@ export class ProjectGetController extends DefaultController<number, IProjectGetD
     //
     // --------------------------------------------------------------------------
 
-    @Swagger({ name: `Get user by id`, response: UserCompany })
+    @Swagger({ name: `Get user project id`, response: UserCompany })
     @Get()
     @UseGuards(UserGuard)
     @UserGuardOptions({
         required: false
     })
     public async executeExtends(@Param('id', ParseIntPipe) id: number, @Req() request: IUserHolder): Promise<IProjectGetDtoResponse> {
-        let user = request.user;
-        
-        let item = await this.database.projectGet(id, !_.isNil(user) ? user.id : null);
+        let item = await this.database.projectGet(id, request.user, true);
         UserGuard.checkProject({ isProjectRequired: true }, item);
+
+        item.paymentsAmount = await this.database.paymentTransaction.createQueryBuilder('paymentTransaction')
+            .where('paymentTransaction.projectId = :projectId', { projectId: id })
+            .andWhere('paymentTransaction.type = :type', { type: CoinEmitType.DONATED })
+            .andWhere('paymentTransaction.activatedDate IS NOT NULL')
+            .getCount();
 
         return item.toUserObject({ groups: [TransformGroup.PUBLIC_DETAILS] });
     }
