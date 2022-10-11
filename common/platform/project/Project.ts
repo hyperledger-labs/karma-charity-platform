@@ -26,6 +26,12 @@ export class Project {
     @Type(() => Date)
     updatedDate: Date;
 
+    @Type(() => Date)
+    activatedDate?: Date;
+
+    @Type(() => Date)
+    finishedDate?: Date;
+
     @Type(() => ProjectPreferences)
     preferences: ProjectPreferences;
 

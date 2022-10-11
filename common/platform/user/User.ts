@@ -1,8 +1,6 @@
 import { Type } from 'class-transformer';
 import { UserType } from './UserType';
-import { LoginResource } from '../api/login';
 import { UserPreferences } from './UserPreferences';
-import { UserRole } from './UserRole';
 import { UserStatus } from './UserStatus';
 
 export class User {
@@ -11,8 +9,9 @@ export class User {
     type: UserType;
     login: string;
     status: UserStatus;
-    resource: LoginResource;
+    resource: UserResource;
 
+    password?: string;
     ledgerUid?: string;
 
     @Type(() => Date)
@@ -23,5 +22,11 @@ export class User {
 
     @Type(() => UserPreferences)
     preferences: UserPreferences;
+}
+
+export enum UserResource {
+    VK = 'VK',
+    GOOGLE = 'GOOGLE',
+    PASSWORD = 'PASSWORD',
 }
 

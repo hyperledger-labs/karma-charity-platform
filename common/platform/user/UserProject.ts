@@ -3,5 +3,6 @@ import { Project } from '../project';
 
 export class UserProject extends Project {
     roles: Array<LedgerProjectRole>;
+    isFavorite: boolean;
 }
 
