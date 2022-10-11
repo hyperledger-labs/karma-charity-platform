@@ -1,0 +1,30 @@
+export enum UserStatus {
+    INVITED = 'INVITED',
+    NEED_CONFIRMATION = 'NEED_CONFIRMATION',
+    CONFIRMED = 'CONFIRMED',
+    NEED_VERIFICATION = 'NEED_VERIFICATION',
+    PREVERIFIED = 'PREVERIFIED',
+    VERIFIED = 'VERIFIED',
+    ACTIVE = 'ACTIVE',
+    NOT_ACTIVE = 'NOT_ACTIVE'
+}
+
+// Not used now, but need
+export enum KarmaStaffStatus {
+    INVITED = 'INVITED',
+    ACTIVE = 'ACTIVE',
+    NOT_ACTIVE = 'NOT_ACTIVE'
+}
+
+export enum NkoStaffStatus {
+    NEED_CONFIRMATION = 'NEED_CONFIRMATION',
+    NEED_VERIFICATION = 'NEED_VERIFICATION',
+    VERIFIED = 'VERIFIED',
+    ACTIVE = 'ACTIVE',
+    NOT_ACTIVE = 'NOT_ACTIVE'
+}
+
+export enum DonaterStatus {
+    ACTIVE = 'ACTIVE',
+    NOT_ACTIVE = 'NOT_ACTIVE'
+}

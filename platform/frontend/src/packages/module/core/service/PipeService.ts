@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { PipeBaseService } from '@ts-core/angular';
 import { UserTitlePipe, RolePipe, AccountPipe, AmountPipe } from '@shared/pipe';
 import { PaymentAmountPipe } from '@feature/payment/pipe';

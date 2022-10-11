@@ -3,10 +3,10 @@ import { IPaymentWidgetOpenDto, IPaymentWidgetOpenDtoResponse } from "../../tran
 import { PaymentAggregatorManager } from "../PaymentAggregatorManager";
 import { IPaymentAggregatorGetDtoResponse } from "@project/common/platform/api/payment";
 import * as _ from 'lodash';
-import { PromiseHandler } from "@ts-core/common/promise";
-import { ExtendedError } from "@ts-core/common/error";
+import { PromiseHandler } from "@ts-core/common";
+import { ExtendedError } from "@ts-core/common";
 import { CoinObjectType } from "@project/common/transport/command/coin";
-import { NativeWindowService } from "@ts-core/frontend/service";
+import { NativeWindowService } from "@ts-core/frontend";
 
 export class CloudPaymentsAggregator extends PaymentAggregatorManager {
     // --------------------------------------------------------------------------
@@ -63,23 +63,22 @@ export class CloudPaymentsAggregator extends PaymentAggregatorManager {
 
         let promise = PromiseHandler.create<IPaymentWidgetOpenDtoResponse, ExtendedError>();
         let widget = new api.CloudPayments();
-        widget.pay('charge', options,
-            {
-                onFail: (reason, options) => {
-                    promise.reject(new ExtendedError(reason, null, options));
-                },
-                onSuccess: (options) => {
-                    promise.resolve(options)
-                },
-                onComplete: (result, options) => {
-                    if (result.success) {
-                        promise.resolve(options);
-                    }
-                    else {
-                        promise.reject(new ExtendedError(`Unable to make payment code "${result.code}"`))
-                    }
+        widget.pay('charge', options, {
+            onFail: (reason, options) => {
+                promise.reject(new ExtendedError(reason, null, options));
+            },
+            onSuccess: (options) => {
+                promise.resolve(options)
+            },
+            onComplete: (result, options) => {
+                if (result.success) {
+                    promise.resolve(options);
                 }
-            });
+                else {
+                    promise.reject(new ExtendedError(`Unable to make payment code "${result.code}"`))
+                }
+            }
+        });
         return promise.promise;
     }
 }

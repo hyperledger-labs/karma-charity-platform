@@ -1,9 +1,9 @@
 import { FileItem, FileLikeObject, FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { Loadable, LoadableEvent, LoadableStatus } from '@ts-core/common';
-import { ObservableData } from '@ts-core/common/observer';
+import { ObservableData } from '@ts-core/common';
 import * as _ from 'lodash';
-import { ArrayUtil } from '@ts-core/common/util';
+import { ArrayUtil } from '@ts-core/common';
 import { Base64File, Base64Source } from './base64';
 import { filter, map } from 'rxjs/operators';
 import { IUploaderFileCancel, IUploaderFileComplete, IUploaderFileError, IUploaderFileProgress, UploaderFile } from './UploaderFile';

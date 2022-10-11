@@ -1,0 +1,16 @@
+<img class="logo me-2" [src]="'icon' | viAssetIcon: 'svg'" />
+
+<p class="mat-title mouse-inactive flex-shrink-0" [vi-translate]="'general.header'"></p>
+
+<div class="d-flex justify-content-around flex-grow-1 mx-5">
+    <p class="mouse-active mat-subheading-2 m-0 text-underline-hover" *ngFor="let item of menu.collection" [class.text-primary]="item.isSelected" [innerHTML]="item.label"></p>
+</div>
+
+<div>
+    <button class="flex-shrink-0 highlight me-2" color="primary" mat-button>
+        <span [vi-translate]="'general.help'"></span>
+    </button>
+    <button class="flex-shrink-0" color="primary" mat-stroked-button>
+        <span [vi-translate]="'login.login'"></span>
+    </button>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Logger } from '@ts-core/common/logger';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { PaymentWidgetOpenCommand } from '../transport';
 import { IPaymentWidgetOpenDto, IPaymentWidgetOpenDtoResponse } from '../transport';

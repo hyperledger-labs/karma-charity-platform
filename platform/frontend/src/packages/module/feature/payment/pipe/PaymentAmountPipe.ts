@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DestroyableContainer } from '@ts-core/common';
 import * as _ from 'lodash';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { FinancePipe, PrettifyPipe } from '@ts-core/angular';
-import { MathUtil } from '@ts-core/common/util';
+import { MathUtil } from '@ts-core/common';
 import { LedgerCoinId } from '@project/common/ledger/coin';
 import { Payment } from '@project/common/platform/payment';
 import { AmountPipe } from '@shared/pipe';

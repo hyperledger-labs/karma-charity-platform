@@ -1,11 +1,11 @@
 import { User, UserPreferences } from '@common/platform/user';
 import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings } from '@ts-core/angular';
-import { IPagination } from '@ts-core/common/dto';
+import { IPagination } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
 import { PipeService, UserService } from '../../service';
 import { Injectable } from '@angular/core';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 
 @Injectable()
 export class UserMapCollection extends CdkTablePaginableMapCollection<User, User> {

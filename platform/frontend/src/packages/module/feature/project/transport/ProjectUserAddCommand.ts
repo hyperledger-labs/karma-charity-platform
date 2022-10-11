@@ -1,5 +1,5 @@
 import { UserProject } from '@project/common/platform/user';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class ProjectUserAddCommand extends TransportCommandAsync<IProjectUserAddDto, IProjectUserAddDtoResponse> {
     // --------------------------------------------------------------------------

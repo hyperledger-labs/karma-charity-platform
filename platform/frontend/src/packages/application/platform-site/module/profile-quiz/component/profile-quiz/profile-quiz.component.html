@@ -1,0 +1,39 @@
+<div class="d-flex flex-shrink-0 align-items-center p-3 border-bottom">
+    <p class="mat-title text-center flex-grow-1 text-one-line mouse-inactive" [vi-translate]="'profile.quiz.title'"></p>
+</div>
+
+<div class="p-3 flex-grow-1 vertical-scroll-only">
+
+    <p class="mouse-inactive" [innerHTML]="tabs.selectedItem.label"></p>
+
+    <form class="row g-0 mt-3" #form="ngForm" *ngIf="tabs.selectedData === 'UNDEFINED'">
+        <div class="col-12">
+            <mat-radio-group class="d-flex flex-column" [(ngModel)]="type" required>
+                <mat-radio-button *ngFor="let item of types.collection" [value]="item.data">
+                    <span [innerHTML]="item.label"></span>
+                </mat-radio-button>
+            </mat-radio-group>
+            <p class="mt-1 mouse-inactive" [vi-translate]="'profile.quiz.type.' + type + '.description'" *ngIf="type !== 'UNDEFINED'"></p>
+        </div>
+    </form>
+
+    <div class="d-flex mt-3" *ngIf="tabs.selectedData === 'COMPANY_WORKER'" [vi-click-to-copy]="uid">
+        <p #uid class="p-3 flex-grow-1 border background rounded text-multi-line" [innerHTML]="user.user.uid"></p>
+    </div>
+
+</div>
+
+<div class="d-flex flex-shrink-0 p-3 justify-content-end border-top">
+    <button class="d-flex" mat-stroked-button [disabled]="!type" *ngIf="tabs.selectedData === 'UNDEFINED'" (click)="tabs.selectedData = type">
+        <span class="text-one-line flex-grow-1 me-2" [vi-translate]="'profile.quiz.forward'"></span>
+        <span class="fas fa-arrow-right flex-shrink-0"></span>
+    </button>
+    <button class="d-flex" mat-stroked-button [disabled]="!type" *ngIf="tabs.selectedData !== 'UNDEFINED'" (click)="tabs.selectedData = 'UNDEFINED'">
+        <span class="fas fa-arrow-left flex-shrink-0 me-2"></span>
+        <span class="text-one-line flex-grow-1" [vi-translate]="'profile.quiz.backward'"></span>
+    </button>
+    <button class="d-flex ms-3 text-success" mat-stroked-button [disabled]="!type" *ngIf="tabs.selectedData !== 'UNDEFINED'" (click)="finish()">
+        <span class="fas fa-check flex-shrink-0 me-2"></span>
+        <span class="text-one-line flex-grow-1" [vi-translate]="'profile.quiz.finish'"></span>
+    </button>
+</div>

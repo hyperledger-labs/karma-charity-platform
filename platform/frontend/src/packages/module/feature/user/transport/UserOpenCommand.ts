@@ -1,5 +1,5 @@
 import { UserUid } from '@ts-core/angular';
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 
 export class UserOpenCommand extends TransportCommand<UserUid> {
     // --------------------------------------------------------------------------

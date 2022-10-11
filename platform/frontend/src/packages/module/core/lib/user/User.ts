@@ -1,7 +1,7 @@
 import { IUser } from '@ts-core/angular';
 import { User as UserBase } from '@common/platform/user';
 import * as _ from 'lodash';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 
 export class User extends UserBase implements IUser<Partial<User>> {
     //--------------------------------------------------------------------------

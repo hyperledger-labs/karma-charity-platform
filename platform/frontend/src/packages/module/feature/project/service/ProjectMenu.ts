@@ -1,11 +1,11 @@
 import { ListItems, IListItem, ListItem } from '@ts-core/angular';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { UserService } from '@core/service';
 import { UserProject } from '@project/common/platform/user';
-import { ProjectVerifyCommand, ProjectToVerifyCommand, ProjectRejectCommand, ProjectActivateCommand, ProjectEditCommand } from '../transport';
+import { ProjectVerifyCommand, ProjectReportSubmitCommand, ProjectToVerifyCommand, ProjectRejectCommand, ProjectActivateCommand, ProjectEditCommand } from '../transport';
 import { ProjectUtil } from '@project/common/platform/project';
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +21,7 @@ export class ProjectMenu extends ListItems<IListItem<void>> {
     private static REJECT = 30;
     private static ACTIVATE = 40;
     private static EDIT = 50;
+    private static REPORT_SUBMIT = 60;
 
     // --------------------------------------------------------------------------
     //
@@ -62,6 +63,12 @@ export class ProjectMenu extends ListItems<IListItem<void>> {
         item.className = 'text-danger';
         this.add(item);
 
+        item = new ListItem('project.action.reportSubmit.reportSubmit', ProjectMenu.REPORT_SUBMIT, null, 'fas fa-file me-2');
+        item.checkEnabled = (item, project) => this.isCanReportSubmit(project);
+        item.action = (item, project) => transport.send(new ProjectReportSubmitCommand(project));
+        item.className = 'text-success';
+        this.add(item);
+
         this.complete();
     }
 
@@ -85,6 +92,9 @@ export class ProjectMenu extends ListItems<IListItem<void>> {
     }
     private isCanToVerify(project: UserProject): boolean {
         return ProjectUtil.isCanToVerify(project);
+    }
+    private isCanReportSubmit(project: UserProject): boolean {
+        return ProjectUtil.isCanReportSubmit(project);
     }
 }
 

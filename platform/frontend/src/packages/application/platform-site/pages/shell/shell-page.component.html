@@ -1,0 +1,22 @@
+<div #container [vi-scroll-check]="300" (limitExceed)="isNeedScrollButton = $event" style="overflow-x: hidden">
+    <div class="container-fluid h-100 g-0 ps-0 pe-0 d-flex flex-column">
+        <div class="background-2 flex-shrink-0">
+            <shell-header class="container flex-shrink-0 my-3"></shell-header>
+        </div>
+        <router-outlet></router-outlet>
+        <div class="background-2 flex-shrink-0">
+            <shell-footer class="container flex-shrink-0 my-4"></shell-footer>
+        </div>
+    </div>
+</div>
+
+<button
+    mat-icon-button
+    class="background border border-primary-hover mat-elevation-z4"
+    color="primary"
+    (click)="scrollTop()"
+    style="z-index: 1; right: 22px; bottom: 12px; position: fixed"
+    *ngIf="isNeedScrollButton"
+>
+    <span class="fas fa-chevron-up pb-1"></span>
+</button>

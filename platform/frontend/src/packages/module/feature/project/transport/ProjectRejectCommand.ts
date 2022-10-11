@@ -1,5 +1,5 @@
 import { Project } from '@project/common/platform/project';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class ProjectRejectCommand extends TransportCommandAsync<IProjectRejectDto, IProjectRejectDtoResponse> {
     // --------------------------------------------------------------------------

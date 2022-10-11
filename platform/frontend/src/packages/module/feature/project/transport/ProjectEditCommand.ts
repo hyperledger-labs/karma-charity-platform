@@ -1,5 +1,5 @@
 import { IProjectEditDtoResponse } from '@project/common/platform/api/project';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class ProjectEditCommand extends TransportCommandAsync<number, IProjectEditDtoResponse> {
     // --------------------------------------------------------------------------

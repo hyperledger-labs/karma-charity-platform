@@ -9,6 +9,7 @@ import { ProjectBaseComponent } from '../ProjectBaseComponent';
 import { UserProject } from '@project/common/platform/user';
 import { PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import Editor from '@feature/ckeditor/script/ckeditor.js';
+import { Client } from '@project/common/platform/api';
 
 @Component({
     selector: 'project-edit',
@@ -30,12 +31,14 @@ export class ProjectEditComponent extends ProjectBaseComponent implements ISeria
     //--------------------------------------------------------------------------
 
     public tagsAll: SelectListItems<SelectListItem<ProjectTag>>;
-    
+
     public status: ProjectStatus;
     public statuses: SelectListItems<SelectListItem<ProjectStatus>>;
 
     public descriptionEditor: any;
     public paymentAggregatorTypes: SelectListItems<SelectListItem<PaymentAggregatorType>>;
+
+    public cities: Array<string>;
 
     //--------------------------------------------------------------------------
     //
@@ -45,6 +48,7 @@ export class ProjectEditComponent extends ProjectBaseComponent implements ISeria
 
     constructor(
         container: ViewContainerRef,
+        private api: Client,
         private pipe: PipeService,
         private user: UserService,
         private windows: WindowService,
@@ -87,6 +91,16 @@ export class ProjectEditComponent extends ProjectBaseComponent implements ISeria
 
     //--------------------------------------------------------------------------
     //
+    //  Event Handlers
+    //
+    //--------------------------------------------------------------------------
+
+    public async cityChanged(value: string): Promise<void> {
+        this.cities = !_.isEmpty(value) ? await this.api.autocompleteCity(value) : [];
+    }
+
+    //--------------------------------------------------------------------------
+    //
     //  Public Methods
     //
     //--------------------------------------------------------------------------
@@ -94,15 +108,6 @@ export class ProjectEditComponent extends ProjectBaseComponent implements ISeria
     public async submit(): Promise<void> {
         await this.windows.question('project.action.save.confirmation').yesNotPromise;
         this.emit(ProjectEditComponent.EVENT_SUBMITTED);
-    }
-
-    public async geoSelect(): Promise<void> {
-        /*
-        let item = await this.transport.sendListen(new GeoSelectCommand(this.project.preferences.toGeo()), { timeout: DateUtil.MILISECONDS_DAY });
-        this.location = item.location;
-        this.latitude = item.latitude;
-        this.longitude = item.longitude;
-        */
     }
 
     public serialize(): IProjectEditDto {

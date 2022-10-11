@@ -1,5 +1,5 @@
 
-import { TransportCommand } from '@ts-core/common/transport';
+import { TransportCommand } from '@ts-core/common';
 
 export class CompanyOpenCommand extends TransportCommand<number> {
     // --------------------------------------------------------------------------

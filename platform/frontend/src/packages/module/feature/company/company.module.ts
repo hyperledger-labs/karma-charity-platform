@@ -3,7 +3,7 @@ import { NgModule, NgModuleRef } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 import { TransportLazyModule } from '@ts-core/angular';
 import { CompanyAddHandler, CompanyUserAddHandler, CompanyToVerifyHandler, CompanyUserRoleEditHandler, CompanyVerifyHandler, CompanyRejectHandler, CompanyActivateHandler } from './service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { CompanyActivateCommand, CompanyAddCommand, CompanyEditCommand, CompanyOpenCommand, CompanyRejectCommand, CompanyToVerifyCommand, CompanyUserRoleEditCommand, CompanyVerifyCommand } from './transport';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -19,6 +19,7 @@ import { CompanyOpenHandler } from './service/CompanyOpenHandler';
 import { PaymentModule } from '@feature/payment';
 import { CompanyEditHandler } from './service/CompanyEditHandler';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 //--------------------------------------------------------------------------
 //
@@ -39,6 +40,7 @@ const declarations = [CompanyAddComponent, CompanyEditComponent, CompanyUserAddC
         MatButtonModule,
         MatExpansionModule,
         MatMenuModule,
+        MatAutocompleteModule,
         MatProgressBarModule,
         MatDatepickerModule,
         CKEditorModule,

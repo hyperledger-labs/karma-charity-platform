@@ -1,25 +1,23 @@
 import { Injectable } from '@angular/core';
-import { UserBaseService, UserBaseServiceEvent } from '@ts-core/angular';
-import { LoginService } from './LoginService';
+import { LoginBaseService, UserBaseService } from '@ts-core/angular';
 import { IInitDtoResponse } from '@common/platform/api/login';
 import { User } from '../lib/user';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { UserPreferences, UserType } from '@common/platform/user';
 import * as _ from 'lodash';
-import { ExtendedError } from '@ts-core/common/error';
-import { Transport } from '@ts-core/common/transport';
+import { ExtendedError } from '@ts-core/common';
+import { Transport } from '@ts-core/common';
 import { UserSaveCommand } from '@feature/user/transport';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends UserBaseService<User, UserServiceEvent> {
-
     //--------------------------------------------------------------------------
     //
     // 	Constructor
     //
     //--------------------------------------------------------------------------
 
-    constructor(login: LoginService, private transport: Transport) {
+    constructor(login: LoginBaseService, private transport: Transport) {
         super(login);
         this.initialize();
     }

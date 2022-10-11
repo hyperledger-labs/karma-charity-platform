@@ -1,7 +1,7 @@
 import { Destroyable } from "@ts-core/common";
-import { ScriptLoader } from "@ts-core/frontend/lib";
+import { ScriptLoader } from "@ts-core/frontend";
 import * as _ from 'lodash';
-import { NativeWindowService } from "@ts-core/frontend/service";
+import { NativeWindowService } from "@ts-core/frontend";
 import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })

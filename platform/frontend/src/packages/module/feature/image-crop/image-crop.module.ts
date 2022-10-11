@@ -4,7 +4,7 @@ import { SharedModule } from '@shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { TransportLazyModule } from '@ts-core/angular';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { ImageCropComponent } from './component';
 import { ImageCropCommand } from './transport';

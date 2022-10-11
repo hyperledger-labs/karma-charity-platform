@@ -3,7 +3,7 @@ import { IRouterDeactivatable, SelectListItem, SelectListItems, ViewUtil, Window
 import { LoginService, PipeService, SettingsService } from '@core/service';
 import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { Project, ProjectPreferences, ProjectTag } from '@project/common/platform/project';
 import { Client } from '@project/common/platform/api';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
@@ -33,6 +33,8 @@ export class ProjectAddComponent extends ProjectBaseComponent implements IRouter
     public tagsAll: SelectListItems<SelectListItem<ProjectTag>>;
     public descriptionEditor: any;
     public isForceDeactivate: boolean;
+
+    public cities: Array<string>;
 
     //--------------------------------------------------------------------------
     //
@@ -66,6 +68,16 @@ export class ProjectAddComponent extends ProjectBaseComponent implements IRouter
 
     //--------------------------------------------------------------------------
     //
+    //  Event Handlers
+    //
+    //--------------------------------------------------------------------------
+
+    public async cityChanged(value: string): Promise<void> {
+        this.cities = !_.isEmpty(value) ? await this.api.autocompleteCity(value) : [];
+    }
+
+    //--------------------------------------------------------------------------
+    //
     //  Public Methods
     //
     //--------------------------------------------------------------------------
@@ -91,15 +103,6 @@ export class ProjectAddComponent extends ProjectBaseComponent implements IRouter
     public async pictureEdit(): Promise<void> {
         let item = await this.transport.sendListen(new ImageCropCommand({ imageBase64: this.project.preferences.picture }));
         this.project.preferences.picture = item.source;
-    }
-
-    public async geoSelect(): Promise<void> {
-        /*
-        let item = await this.transport.sendListen(new GeoSelectCommand(this.user.preferences.toGeo()), { timeout: DateUtil.MILISECONDS_DAY });
-        this.location = item.location;
-        this.latitude = item.latitude;
-        this.longitude = item.longitude;
-        */
     }
 
     public serialize(): IProjectAddDto {

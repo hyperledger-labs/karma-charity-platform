@@ -4,14 +4,14 @@ import * as _ from 'lodash';
 import { ISerializable } from '@ts-core/common';
 import { CompanyPreferences } from '@project/common/platform/company';
 import { Client } from '@project/common/platform/api';
-import { ObjectUtil } from '@ts-core/common/util';
+import { ObjectUtil } from '@ts-core/common';
 import { CompanyBaseComponent } from '../CompanyBaseComponent';
 import { ICompanyAddDto } from '@project/common/platform/api/company';
 import { PaymentAggregator, PaymentAggregatorType } from '@project/common/platform/payment/aggregator';
 import { PipeService, RouterService, CkeditorService, CompanyService } from '@core/service';
 import { UserCompany } from '@project/common/platform/user';
 import { ImageCropCommand } from '@feature/image-crop/transport';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import Editor from '@feature/ckeditor/script/ckeditor.js';
 import { NgForm } from '@angular/forms';
 
@@ -34,6 +34,8 @@ export class CompanyAddComponent extends CompanyBaseComponent implements IRouter
     public descriptionEditor: any;
     public isForceDeactivate: boolean;
 
+    public cities: Array<string>;
+    
     //--------------------------------------------------------------------------
     //
     // 	Constructor
@@ -63,8 +65,18 @@ export class CompanyAddComponent extends CompanyBaseComponent implements IRouter
 
         this.company.paymentAggregator = new PaymentAggregator();
         this.company.paymentAggregator.type = PaymentAggregatorType.CLOUD_PAYMENTS;
-        
+
         this.descriptionEditor = Editor;
+    }
+
+    //--------------------------------------------------------------------------
+    //
+    //  Event Handlers
+    //
+    //--------------------------------------------------------------------------
+
+    public async cityChanged(value: string): Promise<void> {
+        this.cities = !_.isEmpty(value) ? await this.api.autocompleteCity(value) : [];
     }
 
     //--------------------------------------------------------------------------
@@ -119,15 +131,6 @@ export class CompanyAddComponent extends CompanyBaseComponent implements IRouter
     public async pictureEdit(): Promise<void> {
         let item = await this.transport.sendListen(new ImageCropCommand({ imageBase64: this.company.preferences.picture }));
         this.company.preferences.picture = item.source;
-    }
-
-    public async geoSelect(): Promise<void> {
-        /*
-        let item = await this.transport.sendListen(new GeoSelectCommand(this.user.preferences.toGeo()), { timeout: DateUtil.MILISECONDS_DAY });
-        this.location = item.location;
-        this.latitude = item.latitude;
-        this.longitude = item.longitude;
-        */
     }
 
     public serialize(): ICompanyAddDto {

@@ -1,5 +1,5 @@
 import { ILoginDto } from '@project/common/platform/api/login';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class GoExternalLoginCommand extends TransportCommandAsync<void, ILoginDto> {
     // --------------------------------------------------------------------------

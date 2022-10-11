@@ -1,0 +1,81 @@
+<div class="background">
+    <div class="container p-3">
+        <p>
+            <span class="text-primary text-underline-hover mouse-active" [vi-translate]="'main.main'" (click)="openMain()"></span>
+            <span class="text-secondary mouse-inactive px-2">-</span>
+            <span class="text-primary text-underline-hover mouse-active" [innerHTML]="project?.company.preferences.title" (click)="openCompany()"></span>
+            <span class="text-secondary mouse-inactive px-2">-</span>
+            <span class="text-secondary mouse-inactive" [innerHTML]="project?.preferences.title"></span>
+        </p>
+
+        <p class="mat-headline mouse-inactive py-4 text-word-break-break-all" [innerHTML]="project?.preferences.title"></p>
+
+        <div class="row background">
+            <div class="col-12 col-lg-8">
+                <img class="picture w-100 h-100 thumbnail rounded" [src]="project?.preferences.picture" />
+            </div>
+            <div class="col-12 col-lg-4">
+                <p
+                    class="text-secondary mouse-inactive text-one-line mb-3"
+                    [innerHTML]="project?.preferences.city"
+                    *ngIf="project?.preferences.city"
+                ></p>
+                <div class="d-flex align-items-center mb-4">
+                    <img class="picture-company rounded flex-shrink-0 me-3" [src]="project?.company.preferences.picture" />
+                    <p class="mat-subheading-2 mouse-inactive text-word-break-break-all flex-grow-1 m-0" [innerHTML]="project?.company.preferences.name"></p>
+                </div>
+
+                <p class="text-secondary mouse-inactive text-one-line mb-2" [vi-translate]="'general.collected'"></p>
+                <p class="mat-headline mouse-inactive text-one-line mb-4" [innerHTML]="project?.balance.collected | account: '0 ₽'"></p>
+                <p class="mouse-inactive text-accent-2 mb-3">
+                    <span class="me-1" [vi-translate]="'general.from'"></span>
+                    <span class="text-one-line" [innerHTML]="project?.balance.required | account"></span>
+                </p>
+
+                <project-balance-progress class="mb-3" [project]="project"></project-balance-progress>
+
+                <div class="mb-5">
+                    <button class="d-block w-100 mb-3" color="primary" mat-raised-button>
+                        <span [vi-translate]="'general.help'"></span>
+                    </button>
+                    <button class="d-block w-100" color="primary" mat-stroked-button>
+                        <span [vi-translate]="'general.observe'"></span>
+                    </button>
+                </div>
+
+                <p class="text-secondary mouse-inactive text-one-line mb-3" [vi-translate]="'general.share'"></p>
+                <div class="d-flex justify-content-around">
+                    <span class="fab fa-3x fa-facebook text-accent-3 mouse-active"></span>
+                    <span class="fab fa-3x fa-instagram text-accent-3 mouse-active"></span>
+                    <span class="fab fa-3x fa-vk text-accent-3 mouse-active"></span>
+                    <span class="fab fa-3x fa-telegram text-accent-3 mouse-active"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container p-3">
+ 
+    <div class="my-4">
+        <button
+            class="chip"
+            [class.me-3]="!last"
+            [class.selected]="tabs.selectedItem === item"
+            (click)="tabs.selectedItem = item"
+            *ngFor="let item of tabs?.collection; last as last"
+            mat-button
+        >
+            <span [innerHTML]="item?.label"></span>
+        </button>
+    </div>
+
+    <p class="ck-content mb-4" [innerHTML]="project?.preferences.description" *ngIf="tabs?.selectedData === 'STORY'"></p>
+
+    <div class="row gx-4 pb-3" *ngIf="tabs?.selectedData === 'PAYMENTS'">
+        <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of paymentTransactions.collection">
+            <project-payment-transaction class="p-3" [paymentTransaction]="item"></project-payment-transaction>
+        </div>
+    </div>
+
+</div>

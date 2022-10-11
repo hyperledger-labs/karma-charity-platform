@@ -1,5 +1,5 @@
 import { ICompanyEditDtoResponse } from '@project/common/platform/api/company';
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 
 export class CompanyEditCommand extends TransportCommandAsync<number, ICompanyEditDtoResponse> {
     // --------------------------------------------------------------------------

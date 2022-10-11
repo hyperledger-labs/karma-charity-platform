@@ -5,9 +5,16 @@
     "author": "Renat Gubaev",
     "scripts": {
         "start1": "npm run platform-payment-widget:serve",
+        "start2": "npm run platform-site:serve",
+
         "start": "npm run platform-admin:serve",
         "build": "npm run platform-admin:build",
         "version": "npm run platform-admin:version && npm run platform-payment-widget:version",
+        
+        "platform-site:serve": "ng serve platform-site",
+        "platform-site:build": "ng build platform-admin --configuration production",
+        "platform-site:version": "RELEASE=prerelease SOURCE=htdocs/platform-site/config.json node $(node -e \"console.log(require.resolve('node-version-incrementer'))\") && git add htdocs/platform-site/config.json",
+
         "platform-admin:serve": "ng serve platform-admin",
         "platform-admin:build": "ng build platform-admin --configuration production",
         "platform-admin:version": "RELEASE=prerelease SOURCE=htdocs/platform-admin/config.json node $(node -e \"console.log(require.resolve('node-version-incrementer'))\") && git add htdocs/platform-admin/config.json",
@@ -39,10 +46,9 @@
         "@ckeditor/ckeditor5-angular": "^4.0.0",
         "@nguniversal/express-engine": "^13.1.0",
         "@project/common": "file:./src/externals/common/",
-        "@ts-core/angular": "^13.0.65",
-        "@ts-core/common": "^2.0.8",
-        "@ts-core/crypto-gost": "^2.0.1",
-        "@ts-core/frontend": "^2.0.9",
+        "@ts-core/angular": "^13.1.0",
+        "@ts-core/common": "^3.0.7",
+        "@ts-core/frontend": "^3.0.1",
         "@types/numeral": "^2.0.2",
         "bootstrap": "^5.1.3",
         "classlist.js": "^1.1.20150312",

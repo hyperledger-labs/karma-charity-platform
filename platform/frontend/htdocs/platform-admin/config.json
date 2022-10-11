@@ -1,12 +1,13 @@
 {
-    "version": "1.0.0-24",
-    "versionDate": "2022-07-12T14:30:00.494Z",
+    "version": "1.0.0-41",
+    "versionDate": "2022-10-05T15:42:52.274Z",
     "language": "ru",
     "languages": "ru|Русский",
     "assetsUrl": "assets/",
     "apiUrl": "http://localhost:3005",
     "explorerUrl": "https://karma-explorer.karma.n-t.io",
 
+    "vkSiteId": 51435233,
     "googleSiteId": "620828373898-aiamermn42egp3rl06nb8jlbi1iuq0eo.apps.googleusercontent.com",
     "googleSiteRedirectUri": "http://localhost:4200",
     

@@ -7,7 +7,7 @@ import { UploaderDropDirective } from './directive/UploaderDropDirective';
 import { FileUploadModule as BaseFileUploadModule } from 'ng2-file-upload';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { FileOpenCommand, FileRemoveCommand, FileUploadCommand } from './transport';
 import { FileOpenHandler, FileRemoveHandler, FileUploadHandler } from './service';
 

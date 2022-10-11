@@ -1,0 +1,28 @@
+{
+    "version": "1.0.0-28",
+    "versionDate": "2022-07-18T07:48:45.861Z",
+    "language": "ru",
+    "languages": "ru|Русский",
+    "assetsUrl": "assets/",
+    "assetsCdnUrl": "assets/", 
+    "isProduction": "false", 
+    "apiUrl": "http://localhost:3005",
+    "explorerUrl": "https://karma-explorer.karma.n-t.io",
+
+    "googleSiteId": "620828373898-aiamermn42egp3rl06nb8jlbi1iuq0eo.apps.googleusercontent.com",
+    "googleSiteRedirectUri": "http://localhost:4200",
+    
+    "theme": "light",
+    "themes": [
+        {
+            "name": "light",
+            "isDark": false,
+            "styles": {}
+        },
+        {
+            "name": "dark",
+            "isDark": true,
+            "styles": {}
+        }
+    ]
+}

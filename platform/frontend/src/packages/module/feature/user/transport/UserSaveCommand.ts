@@ -1,4 +1,4 @@
-import { TransportCommandAsync } from '@ts-core/common/transport';
+import { TransportCommandAsync } from '@ts-core/common';
 import { IUserEditDto, IUserEditDtoResponse } from '@common/platform/api/user';
 
 export class UserSaveCommand extends TransportCommandAsync<IUserEditDto, IUserEditDtoResponse> {

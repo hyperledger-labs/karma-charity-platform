@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, Output, ViewContainerRef } from '@angul
 import { ISelectListItem, IWindowContent, SelectListItem, SelectListItems, ViewUtil } from '@ts-core/angular';
 import * as _ from 'lodash';
 import { PipeService, UserService } from '@core/service';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { IPaymentAggregatorGetDtoResponse } from '@project/common/platform/api/payment';
 import { Client } from '@project/common/platform/api';
 import { Company } from '@project/common/platform/company';
 import { CoinObjectType } from '@project/common/transport/command/coin';
 import { IPaymentWidgetOpenDtoResponse, PaymentWidgetOpenCommand } from '../../transport';
 import { IPaymentAggregatorData, PaymentTargetValue, PaymentUtil, PaymentWidgetDetails } from '@project/common/platform/payment';
-import { ObjectUtil } from '@ts-core/common/util';
-import { ExtendedError } from '@ts-core/common/error';
+import { ObjectUtil } from '@ts-core/common';
+import { ExtendedError } from '@ts-core/common';
 
 @Component({
     selector: 'payment-widget-container',

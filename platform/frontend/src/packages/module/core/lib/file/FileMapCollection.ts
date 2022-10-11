@@ -1,5 +1,5 @@
-import { FilterableConditions, FilterableConditionType, FilterableDataType, IPagination, ParseFilterableCondition } from '@ts-core/common/dto';
-import { TransformUtil } from '@ts-core/common/util';
+import { FilterableConditions, FilterableConditionType, FilterableDataType, IPagination, ParseFilterableCondition } from '@ts-core/common';
+import { TransformUtil } from '@ts-core/common';
 import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings, MomentDatePipe } from '@ts-core/angular';
 import { Client } from '@project/common/platform/api';
 import { File } from '@project/common/platform/file';

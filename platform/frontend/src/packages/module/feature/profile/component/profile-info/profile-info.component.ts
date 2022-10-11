@@ -3,7 +3,7 @@ import { DestroyableContainer } from '@ts-core/common';
 import { ViewUtil } from '@ts-core/angular';
 import { takeUntil } from 'rxjs';
 import { User } from '@core/lib/user';
-import { ThemeAssetService } from '@ts-core/frontend/theme';
+import { ThemeAssetService } from '@ts-core/frontend';
 import { UserService, PipeService, LoginService } from '@core/service';
 import { ProfileMenu } from '../../service';
 import { merge } from 'rxjs';

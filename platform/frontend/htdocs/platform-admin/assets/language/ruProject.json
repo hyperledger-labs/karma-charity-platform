@@ -18,7 +18,9 @@
             "AGED": "Пожилым",
             "ADULT": "Взрослым",
             "ANIMAL": "Животным",
-            "CHILDREN": "Детям"
+            "CHILDREN": "Детям",
+            "CULTURE": "Культуре",
+            "NATURE": "Природе"
         },
         "account": {
             "required": "Нужно собрать",
@@ -59,6 +61,11 @@
                 "reject": "Отклонить",
                 "confirmation": "Вы уверены что хотите отклонить проект?",
                 "notification": "Проект отклонен"
+            },
+            "reportSubmit": {
+                "reportSubmit": "Отчет загружен",
+                "confirmation": "Вы уверены что хотите изменить статус на \"Отчет загружен\"?",
+                "notification": "У проекта загружены отчеты"
             }
         },
         "preferences": {
@@ -66,7 +73,8 @@
             "description": "Описание",
             "descriptionShort": "Краткое описание",
             "picture": "Логотип",
-            "location": "⇛geo.location"
+            "isUrgent": "Срочный",
+            "city": "⇛geo.city"
         },
         "status": {
             "status": "Статус",
@@ -81,7 +89,11 @@
             "REJECTED": "Отклонен",
             "REJECTEDDescription": "Проект отклонена - необходимо проверить и исправить заполненные ранее данные и отправить на повторную проверку",
             "VERIFICATION_PROCESS": "В процессе верификации",
-            "VERIFICATION_PROCESSDescription": "Проект находится на рассмотрении, дождитесь рассмотрения"
+            "VERIFICATION_PROCESSDescription": "Проект находится на рассмотрении, дождитесь рассмотрения",
+            "COLLECTED": "Средства собраны",
+            "COLLECTEDDescription": "Средства собраны и используются",
+            "REPORT_SUBMITTED": "Отчет о использовании средства загружен",
+            "REPORT_SUBMITTEDDescription": "Отчет о использовании средства загружен"
         }
     }
 }

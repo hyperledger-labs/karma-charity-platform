@@ -1,11 +1,11 @@
 import { Payment } from '@common/platform/payment';
 import { CdkTablePaginableMapCollection, ICdkTableColumn, ICdkTableSettings, PrettifyPipe } from '@ts-core/angular';
-import { IPagination } from '@ts-core/common/dto';
+import { IPagination } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
 import { PipeService, UserService } from '@core/service';
 import { Injectable } from '@angular/core';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import { PaymentStatus } from '@project/common/platform/payment';
 
 @Injectable()

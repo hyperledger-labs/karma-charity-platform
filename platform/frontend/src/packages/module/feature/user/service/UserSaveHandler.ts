@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Logger } from '@ts-core/common/logger';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Client } from '@common/platform/api';
 import { IUserEditDto, IUserEditDtoResponse } from '@common/platform/api/user';
 import { UserService } from '@core/service';
 import { UserSaveCommand } from '../transport';
-import { ExtendedError } from '@ts-core/common/error';
+import { ExtendedError } from '@ts-core/common';
 
 @Injectable({ providedIn: 'root' })
 export class UserSaveHandler extends TransportCommandAsyncHandler<IUserEditDto, IUserEditDtoResponse, UserSaveCommand> {

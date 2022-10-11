@@ -1,0 +1,45 @@
+{
+    "general": {
+        "collected": "Собрано",
+        "from": "из",
+        "help": "Помочь",
+        "observe": "Следить",
+        "share": "Поделиться",
+        "story": "История",
+        "helped": "Помогли",
+        "anonymousPayment": "Анонимный платеж",
+        "unknown": "Неизвестно",
+        "publications": "Публикации"
+    },
+    "login": {
+        "login": "Войти"
+    },
+    "main": {
+        "menu": {
+            "about": "О нас",
+            "publications": "⇛general.publications",
+            "funds": "Фонды",
+            "becomePartner": "Стать партнером",
+            "shop": "Магазин",
+            "contacts": "Контакты"
+        },
+        "main": "Главная",
+        "footer": {
+            "slogan": "Откройте двери доброте",
+            "help": "Помощь",
+            "children": "Дети",
+            "adult": "Взрослые",
+            "elderly": "Пожилые",
+            "animal": "Животные",
+            "culture": "Культура",
+            "nature": "Природа",
+            "about": "О проекте",
+            "team": "Команда",
+            "sponsor": "Спонсоры",
+            "contact": "Контакты",
+            "information": "Информация",
+            "user": "Помощь пользователям",
+            "agreement": "Соглашение"
+        }
+    }
+}

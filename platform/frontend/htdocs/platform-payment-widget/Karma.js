@@ -27,8 +27,8 @@ class Karma {
             iframe.onload = () => resolve();
             iframe.onerror = event => reject(event.toString());
             iframe.oninvalid = event => reject(event.toString());
-            // let url = `https://payment-widget-dev.project-karma.com`;
-            let url = `http://localhost:4200`;
+            let url = `https://payment-widget-dev.project-karma.com`;
+            // let url = `http://localhost:4200`;
             url += `?id=${id}&type=${type}`;
             if (details) {
                 url += `&details=${JSON.stringify(details)}`;
@@ -46,7 +46,7 @@ class Karma {
     createContainerIfNeed(details) {
         let onFail = details.onFail;
         let onSuccess = details.onSuccess;
-        
+
         delete details.onFail;
         delete details.onSuccess;
 
@@ -85,14 +85,16 @@ class Karma {
         };
 
         let backdrop = document.createElement('div');
+        backdrop.className = 'karma-widget-backdrop';
         backdrop.setAttribute(
             'style',
-            'background-color:rgba(0,0,0,0.5);position:fixed;top:0;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:center;'
+            'background-color:rgba(0,0,0,0.5);position:fixed;top:0;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:center;z-index:9999'
         );
         backdrop.addEventListener('click', closeHandler);
         document.body.appendChild(backdrop);
 
         let container = document.createElement('div');
+        backdrop.className = 'karma-widget';
         container.setAttribute('style', `width:454px;height:576px;`);
         container.addEventListener('click', event => event.stopPropagation());
         backdrop.appendChild(container);

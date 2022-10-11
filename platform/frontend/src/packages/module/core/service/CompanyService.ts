@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { LoginBaseServiceEvent } from '@ts-core/angular';
+import { LoginBaseService, LoginBaseServiceEvent } from '@ts-core/angular';
 import { LoginService } from './LoginService';
-import { TransformUtil } from '@ts-core/common/util';
+import { TransformUtil } from '@ts-core/common';
 import * as _ from 'lodash';
 import { Company } from '@project/common/platform/company';
 import { Destroyable } from '@ts-core/common';
 import { filter, map, Observable, Subject, takeUntil } from 'rxjs';
-import { ObservableData } from '@ts-core/common/observer';
+import { ObservableData } from '@ts-core/common';
 import { UserCompany } from '@project/common/platform/user';
 
 @Injectable({ providedIn: 'root' })
@@ -26,7 +26,7 @@ export class CompanyService extends Destroyable {
     //
     //--------------------------------------------------------------------------
 
-    constructor(private login: LoginService) {
+    constructor(private login: LoginBaseService) {
         super();
         this.observer = new Subject();
         this.initialize();

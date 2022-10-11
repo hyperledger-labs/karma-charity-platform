@@ -3,7 +3,7 @@ import { ISelectListItem, MenuTriggerForDirective, SelectListItem, SelectListIte
 import * as _ from 'lodash';
 import { Project } from '@common/platform/project';
 import { ProjectBaseComponent } from '../ProjectBaseComponent';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import { ProjectMenu } from '../../service';
 import { PaymentTransactionMapCollection } from '@core/lib/payment';
 import { UserProject } from '@project/common/platform/user';

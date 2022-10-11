@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@project/common/platform/api';
 import { WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
-import { Logger } from '@ts-core/common/logger';
-import { Transport, TransportCommandHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { Transport, TransportCommandHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { SettingsService } from '@core/service';
-import { PromiseHandler } from '@ts-core/common/promise';
+import { PromiseHandler } from '@ts-core/common';
 import { takeUntil } from 'rxjs';
 import { FileOpenCommand, IFileOpenDto } from '../transport';
-import { NativeWindowService } from '@ts-core/frontend/service';
+import { NativeWindowService } from '@ts-core/frontend';
 
 @Injectable({ providedIn: 'root' })
 export class FileOpenHandler extends TransportCommandHandler<IFileOpenDto, FileOpenCommand> {

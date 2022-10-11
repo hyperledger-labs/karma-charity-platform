@@ -1,8 +1,8 @@
 import { ListItems, IListItem, ListItem } from '@ts-core/angular';
-import { LanguageService } from '@ts-core/frontend/language';
+import { LanguageService } from '@ts-core/frontend';
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { UserService } from '@core/service';
 import { UserProject } from '@project/common/platform/user';
 import { PermissionUtil } from '@project/common/util';

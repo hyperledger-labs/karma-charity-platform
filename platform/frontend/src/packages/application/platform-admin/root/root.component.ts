@@ -1,12 +1,12 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { LoadingService, LoadingServiceManager } from '@ts-core/frontend/service';
+import { LoadingService, LoadingServiceManager } from '@ts-core/frontend';
 import { LoadableEvent } from '@ts-core/common';
 import * as _ from 'lodash';
-import { ApplicationComponent, ViewUtil, WindowService } from '@ts-core/angular';
-import { TransportHttpCommandAsync } from '@ts-core/common/transport/http';
-import { LanguageService } from '@ts-core/frontend/language';
-import { ThemeService } from '@ts-core/frontend/theme';
+import { ApplicationComponent, LoginBaseService, LoginBaseServiceEvent, LoginGuard, LoginNotGuard, ViewUtil, WindowService } from '@ts-core/angular';
+import { TransportHttpCommandAsync } from '@ts-core/common';
+import { LanguageService } from '@ts-core/frontend';
+import { ThemeService } from '@ts-core/frontend';
 import { RouterService, SettingsService } from '@core/service';
 import { Language } from '@ts-core/language';
 import { takeUntil, filter, map, merge, delay } from 'rxjs';
@@ -15,9 +15,9 @@ import { LoginService, CompanyService, UserService } from '@core/service';
 import { Client } from '@common/platform/api';
 import 'numeral/locales/ru';
 import 'moment/locale/ru';
-import { ExtendedError } from '@ts-core/common/error';
-import { Transport } from '@ts-core/common/transport';
-import { ProfileQuizOpenCommand } from '@feature/profile-quiz/transport';
+import { ExtendedError } from '@ts-core/common';
+import { Transport } from '@ts-core/common';
+import { ProfileQuizOpenCommand } from '../module/profile-quiz/transport';
 import { CompanyAddCommand } from '@feature/company/transport';
 
 @Component({
@@ -39,7 +39,7 @@ export class RootComponent extends ApplicationComponent<SettingsService> {
         private api: Client,
         private user: UserService,
         private company: CompanyService,
-        private login: LoginService,
+        private login: LoginBaseService,
         private router: RouterService,
         protected renderer: Renderer2,
         protected settings: SettingsService,
@@ -85,6 +85,21 @@ export class RootComponent extends ApplicationComponent<SettingsService> {
                 this.loading.start();
             } else if (event instanceof RouteConfigLoadEnd) {
                 this.loading.finish();
+            }
+        });
+
+        // Login
+        this.login.events.subscribe(data => {
+            switch (data.type) {
+                case LoginBaseServiceEvent.LOGIN_COMPLETE:
+                    this.router.navigate(LoginNotGuard.redirectUrl);
+                    break;
+                case LoginBaseServiceEvent.LOGOUT_FINISHED:
+                    this.router.navigate(LoginGuard.redirectUrl);
+                    break;
+                case LoginBaseServiceEvent.LOGOUT_STARTED:
+                    this.windows.removeAll();
+                    break;
             }
         });
 

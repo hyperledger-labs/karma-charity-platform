@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@project/common/platform/api';
 import { NotificationService, WindowConfig, WindowEvent, WindowService } from '@ts-core/angular';
-import { Logger } from '@ts-core/common/logger';
-import { Transport, TransportCommandAsyncHandler } from '@ts-core/common/transport';
+import { Logger } from '@ts-core/common';
+import { Transport, TransportCommandAsyncHandler } from '@ts-core/common';
 import * as _ from 'lodash';
 import { ProjectService } from '@core/service';
 import { ProjectUserRoleEditCommand, IProjectUserRoleEditDto, IProjectUserRoleEditDtoResponse } from '../transport';
-import { PromiseHandler } from '@ts-core/common/promise';
+import { PromiseHandler } from '@ts-core/common';
 import { ProjectUserRoleEditComponent } from '../component/project-user-role-edit/project-user-role-edit.component';
 import { takeUntil } from 'rxjs';
 

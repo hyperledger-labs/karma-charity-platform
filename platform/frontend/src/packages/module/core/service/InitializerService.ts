@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Destroyable } from '@ts-core/common';
-import { ThemeService } from '@ts-core/frontend/theme';
+import { ThemeService } from '@ts-core/frontend';
 import { SettingsService } from './SettingsService';
-import { Transport } from '@ts-core/common/transport';
+import { Transport } from '@ts-core/common';
 import { ServiceWorkerService } from './ServiceWorkerService';
 
 @Injectable({ providedIn: 'root' })
