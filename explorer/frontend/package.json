@@ -45,7 +45,7 @@
         "classlist.js": "^1.1.20150312",
         "css-element-queries": "^1.2.3",
         "csshake": "^1.5.3",
-        "express": "^4.17.2",
+        "express": "^4.17.3",
         "hammerjs": "^2.0.8",
         "highlight.js": "^11.4.0",
         "interactjs": "^1.10.11",
