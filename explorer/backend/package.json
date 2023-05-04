@@ -21,11 +21,11 @@
     "dependencies": {
         "@hlf-core/transport": "^3.0.11",
         "@hlf-explorer/common": "^3.0.1",
-        "@nestjs/platform-express": "^8.3.1",
-        "@nestjs/swagger": "^5.1.5",
-        "@nestjs/typeorm": "^8.0.3",
+        "@nestjs/platform-express": "^9.4.0",
+        "@nestjs/swagger": "^6.3.0",
+        "@nestjs/typeorm": "^8.1.4",
         "@project/module": "file:./src/packages/module",
-        "@ts-core/backend-nestjs": "^8.1.8"
+        "@ts-core/backend-nestjs": "^9.0.3"
     },
     "devDependencies": {
         "prettier": "^2.5.1",
