@@ -17,7 +17,7 @@
     "license": "ISC",
     "dependencies": {
         "@hlf-core/transport-chaincode": "^3.0.3",
-        "@ts-core/backend-nestjs": "^8.1.8",
+        "@ts-core/backend-nestjs": "^9.0.4",
         "@ts-core/crypto-gost": "^3.0.1",
         "@project/common": "file:./src/externals/common",
         "@project/module": "file:./src/packages/module"
