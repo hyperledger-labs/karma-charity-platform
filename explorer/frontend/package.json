@@ -24,7 +24,7 @@
     "dependencies": {
         "@angular/animations": "^13.2.2",
         "@angular/cdk": "^13.2.1",
-        "@angular/cli": "^13.2.2",
+        "@angular/cli": "^16.1.4",
         "@angular/common": "^13.2.2",
         "@angular/compiler": "^13.2.2",
         "@angular/core": "^13.2.2",
@@ -60,7 +60,7 @@
     },
     "devDependencies": {
         "@angular-devkit/architect": "^0.1301.4",
-        "@angular-devkit/build-angular": "^13.2.3",
+        "@angular-devkit/build-angular": "^16.1.4",
         "@angular/compiler-cli": "^13.2.2",
         "node-version-incrementer": "^1.0.6",
         "pre-commit": "^1.2.2",
